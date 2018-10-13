@@ -10,10 +10,7 @@ export default {
 </script>
 
 <style lang="scss">
-html, body {
-  height: 100%;
-}
-body {
-  margin: 0;
-}
+@import './css/vars';
+@import './css/reset';
+@import './css/index';
 </style>

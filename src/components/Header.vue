@@ -11,7 +11,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+@import '@/css/vars.scss';
+
 .header {
-  background-color: blue;
+  background-color: $color-primary;
 }
 </style>

@@ -9,6 +9,8 @@
       </el-aside>
       <el-main>
         <router-view/>
+        <i class="material-icons">face</i>
+        <Icon/>
       </el-main>
     </el-container>
   </el-container>

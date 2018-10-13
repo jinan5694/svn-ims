@@ -1,4 +1,10 @@
 {
+  "editor.tabSize": 2,
+  "emmet.triggerExpansionOnTab": true,
+    "emmet.includeLanguages": {
+      "vue-html": "html",
+      "vue": "html"
+    },
   "eslint.autoFixOnSave": true,
   "eslint.validate": [
     "javascript",
