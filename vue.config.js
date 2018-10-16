@@ -7,6 +7,13 @@ module.exports = {
       errors: true
     },
     // 端口号
-    port: 8088
+    port: 8088,
+    proxy: {
+      '/api': {
+        target: 'http://cloudbrain.aicloudata.com/gateway/dms/api',
+        ws: true,
+        changeOrigin: true
+      }
+    }
   }
 }

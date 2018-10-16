@@ -54,6 +54,9 @@
           @click="handleSubmit">登 录</el-button>
       </el-form>
     </div>
+    <img
+      :src="codeSrc"
+      alt="code">
   </div>
 </template>
 
@@ -80,7 +83,7 @@ export default {
     return {
       loading: false,
       loginForm: {
-        account: '',
+        account: '18804004850',
         password: '',
         captcha: ''
       },
@@ -110,8 +113,17 @@ export default {
     // todo
   },
   methods: {
-    getErrorCount (account) {
-
+    pwdErrorCount (account) {
+      const url = '/SSOService/pwdErrorCount'
+      const param = [account]
+      this.$axios.get(url, { param2: param }).then(resp => {
+        // todo
+        console.log('ok')
+      }).catch(error => {
+        if (error) {
+          console.log('error')
+        }
+      })
     },
     handleAccountBlur () {
 
@@ -120,10 +132,20 @@ export default {
 
     },
     handleSubmit () {
-
+      // this.pwdErrorCount(this.loginForm.account)
+      this.reloadCaptchaImage()
     },
     reloadCaptchaImage () {
-
+      const url = '/CaptchaService/getCaptchaImage'
+      this.$axios.get(url, {
+        responseType: 'blob'
+      }).then(resp => {
+        const src = window.URL.createObjectURL(resp)
+        console.log(src)
+        debugger
+      }).catch(result => {
+        this.codeSrc = window.URL.createObjectURL(result)
+      })
     },
     submit () {
 

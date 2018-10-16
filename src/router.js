@@ -3,9 +3,11 @@ import Router from 'vue-router'
 import Login from './views/login/Login'
 import Index from './views/Index'
 
+import { hasLogged } from './common/login'
+
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/login',
@@ -34,3 +36,25 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach(async (to, from, next) => {
+  if (to.path === '/login') {
+    if (hasLogged()) {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (hasLogged() || to.meta.public) {
+      next()
+    } else {
+      next('/login')
+    }
+  }
+})
+
+router.afterEach((to, from) => {
+  // todo
+})
+
+export default router

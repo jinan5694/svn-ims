@@ -1,7 +1,7 @@
 <template>
   <div
     :style="style"
-    class="logo">IMS</div>
+    class="logo">PSI</div>
 </template>
 
 <script>
