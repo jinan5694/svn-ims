@@ -115,6 +115,7 @@ export default {
     },
     // 查询当前账号密码输出错误次数
     pwdErrorCount (account) {
+      if (!account) return
       const url = '/SSOService/pwdErrorCount'
       const param = [account]
       this.$axios.get(url, { param: param }).then(resp => {

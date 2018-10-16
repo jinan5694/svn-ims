@@ -1,13 +1,15 @@
 <template>
-  <el-container>
-    <el-header>
+  <el-container class="container">
+    <el-header
+      class="header"
+      height="50px">
       <Header/>
     </el-header>
     <el-container>
-      <el-aside width="200px">
+      <el-aside width="60px">
         <Sidebar/>
       </el-aside>
-      <el-main>
+      <el-main class="main">
         <router-view/>
         <i class="material-icons">face</i>
         <Icon/>
@@ -29,5 +31,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
+@import '@/css/vars.scss';
+.container {
+  height: 100%;
+  overflow: hidden;
+}
+.header {
+  height: 50px;
+  background-color: $color-primary;
+}
+.main {
+  overflow-x: auto;
+}
 </style>
