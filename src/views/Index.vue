@@ -6,13 +6,11 @@
       <Header/>
     </el-header>
     <el-container>
-      <el-aside width="60px">
+      <el-aside width="65px">
         <Sidebar/>
       </el-aside>
       <el-main class="main">
         <router-view/>
-        <i class="material-icons">face</i>
-        <Icon/>
       </el-main>
     </el-container>
   </el-container>

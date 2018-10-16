@@ -4,6 +4,7 @@ import Login from './views/login/Login'
 import Index from './views/Index'
 
 import { hasLogged } from './common/login'
+import routes from '@/common/routes'
 
 Vue.use(Router)
 
@@ -12,6 +13,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
+      meta: { title: '登录', public: true },
       component: Login
     },
     {
@@ -19,18 +21,11 @@ const router = new Router({
       name: 'index',
       component: Index,
       children: [
+        ...routes,
         {
-          path: '/about',
-          name: 'about',
-          // route level code-splitting
-          // this generates a separate chunk (about.[hash].js) for this route
-          // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-        },
-        {
-          path: '/home',
-          name: 'home',
-          component: () => import('./views/Home.vue')
+          path: '*',
+          name: '404',
+          component: () => import('@/views/404.vue')
         }
       ]
     }
