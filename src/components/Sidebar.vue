@@ -1,7 +1,6 @@
 <template>
   <div class="sidebar">
     Sidebar
-    {{ __PUBLISH__ }}
   </div>
 </template>
 

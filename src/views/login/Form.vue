@@ -28,51 +28,40 @@
             placeholder="密码"/>
         </el-form-item>
         <el-form-item
-          v-show="showPinCode"
+          v-show="showCaptcha"
           prop="captcha">
           <el-input
             v-model="loginForm.captcha"
             :maxlength="4"
-            class="lf-pin"
+            class="captcha-input"
             size="large"
             placeholder="验证码"/>
           <img
-            :src="codeSrc"
-            class="lf-captch-image"
+            :src="captchaSrc"
+            class="captcha-img"
             @click="reloadCaptchaImage">
         </el-form-item>
-        <div class="lf-toolbar">
+        <div class="toolbar">
           <el-checkbox
             v-model="rememberPassword"
             @change="handleChange">记住密码</el-checkbox>
         </div>
         <el-button
           :loading="loading"
-          class="lf-submit"
+          class="submit"
           size="large"
           type="primary"
           @click="handleSubmit">登 录</el-button>
       </el-form>
     </div>
-    <img
-      :src="codeSrc"
-      alt="code">
   </div>
 </template>
 
 <script>
-// import md5 from 'md5'
-// import { login, getCaptchaImage } from 'src/config/login.js'
-// import {
-//   init,
-//   getAccount,
-//   getPassword,
-//   isRememberPassword,
-//   setRememberPassword,
-//   syncAccountAndPassword
-// } from 'src/page/login/rememberPassword.js'
-// import PwdFindContainer from 'src/components/pwdFindContainer.vue'
-
+import md5 from 'md5'
+import Axios from 'axios'
+import { baseURL } from '@/common/config'
+import { login } from '@/common/login'
 import Logo from '@/components/Logo'
 
 export default {
@@ -81,17 +70,16 @@ export default {
   },
   data () {
     return {
+      captchaSrc: '',
       loading: false,
       loginForm: {
-        account: '18804004850',
+        account: '',
         password: '',
         captcha: ''
       },
-      codeSrc: '',
       rememberPassword: true,
       sessionId: '',
-      showPinCode: false,
-      findPwdDialog: false
+      showCaptcha: false
     }
   },
   computed: {
@@ -104,59 +92,79 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' }
         ],
         captcha: [
-          { required: this.showPinCode, message: '请输入验证码', trigger: 'blur' }
+          { required: this.showCaptcha, message: '请输入验证码', trigger: 'blur' }
         ]
       }
     }
   },
   created () {
     // todo
+    this.reloadCaptchaImage()
   },
   methods: {
+    handleAccountBlur () {
+      this.pwdErrorCount(this.loginForm.account)
+    },
+    handleChange (value) {
+      // todo
+    },
+    handleSubmit () {
+      this.$refs.loginForm.validate().then(valid => {
+        this.submit()
+      })
+    },
+    // 查询当前账号密码输出错误次数
     pwdErrorCount (account) {
       const url = '/SSOService/pwdErrorCount'
       const param = [account]
-      this.$axios.get(url, { param2: param }).then(resp => {
-        // todo
-        console.log('ok')
-      }).catch(error => {
-        if (error) {
-          console.log('error')
-        }
+      this.$axios.get(url, { param: param }).then(resp => {
+        this.toggleCaptcha(resp)
       })
-    },
-    handleAccountBlur () {
-
-    },
-    handleChange (value) {
-
-    },
-    handleSubmit () {
-      // this.pwdErrorCount(this.loginForm.account)
-      this.reloadCaptchaImage()
     },
     reloadCaptchaImage () {
       const url = '/CaptchaService/getCaptchaImage'
-      this.$axios.get(url, {
+      Axios.get(url, {
+        baseURL: baseURL,
         responseType: 'blob'
       }).then(resp => {
-        const src = window.URL.createObjectURL(resp)
-        console.log(src)
-        debugger
-      }).catch(result => {
-        this.codeSrc = window.URL.createObjectURL(result)
+        this.sessionId = resp.headers.sessionid
+        this.captchaSrc = window.URL.createObjectURL(resp.data)
       })
     },
     submit () {
-
+      const params = {
+        account: this.loginForm.account,
+        password: md5(this.loginForm.password),
+        captcha: this.loginForm.captcha,
+        sessionId: this.sessionId
+      }
+      this.loading = true
+      login(this, params).then(resp => {
+        if (resp.success) {
+          this.$router.push('/')
+          return
+        }
+        this.toggleCaptcha(resp)
+      }).catch(err => {
+        this.$message({
+          type: 'warning',
+          message: err.exceptionMessage
+        })
+        this.reloadCaptchaImage()
+      }).finally(() => {
+        this.loading = false
+      })
     },
     // 切换验证码显示状态
     toggleCaptcha (resp) {
-
-    },
-    // 忘记密码
-    openFindPwdDialog () {
-      this.findPwdDialog = true
+      if (resp.data === null || resp.data > 2) {
+        // 验证码错误
+        this.showCaptcha = true
+        this.loginForm.captcha = ''
+        this.reloadCaptchaImage()
+      } else {
+        this.showCaptcha = false
+      }
     }
   }
 }
@@ -164,34 +172,24 @@ export default {
 
 <style lang='scss' scoped>
 .login-form {
-
-  .lf-icon {
-    margin-top: 11px;
-    color: #666;
-  }
-  .lf-pin {
+  .captcha-input {
     width: 200px;
   }
-  .lf-captch-image {
+  .captcha-img {
     float: right;
-    width: 72px;
-    height: 40px;
+    margin-left: 10px;
+    width: 75px;
+    height: 38px;
     border: 1px solid #ccc;
   }
-  .lf-toolbar {
+  .toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 30px;
     margin-bottom: 18px;
-    .lf-forget-pwd {
-      cursor: pointer;
-      color: #409EFF;
-      text-decoration: none;
-      font-size: 14px;
-    }
   }
-  .lf-submit {
+  .submit {
     width: 100%;
   }
 }

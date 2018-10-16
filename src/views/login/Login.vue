@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <Form/>
+    <Form class="login-form"/>
   </div>
 </template>
 
@@ -20,5 +20,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  .login-form {
+    width: 300px;
+  }
 }
 </style>

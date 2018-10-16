@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Axios from 'axios'
+import { baseURL } from '@/common/config'
 import { logout } from '@/common/login'
 
 const vue = new Vue()
 const instance = Axios.create({
   // baseUrl处理的不合理
-  baseURL: `${process.env.BASE_URL}api`
+  baseURL: baseURL
 })
 
 instance.interceptors.request.use(config => {
