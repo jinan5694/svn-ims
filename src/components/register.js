@@ -2,10 +2,12 @@ import Vue from 'vue'
 
 import Icon from './Icon'
 import Logo from './Logo'
+import Page from './Page'
 
 const components = [
   Icon,
-  Logo
+  Logo,
+  Page
 ]
 
 components.forEach(component => {

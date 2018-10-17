@@ -3,6 +3,7 @@
  * 可以对象嵌套
  */
 export default {
+  back: '返回',
   ok: '确定',
   cancel: '取消',
   close: '关闭',

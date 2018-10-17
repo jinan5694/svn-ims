@@ -52,9 +52,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-@import '@/css/vars.scss';
-
 .header {
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;

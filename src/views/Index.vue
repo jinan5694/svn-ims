@@ -3,12 +3,14 @@
     v-if="hasReady"
     class="container">
     <el-header
-      class="header"
+      class="header-box"
       height="50px">
       <Header/>
     </el-header>
     <el-container>
-      <el-aside width="65px">
+      <el-aside
+        class="aside-box"
+        width="65px">
         <Sidebar/>
       </el-aside>
       <el-main class="main">
@@ -18,7 +20,6 @@
   </el-container>
   <Ready v-else/>
 </template>
-
 <script>
 import Ready from '@/views/Ready'
 import Header from '@/components/Header'
@@ -45,11 +46,17 @@ export default {
   height: 100%;
   overflow: hidden;
 }
-.header {
+.header-box {
   height: 50px;
   background-color: $color-primary;
+  box-shadow: $box-shadow;
+}
+.aside-box {
+  box-shadow: $box-shadow;
 }
 .main {
   overflow-x: auto;
+  padding: 0;
+  background-color: $color-background;
 }
 </style>
