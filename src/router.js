@@ -1,14 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from './views/login/Login'
-import Index from './views/Index'
+import Login from '@/views/login/Login'
+import Index from '@/views/Index'
 
-import { hasLogged } from './common/login'
+import { hasLogged } from '@/common/login'
 import routes from '@/common/routes'
 
 Vue.use(Router)
 
 const router = new Router({
+  scrollBehavior: () => ({ y: 0 }),
   routes: [
     {
       path: '/login',
@@ -19,12 +20,20 @@ const router = new Router({
     {
       path: '/',
       name: 'index',
+      meta: { title: '首页' },
       component: Index,
       children: [
+        {
+          path: '/',
+          name: 'dashboard',
+          meta: { title: 'Dashboard' },
+          component: () => import('@/views/Dashboard.vue')
+        },
         ...routes,
         {
           path: '*',
           name: '404',
+          meta: { title: '404' },
           component: () => import('@/views/404.vue')
         }
       ]
@@ -33,14 +42,10 @@ const router = new Router({
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (to.path === '/login') {
-    if (hasLogged()) {
-      next('/')
-    } else {
-      next()
-    }
+  if (to.meta.public) {
+    next()
   } else {
-    if (hasLogged() || to.meta.public) {
+    if (hasLogged()) {
       next()
     } else {
       next('/login')

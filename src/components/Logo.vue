@@ -8,6 +8,10 @@
 export default {
   name: 'Logo',
   props: {
+    color: {
+      type: String,
+      default: '#666'
+    },
     size: {
       type: Number,
       default: 40
@@ -17,7 +21,8 @@ export default {
     style () {
       return {
         height: `${this.size}px`,
-        lineHeight: `${this.size}px`
+        lineHeight: `${this.size}px`,
+        color: `${this.color}`
       }
     }
   }
@@ -27,8 +32,7 @@ export default {
 <style lang='scss' scoped>
 .logo {
   display: inline-block;
-  color: #666;
-  font-size: 18px;
+  font-size: 24px;
   font-weight: 700;
 }
 </style>

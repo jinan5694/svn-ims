@@ -1,7 +1,12 @@
 <template>
   <div class="header">
-    <Logo/>
+    <router-link to="/">
+      <Logo color="#fff"/>
+    </router-link>
     <div class="toolbar">
+      <div class="item">
+        {{ user.name }}
+      </div>
       <div class="item">
         <Icon name="notifications"/>
       </div>
@@ -24,6 +29,11 @@ export default {
   name: 'Header',
   components: {
     Logo
+  },
+  computed: {
+    user () {
+      return this.$store.state.User.user
+    }
   },
   methods: {
     handleLogout () {

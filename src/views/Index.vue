@@ -1,5 +1,7 @@
 <template>
-  <el-container class="container">
+  <el-container
+    v-if="hasReady"
+    class="container">
     <el-header
       class="header"
       height="50px">
@@ -14,16 +16,25 @@
       </el-main>
     </el-container>
   </el-container>
+  <Ready v-else/>
 </template>
 
 <script>
+import Ready from '@/views/Ready'
 import Header from '@/components/Header'
 import Sidebar from '@/components/Sidebar'
+
 export default {
   name: 'Index',
   components: {
+    Ready,
     Header,
     Sidebar
+  },
+  computed: {
+    hasReady () {
+      return this.$store.state.hasReady
+    }
   }
 }
 </script>

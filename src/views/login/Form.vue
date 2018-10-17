@@ -73,8 +73,8 @@ export default {
       captchaSrc: '',
       loading: false,
       loginForm: {
-        account: '',
-        password: '',
+        account: '18804004850',
+        password: '123456',
         captcha: ''
       },
       rememberPassword: true,
@@ -109,8 +109,10 @@ export default {
       // todo
     },
     handleSubmit () {
-      this.$refs.loginForm.validate().then(valid => {
-        this.submit()
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.submit()
+        }
       })
     },
     // 查询当前账号密码输出错误次数

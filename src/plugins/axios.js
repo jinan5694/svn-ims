@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Axios from 'axios'
+import router from '@/router'
 import { baseURL } from '@/common/config'
-import { logout } from '@/common/login'
 
 const vue = new Vue()
 const instance = Axios.create({
@@ -34,7 +34,8 @@ instance.interceptors.response.use(response => {
   if (data.success) {
     // session timeout
     if (data.status === 'Redirect') {
-      logout()
+      localStorage.removeItem('token')
+      router.push('/login')
     }
     return data
   } else {
