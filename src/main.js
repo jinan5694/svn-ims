@@ -5,6 +5,7 @@ import store from './store/index'
 // plugins
 import './plugins/element.js'
 import './plugins/axios.js'
+import './plugins/locale.js'
 // components register
 import './components/register.js'
 

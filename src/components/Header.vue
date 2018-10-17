@@ -6,6 +6,7 @@
     <div class="toolbar">
       <div class="item">
         {{ user.name }}
+        {{ $t('message.success') }}
       </div>
       <div class="item">
         <Icon name="notifications"/>
@@ -38,8 +39,8 @@ export default {
   methods: {
     handleLogout () {
       this.$confirm('确认退出登录？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+        confirmButtonText: this.$t('ok'),
+        cancelButtonText: this.$t('cancel'),
         type: 'warning'
       }).then(() => {
         logout(this)
