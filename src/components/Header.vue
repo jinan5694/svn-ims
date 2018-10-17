@@ -6,7 +6,6 @@
     <div class="toolbar">
       <div class="item">
         {{ user.name }}
-        {{ $t('message.success') }}
       </div>
       <div class="item">
         <Icon name="notifications"/>

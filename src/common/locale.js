@@ -1,8 +1,12 @@
+/**
+ * 命名方式建议全小写，下划线分隔
+ * 可以对象嵌套
+ */
 export default {
-  ok: '确 定',
-  cancel: '取 消',
-  close: '关 闭',
+  ok: '确定',
+  cancel: '取消',
+  close: '关闭',
   message: {
-    success: '成 功'
+    success: '成功'
   }
 }
