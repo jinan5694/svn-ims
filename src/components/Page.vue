@@ -39,10 +39,14 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .toolbar {
+      min-height: 28px;
+    }
   }
   .content {
-    margin: 16px 24px;
-    padding: 8px;
+    margin: 16px;
+    padding: 16px;
     background-color: #fff;
     flex: 1;
   }

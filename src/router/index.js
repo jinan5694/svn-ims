@@ -25,7 +25,7 @@ const router = new Router({
         {
           path: '/',
           name: 'dashboard',
-          meta: { title: 'Dashboard' },
+          meta: { title: '工作台' },
           component: () => import('@/views/Dashboard.vue')
         },
         ...routes,

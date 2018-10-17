@@ -4,13 +4,13 @@
       :collapse="isCollapse"
       :default-active="defaultActive"
       :router="true">
-      <el-submenu index="/">
+      <el-submenu index="/master">
         <template slot="title">
           <Icon name="settings"/>
           <span slot="title">库存</span>
         </template>
-        <el-menu-item index="/home">商品采购</el-menu-item>
-        <el-menu-item index="/about">商品入库</el-menu-item>
+        <el-menu-item index="/master/home">商品采购</el-menu-item>
+        <el-menu-item index="/master/about">商品入库</el-menu-item>
       </el-submenu>
       <el-submenu index="2">
         <template slot="title">

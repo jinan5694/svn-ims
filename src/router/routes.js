@@ -2,13 +2,13 @@ const routes = []
 
 routes.push({
   meta: { title: 'home' },
-  path: '/home',
+  path: '/master/home',
   component: () => import('@/views/Home.vue')
 })
 
 routes.push({
   meta: { title: 'about' },
-  path: '/about',
+  path: '/master/about',
   component: () => import('@/views/About.vue')
 })
 
