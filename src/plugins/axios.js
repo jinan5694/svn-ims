@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Axios from 'axios'
 import router from '@/router'
+import _ from 'lodash'
+
 import { baseURL } from '@/common/config'
 
 const vue = new Vue()
@@ -16,11 +18,20 @@ instance.interceptors.request.use(config => {
     config.headers.token = token
   }
   // get请求参数处理
-  if (config.param) {
+  if (config.params) {
     const methods = ['get', 'delete']
     if (methods.some(type => type === config.method)) {
-      config.params = {
-        param: JSON.stringify(config.param)
+      config.paramsSerializer = (params) => {
+        params.forEach((item, index) => {
+          if (_.isPlainObject(item)) {
+            params[index] = JSON.stringify(item)
+          }
+        })
+        // const query = params[0]
+        // if (_.isPlainObject(query)) {
+        //   params[0] = JSON.stringify(query)
+        // }
+        return 'param=' + encodeURIComponent(JSON.stringify(params))
       }
     }
   }

@@ -1,6 +1,12 @@
 <template>
   <Page>
+    <template slot="toolbar">
+      <el-button @click="handleFetch">fetch</el-button>
+    </template>
     <DataTable
+      ref="table"
+      url="/WorkOrderHeadService/query"
+      :params="getParam()"
       :columns="columns"
       :data="tableData"
       :table-config="tableConfig"
@@ -34,7 +40,7 @@ export default {
       },
       paginationConfig: {
         props: {
-
+          total: 100
         },
         events: {
           'current-change': this.handleCurrentChange,
@@ -88,6 +94,25 @@ export default {
     }
   },
   methods: {
+    getParam () {
+      return [
+        {
+          where: {
+            and: [
+              { enableFlag: 'System_EnableFlag_1' },
+              { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
+            ],
+            or: []
+          }
+        },
+        // 增加会员卡号查询path
+        [
+          'servedObj',
+          'servedOrg.mcInstance',
+          'finVirtualItems.product'
+        ]
+      ]
+    },
     handleSelect (selection, row) {
       console.log('select', selection, row)
     },
@@ -97,6 +122,9 @@ export default {
     },
     handleSizeChange () {
       console.log('outer handleSizeChange')
+    },
+    handleFetch () {
+      this.$refs.table.fetch()
     }
   }
 }

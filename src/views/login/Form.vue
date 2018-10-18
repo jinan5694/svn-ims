@@ -120,7 +120,7 @@ export default {
       if (!account) return
       const url = '/SSOService/pwdErrorCount'
       const param = [account]
-      this.$axios.get(url, { param: param }).then(resp => {
+      this.$axios.get(url, { params: param }).then(resp => {
         this.toggleCaptcha(resp)
       })
     },

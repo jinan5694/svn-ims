@@ -55,7 +55,6 @@ export default {
   box-shadow: $box-shadow;
 }
 .main {
-  overflow-x: auto;
   padding: 0;
   background-color: $color-background;
 }
