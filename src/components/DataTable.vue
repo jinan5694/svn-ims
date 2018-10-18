@@ -29,7 +29,11 @@
       </el-table>
     </div>
     <div class="pagination">
-      pagination
+      <el-pagination
+        v-bind="paginationConfig.props"
+        v-on="paginationConfig.events"
+        @current-change="handleCurrentChange"
+        @size-change="handleSizeChange"/>
     </div>
   </div>
 </template>
@@ -48,7 +52,8 @@ const TABLE_COL_DEFAULT = {
 
 // 分页组件默认值
 const PAGINATION_DEFAULT = {
-
+  'page-sizes': [10, 20, 50],
+  'layout': 'total, sizes, prev, pager, next, jumper'
 }
 
 export default {
@@ -84,6 +89,7 @@ export default {
   data () {
     return {
       loading: false,
+      // defaults
       tableDefault: TABLE_DEFAULT,
       tableColDefault: TABLE_COL_DEFAULT,
       paginationDefault: PAGINATION_DEFAULT
@@ -118,6 +124,13 @@ export default {
     },
     needSlot (column) {
       return column.type === 'expand' || column.slotName
+    },
+    // events
+    handleCurrentChange () {
+      console.log('inner handleCurrentChange')
+    },
+    handleSizeChange () {
+      console.log('inner handleSizeChange')
     }
   }
 }

@@ -37,7 +37,8 @@ export default {
 
         },
         events: {
-
+          'current-change': this.handleCurrentChange,
+          'size-change': this.handleSizeChange
         }
       },
       columns: [
@@ -90,8 +91,12 @@ export default {
     handleSelect (selection, row) {
       console.log('select', selection, row)
     },
-    test (scope) {
-      debugger
+    // events
+    handleCurrentChange () {
+      console.log('outer handleCurrentChange')
+    },
+    handleSizeChange () {
+      console.log('outer handleSizeChange')
     }
   }
 }
