@@ -10,18 +10,16 @@
       :columns="columns"
       :data="tableData"
       :table-config="tableConfig"
-      :pagination-config="paginationConfig"
-      size="mini">
+      :pagination-config="paginationConfig">
       <template
         slot="expand"
         slot-scope="{row, index}">
-        {{ row }}
-        {{ index }}
+        {{ `${row.id} - ${index}` }}
       </template>
       <template
         slot="test"
         slot-scope="{row, index}">
-        {{ row }}
+        <el-button type="text">{{ $t('view') }}</el-button>
       </template>
     </DataTable>
   </Page>
@@ -32,7 +30,10 @@ export default {
     return {
       tableConfig: {
         props: {
-          border: true
+          'show-summary': true,
+          'summary-method': () => {
+            return ['合计', null, null, 10, 30, 40, null]
+          }
         },
         events: {
           select: this.handleSelect
@@ -59,7 +60,7 @@ export default {
         },
         {
           label: '姓名',
-          prop: 'name'
+          prop: 'orderNo'
         },
         {
           label: '日期',
@@ -71,7 +72,9 @@ export default {
         },
         {
           label: '测试',
-          slotName: 'test'
+          slotName: 'test',
+          align: 'center',
+          width: 100
         }
       ],
       tableData: [{

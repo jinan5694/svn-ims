@@ -30,9 +30,9 @@
     </div>
     <div class="pagination">
       <el-pagination
-        v-bind="paginationConfig.props"
+        v-bind="_paginationProps"
         v-on="paginationConfig.events"
-        :total="50"
+        :total="total"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"/>
     </div>
@@ -43,7 +43,8 @@ import _ from 'lodash'
 
 // 表格组件默认值
 const TABLE_DEFAULT = {
-  'size': 'small'
+  'size': 'mini',
+  'stripe': true
 }
 
 // 表格组件列默认值
@@ -53,9 +54,11 @@ const TABLE_COL_DEFAULT = {
 
 // 分页组件默认值
 const PAGINATION_DEFAULT = {
+  'background': true,
+  'pager-count': 7,
   'page-size': 10,
   'page-sizes': [10, 20, 50],
-  'layout': 'total, sizes, prev, pager, next, jumper'
+  'layout': 'prev, pager, next, ->, sizes, total'
 }
 
 export default {
@@ -94,6 +97,7 @@ export default {
   },
   data () {
     return {
+      data: [],
       loading: false,
       // defaults
       tableDefault: TABLE_DEFAULT,
@@ -122,6 +126,7 @@ export default {
       return _.assign({}, this.paginationDefault, this.paginationConfig.props)
     },
     _params () {
+      // todo 对外部传参数支持有问题
       const params = _.cloneDeep(this.params)
       const param = params[0] || {}
       param.page = _.assign({}, this.defaultPage, param.page)
@@ -149,11 +154,15 @@ export default {
       return column.type === 'expand' || column.slotName
     },
     // events
-    handleCurrentChange () {
+    handleCurrentChange (pageNumber) {
       console.log('inner handleCurrentChange')
+      this.defaultPage.pageNumber = pageNumber
+      this.fetch()
     },
-    handleSizeChange (size) {
+    handleSizeChange (pageSize) {
       console.log('inner handleSizeChange')
+      this.defaultPage.pageSize = pageSize
+      this.fetch()
     },
     // fetch data
     fetch () {
@@ -176,7 +185,13 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.pagination {
-  margin: 8px 0;
+.data-table {
+  .table {
+    min-height: 200px;
+  }
+  .pagination {
+    margin: 8px 0;
+  }
+
 }
 </style>
