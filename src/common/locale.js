@@ -9,5 +9,6 @@ export default {
   close: '关闭',
   message: {
     success: '成功'
-  }
+  },
+  loading_text: '拼命加载中'
 }

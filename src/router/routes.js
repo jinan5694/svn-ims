@@ -7,9 +7,9 @@ routes.push({
 })
 
 routes.push({
-  meta: { title: 'about' },
-  path: '/master/about',
-  component: () => import('@/views/About.vue')
+  meta: { title: '实验室' },
+  path: '/play',
+  component: () => import('@/views/Play.vue')
 })
 
 export default routes
