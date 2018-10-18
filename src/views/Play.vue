@@ -3,8 +3,8 @@
     <DataTable
       :columns="columns"
       :data="tableData"
-      @select="handleSelect"
-      border
+      :table-config="tableConfig"
+      :pagination-config="paginationConfig"
       size="mini">
       <template
         slot="expand"
@@ -24,6 +24,22 @@
 export default {
   data () {
     return {
+      tableConfig: {
+        props: {
+          border: true
+        },
+        events: {
+          select: this.handleSelect
+        }
+      },
+      paginationConfig: {
+        props: {
+
+        },
+        events: {
+
+        }
+      },
       columns: [
         {
           type: 'expand'
