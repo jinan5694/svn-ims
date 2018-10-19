@@ -99,10 +99,6 @@ export default {
     return {
       data: [],
       loading: false,
-      // defaults
-      tableDefault: TABLE_DEFAULT,
-      tableColDefault: TABLE_COL_DEFAULT,
-      paginationDefault: PAGINATION_DEFAULT,
       // page
       defaultPage: {
         pageNumber: 1,
@@ -115,15 +111,15 @@ export default {
   },
   computed: {
     _tableProps () {
-      return _.assign({}, this.tableDefault, this.tableConfig.props)
+      return _.assign({}, TABLE_DEFAULT, this.tableConfig.props)
     },
     _columns () {
       return this.columns.map(column => {
-        return _.assign({}, this.tableColDefault, column)
+        return _.assign({}, TABLE_COL_DEFAULT, column)
       })
     },
     _paginationProps () {
-      return _.assign({}, this.paginationDefault, this.paginationConfig.props)
+      return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
     },
     _params () {
       // todo 对外部传参数支持有问题
