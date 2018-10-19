@@ -9,7 +9,7 @@
         :data="data"
         v-bind="tableBinds"
         v-on="tableConfig.events">
-        <template v-for="(column, index) in cols">
+        <template v-for="(column, index) in _columns">
           <el-table-column
             v-if="needSlot(column)"
             :key="columnKey(column, index)"
@@ -42,11 +42,10 @@
 <script>
 /**
  * DataTable
- * 解决【请求数据】【代理分页】
- * params 的格式，请在 /common/params.js 中处理
+ * 解决【请求数据】【分页代理】
+ * params 默认值设置，请在 /common/params.js 中处理
  */
 import _ from 'lodash'
-import mergeParams from '@/common/params'
 
 // 表格组件默认值
 const TABLE_DEFAULT = {
@@ -83,6 +82,11 @@ export default {
       type: Array,
       default: () => []
     },
+    // 延迟显示loading
+    loadingDelay: {
+      type: Number,
+      default: 800
+    },
     tableConfig: {
       type: Object,
       default: () => {
@@ -106,7 +110,9 @@ export default {
     return {
       data: [],
       loading: false,
-      // page
+      // 请求是否完成，用于实现loading延迟显示
+      responseComplete: false,
+      // page about
       page: {
         pageNumber: 1,
         pageSize: 10
@@ -115,36 +121,33 @@ export default {
     }
   },
   computed: {
-    cols () {
+    _columns () {
+      // 给传进来的 columns 设置默认值
       return this.columns.map(column => {
         return _.assign({}, TABLE_COL_DEFAULT, column)
       })
+    },
+    _params () {
+      // 克隆并添加分页信息
+      const params = _.cloneDeep(this.params)
+      _.set(params, '[0].page', this.page)
+      return params
     },
     tableBinds () {
       return _.assign({}, TABLE_DEFAULT, this.tableConfig.props)
     },
     paginationBinds () {
       return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
-    },
-    // params
-    _params () {
-      const params = mergeParams(this.params)
-      _.set(params, '[0].page', this.page)
-      return params
     }
-  },
-  watch: {
-
   },
   created () {
     this.fetch()
   },
   methods: {
-    // key
+    // v-for key generator
     columnKey (column, index) {
       return `${index}_${column.prop || ''}`
     },
-
     getSlotName (column) {
       return column.type === 'expand' ? 'expand' : column.slotName
     },
@@ -153,19 +156,23 @@ export default {
     },
     // events
     handleCurrentChange (pageNumber) {
-      console.log('inner handleCurrentChange')
       this.page.pageNumber = pageNumber
-      this.fetch()
+      this._fetch()
     },
     handleSizeChange (pageSize) {
-      console.log('inner handleSizeChange')
       this.page.pageSize = pageSize
-      this.fetch()
+      this._fetch()
     },
-    // fetch data
+    /**
+     * fetch data
+     * 用于外部调用
+     */
     fetch () {
-      this.data = []
-      this.loading = true
+      this.page.pageNumber = 1
+      this._fetch()
+    },
+    _fetch () {
+      this.showLoading()
       this.$axios.get(this.url, { params: this._params }).then(resp => {
         this.data = resp.data || []
         this.total = resp.total
@@ -175,8 +182,21 @@ export default {
           message: err.exceptionMessage
         })
       }).finally(() => {
-        this.loading = false
+        this.hideLoading()
       })
+    },
+    // loading about
+    showLoading () {
+      this.responseComplete = false
+      setTimeout(() => {
+        if (!this.responseComplete) {
+          this.loading = true
+        }
+      }, this.loadingDelay)
+    },
+    hideLoading () {
+      this.loading = false
+      this.responseComplete = true
     }
   }
 }
@@ -188,7 +208,7 @@ export default {
     min-height: 200px;
   }
   .pagination {
-    margin: 8px 0;
+    margin: 5px 0;
   }
 }
 </style>
