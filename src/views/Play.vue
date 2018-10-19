@@ -1,13 +1,13 @@
 <template>
   <Page>
     <template slot="toolbar">
+      <el-input v-model="searchKey"/>
       <el-button @click="handleFetch">fetch</el-button>
     </template>
     <DataTable
       ref="table"
       url="/WorkOrderHeadService/query"
-      :get-params="getParams"
-      :func="funcTest"
+      :params="params"
       :columns="columns"
       :table-config="tableConfig"
       :pagination-config="paginationConfig">
@@ -25,47 +25,18 @@
   </Page>
 </template>
 <script>
-
-const params = [
-  {
-    where: {
-      and: [
-        { enableFlag: 'System_EnableFlag_1' },
-        { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
-      ]
-    }
-  },
-  [
-    'servedObj',
-    'servedOrg.mcInstance',
-    'finVirtualItems.product'
-  ]
-]
+// import _ from 'lodash'
 
 export default {
   data () {
     return {
-      tableConfig: {
-        props: {
-          'show-summary': true,
-          'summary-method': () => {
-            return ['合计', null, null, 10, 30, 40, null]
-          }
-        },
-        events: {
-          select: this.handleSelect
-        }
-      },
-      paginationConfig: {
-        props: {
-          // small: true
-        },
-        events: {
-          'current-change': this.handleCurrentChange,
-          'size-change': this.handleSizeChange
-        }
-      },
-      columns: [
+      searchKey: ''
+    }
+  },
+  computed: {
+    // 建议 params 参数放在计算属性中，可以方便的与其他变量整合
+    columns () {
+      return [
         {
           type: 'expand'
         },
@@ -93,18 +64,15 @@ export default {
           align: 'center',
           width: 100
         }
-      ],
-      searchKey: ''
-    }
-  },
-  methods: {
-    getParams () {
+      ]
+    },
+    params () {
       return [
         {
           where: {
             and: [
               { enableFlag: 'System_EnableFlag_1' },
-              { orderNo: this.searchKey },
+              { orderNo: { like: this.searchKey } },
               { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
             ]
           }
@@ -116,6 +84,32 @@ export default {
         ]
       ]
     },
+    tableConfig () {
+      return {
+        props: {
+          'show-summary': true,
+          'summary-method': () => {
+            return ['合计', null, null, 10, 30, 40, null]
+          }
+        },
+        events: {
+          select: this.handleSelect
+        }
+      }
+    },
+    paginationConfig () {
+      return {
+        props: {
+          // small: true
+        },
+        events: {
+          'current-change': this.handleCurrentChange,
+          'size-change': this.handleSizeChange
+        }
+      }
+    }
+  },
+  methods: {
     handleSelect (selection, row) {
       console.log('select', selection, row)
     },
@@ -127,12 +121,7 @@ export default {
       console.log('outer handleSizeChange')
     },
     handleFetch () {
-      this.searchKey = new Date().getTime()
-      console.log(`outer searchKey is: ${this.searchKey}`)
       this.$refs.table.fetch()
-    },
-    funcTest () {
-      return params
     }
   }
 }
