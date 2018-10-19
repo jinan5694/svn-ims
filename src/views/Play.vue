@@ -6,7 +6,8 @@
     <DataTable
       ref="table"
       url="/WorkOrderHeadService/query"
-      :params="getParam()"
+      :get-params="getParams"
+      :func="funcTest"
       :columns="columns"
       :table-config="tableConfig"
       :pagination-config="paginationConfig">
@@ -24,6 +25,23 @@
   </Page>
 </template>
 <script>
+
+const params = [
+  {
+    where: {
+      and: [
+        { enableFlag: 'System_EnableFlag_1' },
+        { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
+      ]
+    }
+  },
+  [
+    'servedObj',
+    'servedOrg.mcInstance',
+    'finVirtualItems.product'
+  ]
+]
+
 export default {
   data () {
     return {
@@ -75,24 +93,22 @@ export default {
           align: 'center',
           width: 100
         }
-      ]
+      ],
+      searchKey: ''
     }
   },
   methods: {
-    getParam () {
+    getParams () {
       return [
         {
           where: {
             and: [
               { enableFlag: 'System_EnableFlag_1' },
+              { orderNo: this.searchKey },
               { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
             ]
-          },
-          page: {
-            pageNumber: 2
           }
         },
-        // 增加会员卡号查询path
         [
           'servedObj',
           'servedOrg.mcInstance',
@@ -111,7 +127,12 @@ export default {
       console.log('outer handleSizeChange')
     },
     handleFetch () {
+      this.searchKey = new Date().getTime()
+      console.log(`outer searchKey is: ${this.searchKey}`)
       this.$refs.table.fetch()
+    },
+    funcTest () {
+      return params
     }
   }
 }

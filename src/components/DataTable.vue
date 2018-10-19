@@ -74,9 +74,9 @@ export default {
       type: String,
       default: null
     },
-    params: {
-      type: Array,
-      default: () => []
+    getParams: {
+      type: Function,
+      default: () => {}
     },
     columns: {
       type: Array,
@@ -85,7 +85,7 @@ export default {
     // 延迟显示loading
     loadingDelay: {
       type: Number,
-      default: 800
+      default: 300
     },
     tableConfig: {
       type: Object,
@@ -129,7 +129,7 @@ export default {
     },
     _params () {
       // 克隆并添加分页信息
-      const params = _.cloneDeep(this.params)
+      const params = _.cloneDeep(this.getParams())
       _.set(params, '[0].page', this.page)
       return params
     },
@@ -138,6 +138,11 @@ export default {
     },
     paginationBinds () {
       return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
+    }
+  },
+  watch: {
+    getParams () {
+      debugger
     }
   },
   created () {
@@ -173,6 +178,7 @@ export default {
     },
     _fetch () {
       this.showLoading()
+
       this.$axios.get(this.url, { params: this._params }).then(resp => {
         this.data = resp.data || []
         this.total = resp.total
