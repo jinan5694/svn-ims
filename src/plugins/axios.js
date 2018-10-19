@@ -22,16 +22,13 @@ instance.interceptors.request.use(config => {
     const methods = ['get', 'delete']
     if (methods.some(type => type === config.method)) {
       config.paramsSerializer = (params) => {
-        params.forEach((item, index) => {
+        const temp = _.cloneDeep(params)
+        temp.forEach((item, index) => {
           if (_.isPlainObject(item)) {
-            params[index] = JSON.stringify(item)
+            temp[index] = JSON.stringify(item)
           }
         })
-        // const query = params[0]
-        // if (_.isPlainObject(query)) {
-        //   params[0] = JSON.stringify(query)
-        // }
-        return 'param=' + encodeURIComponent(JSON.stringify(params))
+        return 'param=' + encodeURIComponent(JSON.stringify(temp))
       }
     }
   }

@@ -86,8 +86,10 @@ export default {
             and: [
               { enableFlag: 'System_EnableFlag_1' },
               { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
-            ],
-            or: []
+            ]
+          },
+          page: {
+            pageNumber: 2
           }
         },
         // 增加会员卡号查询path

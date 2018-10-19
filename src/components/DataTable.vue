@@ -7,9 +7,9 @@
       <el-table
         ref="table"
         :data="data"
-        v-bind="_tableProps"
+        v-bind="tableBinds"
         v-on="tableConfig.events">
-        <template v-for="(column, index) in _columns">
+        <template v-for="(column, index) in cols">
           <el-table-column
             v-if="needSlot(column)"
             :key="columnKey(column, index)"
@@ -30,8 +30,9 @@
     </div>
     <div class="pagination">
       <el-pagination
-        v-bind="_paginationProps"
+        v-bind="paginationBinds"
         v-on="paginationConfig.events"
+        :current-page.sync="page.pageNumber"
         :total="total"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"/>
@@ -39,11 +40,19 @@
   </div>
 </template>
 <script>
+/**
+ * DataTable
+ * 解决【请求数据】【代理分页】
+ * params 的格式，请在 /common/params.js 中处理
+ */
 import _ from 'lodash'
+import mergeParams from '@/common/params'
 
 // 表格组件默认值
 const TABLE_DEFAULT = {
+  // 最小行高
   'size': 'mini',
+  // 斑马纹
   'stripe': true
 }
 
@@ -55,8 +64,6 @@ const TABLE_COL_DEFAULT = {
 // 分页组件默认值
 const PAGINATION_DEFAULT = {
   'background': true,
-  'pager-count': 7,
-  'page-size': 10,
   'page-sizes': [10, 20, 50],
   'layout': 'prev, pager, next, ->, sizes, total'
 }
@@ -100,34 +107,29 @@ export default {
       data: [],
       loading: false,
       // page
-      defaultPage: {
+      page: {
         pageNumber: 1,
         pageSize: 10
       },
-      total: 0,
-      // fetch
-      defaultOrder: { 'updatedTime': 0 }
+      total: 0
     }
   },
   computed: {
-    _tableProps () {
-      return _.assign({}, TABLE_DEFAULT, this.tableConfig.props)
-    },
-    _columns () {
+    cols () {
       return this.columns.map(column => {
         return _.assign({}, TABLE_COL_DEFAULT, column)
       })
     },
-    _paginationProps () {
+    tableBinds () {
+      return _.assign({}, TABLE_DEFAULT, this.tableConfig.props)
+    },
+    paginationBinds () {
       return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
     },
+    // params
     _params () {
-      // todo 对外部传参数支持有问题
-      const params = _.cloneDeep(this.params)
-      const param = params[0] || {}
-      param.page = _.assign({}, this.defaultPage, param.page)
-      param.order = _.assign({}, this.defaultOrder, param.order)
-      params[0] = param
+      const params = mergeParams(this.params)
+      _.set(params, '[0].page', this.page)
       return params
     }
   },
@@ -152,12 +154,12 @@ export default {
     // events
     handleCurrentChange (pageNumber) {
       console.log('inner handleCurrentChange')
-      this.defaultPage.pageNumber = pageNumber
+      this.page.pageNumber = pageNumber
       this.fetch()
     },
     handleSizeChange (pageSize) {
       console.log('inner handleSizeChange')
-      this.defaultPage.pageSize = pageSize
+      this.page.pageSize = pageSize
       this.fetch()
     },
     // fetch data
@@ -180,14 +182,13 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 .data-table {
-  .table {
+  .el-table__empty-block {
     min-height: 200px;
   }
   .pagination {
     margin: 8px 0;
   }
-
 }
 </style>
