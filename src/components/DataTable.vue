@@ -74,10 +74,6 @@ export default {
       type: String,
       default: null
     },
-    // params: {
-    //   type: Function,
-    //   default: () => {}
-    // },
     params: {
       type: Array,
       default: () => []
