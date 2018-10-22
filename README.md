@@ -1,4 +1,4 @@
-# svn-ims
+# svn-psi
 
 ## Project setup
 ```
