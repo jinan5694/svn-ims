@@ -1,13 +1,13 @@
 <template>
   <Page>
     <template slot="toolbar">
+      <el-input v-model="searchKey"/>
       <el-button @click="handleFetch">fetch</el-button>
     </template>
     <DataTable
       ref="table"
       url="/WorkOrderHeadService/query"
-      :get-params="getParams"
-      :func="funcTest"
+      :params="params"
       :columns="columns"
       :table-config="tableConfig"
       :pagination-config="paginationConfig">
@@ -25,22 +25,6 @@
   </Page>
 </template>
 <script>
-
-const params = [
-  {
-    where: {
-      and: [
-        { enableFlag: 'System_EnableFlag_1' },
-        { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
-      ]
-    }
-  },
-  [
-    'servedObj',
-    'servedOrg.mcInstance',
-    'finVirtualItems.product'
-  ]
-]
 
 export default {
   data () {
@@ -97,15 +81,19 @@ export default {
       searchKey: ''
     }
   },
-  methods: {
-    getParams () {
+  computed: {
+    params () {
       return [
         {
           where: {
             and: [
               { enableFlag: 'System_EnableFlag_1' },
-              { orderNo: this.searchKey },
-              { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
+              { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } },
+              {
+                orderNo: {
+                  like: this.searchKey
+                }
+              }
             ]
           }
         },
@@ -115,7 +103,9 @@ export default {
           'finVirtualItems.product'
         ]
       ]
-    },
+    }
+  },
+  methods: {
     handleSelect (selection, row) {
       console.log('select', selection, row)
     },
@@ -127,12 +117,8 @@ export default {
       console.log('outer handleSizeChange')
     },
     handleFetch () {
-      this.searchKey = new Date().getTime()
       console.log(`outer searchKey is: ${this.searchKey}`)
       this.$refs.table.fetch()
-    },
-    funcTest () {
-      return params
     }
   }
 }

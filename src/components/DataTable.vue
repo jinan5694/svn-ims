@@ -74,9 +74,9 @@ export default {
       type: String,
       default: null
     },
-    getParams: {
-      type: Function,
-      default: () => {}
+    params: {
+      type: Array,
+      default: () => []
     },
     columns: {
       type: Array,
@@ -129,7 +129,7 @@ export default {
     },
     _params () {
       // 克隆并添加分页信息
-      const params = _.cloneDeep(this.getParams())
+      const params = _.cloneDeep(this.params)
       _.set(params, '[0].page', this.page)
       return params
     },
@@ -141,9 +141,7 @@ export default {
     }
   },
   watch: {
-    getParams () {
-      debugger
-    }
+
   },
   created () {
     this.fetch()
@@ -178,7 +176,6 @@ export default {
     },
     _fetch () {
       this.showLoading()
-
       this.$axios.get(this.url, { params: this._params }).then(resp => {
         this.data = resp.data || []
         this.total = resp.total
