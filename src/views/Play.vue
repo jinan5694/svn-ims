@@ -25,31 +25,18 @@
   </Page>
 </template>
 <script>
+// import _ from 'lodash'
 
 export default {
   data () {
     return {
-      tableConfig: {
-        props: {
-          'show-summary': true,
-          'summary-method': () => {
-            return ['合计', null, null, 10, 30, 40, null]
-          }
-        },
-        events: {
-          select: this.handleSelect
-        }
-      },
-      paginationConfig: {
-        props: {
-          // small: true
-        },
-        events: {
-          'current-change': this.handleCurrentChange,
-          'size-change': this.handleSizeChange
-        }
-      },
-      columns: [
+      searchKey: ''
+    }
+  },
+  computed: {
+    // 建议 params 参数放在计算属性中，可以方便的与其他变量整合
+    columns () {
+      return [
         {
           type: 'expand'
         },
@@ -77,23 +64,16 @@ export default {
           align: 'center',
           width: 100
         }
-      ],
-      searchKey: ''
-    }
-  },
-  computed: {
+      ]
+    },
     params () {
       return [
         {
           where: {
             and: [
               { enableFlag: 'System_EnableFlag_1' },
-              { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } },
-              {
-                orderNo: {
-                  like: this.searchKey
-                }
-              }
+              { orderNo: { like: this.searchKey } },
+              { orderStatus: { ne: 'AfterSales_OrderStatus_WOStatus_999' } }
             ]
           }
         },
@@ -103,6 +83,30 @@ export default {
           'finVirtualItems.product'
         ]
       ]
+    },
+    tableConfig () {
+      return {
+        props: {
+          'show-summary': true,
+          'summary-method': () => {
+            return ['合计', null, null, 10, 30, 40, null]
+          }
+        },
+        events: {
+          select: this.handleSelect
+        }
+      }
+    },
+    paginationConfig () {
+      return {
+        props: {
+          // small: true
+        },
+        events: {
+          'current-change': this.handleCurrentChange,
+          'size-change': this.handleSizeChange
+        }
+      }
     }
   },
   methods: {
@@ -117,7 +121,6 @@ export default {
       console.log('outer handleSizeChange')
     },
     handleFetch () {
-      console.log(`outer searchKey is: ${this.searchKey}`)
       this.$refs.table.fetch()
     }
   }

@@ -127,21 +127,12 @@ export default {
         return _.assign({}, TABLE_COL_DEFAULT, column)
       })
     },
-    _params () {
-      // 克隆并添加分页信息
-      const params = _.cloneDeep(this.params)
-      _.set(params, '[0].page', this.page)
-      return params
-    },
     tableBinds () {
       return _.assign({}, TABLE_DEFAULT, this.tableConfig.props)
     },
     paginationBinds () {
       return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
     }
-  },
-  watch: {
-
   },
   created () {
     this.fetch()
@@ -150,6 +141,11 @@ export default {
     // v-for key generator
     columnKey (column, index) {
       return `${index}_${column.prop || ''}`
+    },
+    getParams () {
+      // clone 是为了不修改原数据
+      const params = _.cloneDeep(this.params)
+      return _.set(params, '[0].page', _.assign({}, this.page))
     },
     getSlotName (column) {
       return column.type === 'expand' ? 'expand' : column.slotName
@@ -176,7 +172,7 @@ export default {
     },
     _fetch () {
       this.showLoading()
-      this.$axios.get(this.url, { params: this._params }).then(resp => {
+      this.$axios.get(this.url, { params: this.getParams() }).then(resp => {
         this.data = resp.data || []
         this.total = resp.total
       }).catch(err => {
