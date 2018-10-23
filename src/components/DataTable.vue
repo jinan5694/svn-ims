@@ -167,8 +167,10 @@ export default {
      * 用于外部调用
      */
     fetch () {
-      this.page.pageNumber = 1
-      this._fetch()
+      this.$nextTick(() => {
+        this.page.pageNumber = 1
+        this._fetch()
+      })
     },
     _fetch () {
       this.showLoading()

@@ -31,9 +31,9 @@ const router = new Router({
         ...routes,
         {
           path: '*',
-          name: '404',
-          meta: { title: '404' },
-          component: () => import('@/views/404.vue')
+          name: 'notFound',
+          meta: { title: 'Not Found' },
+          component: () => import('@/views/NotFound.vue')
         }
       ]
     }

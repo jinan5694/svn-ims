@@ -1,6 +1,9 @@
 <template>
   <Page>
     <template slot="toolbar">
+      <Search
+        v-model="searchKey"
+        @change="handleFetch"/>
       <el-input v-model="searchKey"/>
       <el-button @click="handleFetch">fetch</el-button>
     </template>
@@ -107,6 +110,11 @@ export default {
           'size-change': this.handleSizeChange
         }
       }
+    }
+  },
+  watch: {
+    searchKey () {
+      console.log('watch', this.searchKey)
     }
   },
   methods: {

@@ -1,4 +1,8 @@
-const routes = []
+import masterData from '@/router/modules/masterData'
+
+const routes = [
+  ...masterData
+]
 
 routes.push({
   meta: { title: 'home' },

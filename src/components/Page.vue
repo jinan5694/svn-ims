@@ -41,7 +41,11 @@ export default {
     align-items: center;
 
     .toolbar {
+      display: flex;
       min-height: 28px;
+      * + * {
+        margin-left: 8px;
+      }
     }
   }
   .content {

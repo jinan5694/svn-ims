@@ -4,27 +4,34 @@
       :collapse="isCollapse"
       :default-active="defaultActive"
       :router="true">
-      <el-submenu index="/master">
-        <template slot="title">
-          <Icon name="settings"/>
-          <span slot="title">库存</span>
-        </template>
-        <el-menu-item index="/master/home">商品采购</el-menu-item>
-        <el-menu-item index="/play">商品入库</el-menu-item>
-      </el-submenu>
-      <el-submenu index="2">
-        <template slot="title">
-          <Icon name="favorite"/>
-          <span slot="title">主数据</span>
-        </template>
-        <el-menu-item index="2-1">客户管理</el-menu-item>
-        <el-menu-item index="2-2">供应商管理</el-menu-item>
-      </el-submenu>
+      <template v-for="(menu, index) in menus">
+        <el-submenu
+          v-if="menu.children"
+          :key="index"
+          :index="menu.path">
+          <template slot="title">
+            <Icon :name="menu.icon"/>
+            <span slot="title">{{ menu.label }}</span>
+          </template>
+          <el-menu-item
+            v-for="item in menu.children"
+            :key="item.path"
+            :index="item.path">{{ item.label }}</el-menu-item>
+        </el-submenu>
+        <el-menu-item
+          v-else
+          :key="index"
+          :index="menu.path">
+          <Icon :name="menu.icon"/>
+          <span slot="title">{{ menu.label }}</span>
+        </el-menu-item>
+      </template>
     </el-menu>
   </div>
 </template>
 
 <script>
+import resource from '@/common/resource.js'
 export default {
   name: 'Siderbar',
   data () {
@@ -35,6 +42,9 @@ export default {
   computed: {
     defaultActive () {
       return this.$route.path
+    },
+    menus () {
+      return resource
     }
   }
 }

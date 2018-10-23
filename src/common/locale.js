@@ -8,13 +8,23 @@ export default {
   cancel: '取消',
   close: '关闭',
   save: '保 存',
+  loading_text: '拼命加载中',
+  view: '查看',
+  edit: '编辑',
+  stop: '停用',
+  add: '新建',
+  search: '搜索',
+  confirm_info: '确认信息',
 
   // 提示用在this.$message()中
   message: {
     success: '成功'
   },
-  loading_text: '拼命加载中',
-  view: '查看',
-  edit: '编辑',
-  stop: '停用'
+  placeholder: {
+    prodName: '商品名称',
+    customerName: '客户名称',
+    vendorName: '供应商名称',
+    warehouse: '仓库编号/代码/名称'
+  }
+
 }
