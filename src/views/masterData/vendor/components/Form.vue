@@ -10,7 +10,7 @@
         prop="vendorName">
         <el-input
           v-model="form.vendorName"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -18,7 +18,7 @@
         prop="">
         <el-input
           v-model="form.contact"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="32"/>
       </el-form-item>
       <el-form-item
@@ -26,7 +26,7 @@
         prop="">
         <el-input
           v-model="form.vendorTel"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="30"/>
       </el-form-item>
       <el-form-item
@@ -34,7 +34,7 @@
         prop="">
         <el-input
           v-model="form.bankAccount"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="100"/>
       </el-form-item>
       <el-form-item
@@ -42,7 +42,7 @@
         prop="">
         <el-input
           v-model="form.openingBank"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="100"/>
       </el-form-item>
       <el-form-item
@@ -50,7 +50,7 @@
         prop="">
         <el-input
           v-model="form.taxNo"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="30"/>
       </el-form-item>
       <el-form-item
@@ -58,31 +58,21 @@
         prop="">
         <el-input
           v-model="form.addr"
-          :disabled="viewFlag"
+          :disabled="disabled"
+          type="textarea"
           maxlength="255"/>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import _ from 'lodash'
 
 export default {
   name: 'VendorForm',
   props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    viewFlag: {
+    editable: {
       type: Boolean,
-      default: false
-    },
-    editFlag: {
-      type: Boolean,
-      default: false
+      default: true
     }
   },
   data () {
@@ -95,20 +85,22 @@ export default {
         openingBank: null,
         taxNo: null,
         addr: null
-      },
-      rules: {
+      }
+    }
+  },
+  computed: {
+    disabled () {
+      return !this.editable
+    },
+    rules () {
+      return {
         vendorName: [{ required: true, message: '请输入供应商名称', trigger: ['blur', 'change'] }]
       }
     }
   },
-  created () {
-    this.initData()
-  },
   methods: {
-    initData () {
-      if (this.viewFlag || this.editFlag) {
-        this.form = _.assign({}, this.data)
-      }
+    setForm (form) {
+      this.form = form
     },
     getForm () {
       return this.form

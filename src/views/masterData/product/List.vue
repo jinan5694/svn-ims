@@ -6,14 +6,14 @@
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.prodName')"
-        @search="query"/>
+        @search="fetch"/>
       <Button
         button-type="add"
-        @click="add"/>
+        @click="toAdd"/>
     </template>
     <DataTable
       ref="table"
-      url="/ProductService/query"
+      :url="urlQuery"
       :params="params"
       :columns="columns">
       <template
@@ -21,25 +21,39 @@
         slot-scope="scope">
         <Button
           button-type="view"
-          @click="view(scope.row)"/>
+          @click="toView(scope.row.id)"/>
         <Button
           button-type="edit"
-          @click="edit(scope.row)"/>
-        <Button
-          button-type="stop"
-          @click="stop(scope.row)"/>
+          @click="toEdit(scope.row.id)"/>
+        <ConfirmButton
+          @click="remove(scope.row)"/>
       </template>
     </DataTable>
   </Page>
 </template>
 <script>
+import CrudMixin from '@/mixins/crud'
+import configMixin from './mixins/config'
+
 export default {
   name: 'ProductList',
+  mixins: [ CrudMixin, configMixin ],
   data () {
     return {
-      loading: false,
-      searchValue: null,
-      columns: [
+      searchValue: null
+    }
+  },
+  computed: {
+    params () {
+      let params = [ { where: { and: [], or: [] } } ]
+      params[0].where.and.push({ enableFlag: 'System_EnableFlag_1' })
+      if (this.searchValue) {
+        params[0].where.or.push({ prodName: { like: this.searchValue } })
+      }
+      return params
+    },
+    columns () {
+      return [
         {
           label: '商品名称',
           prop: 'prodName'
@@ -75,50 +89,6 @@ export default {
           width: '120px'
         }
       ]
-    }
-  },
-  computed: {
-    params () {
-      let params = [ { where: { and: [], or: [] } } ]
-      params[0].where.and.push({ enableFlag: 'System_EnableFlag_1' })
-      if (this.searchValue) {
-        params[0].where.or.push({ prodName: { like: this.searchValue } })
-      }
-      return params
-    }
-  },
-  methods: {
-    query () {
-      this.$refs.table.fetch()
-    },
-    add () {
-      this.$router.push('/masterData/product/add')
-    },
-    view (data) {
-      this.$router.push('/masterData/product/view/' + data.id)
-    },
-    edit (data) {
-      this.$router.push('/masterData/product/edit/' + data.id)
-    },
-    stop (data) {
-      this.$confirm('是否停用' + data.prodName + '商品', this.$t('confirm_info'), {
-        distinguishCancelAndClose: true,
-        closeOnClickModal: false,
-        confirmButtonText: this.$t('ok'),
-        cancelButtonText: this.$t('cancel')
-      })
-        .then(() => {
-          this.loading = true
-          let param = { id: data.id, enableFlag: 'System_EnableFlag_0' }
-          this.$axios.post('ProductService/update', [param])
-            .then(resp => {
-              this.$refs.table.fetch()
-            }).finally(() => {
-              this.loading = false
-            })
-        })
-        .catch(action => {
-        })
     }
   }
 }

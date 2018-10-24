@@ -6,14 +6,14 @@
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.vendorName')"
-        @search="query"/>
+        @search="fetch"/>
       <Button
         button-type="add"
-        @click="add"/>
+        @click="toAdd"/>
     </template>
     <DataTable
       ref="table"
-      url="/VendorService/query"
+      :url="urlQuery"
       :params="params"
       :columns="columns">
       <template
@@ -21,25 +21,31 @@
         slot-scope="scope">
         <Button
           button-type="view"
-          @click="view(scope.row)"/>
+          @click="toView(scope.row.id)"/>
         <Button
           button-type="edit"
-          @click="edit(scope.row)"/>
-        <Button
-          button-type="stop"
-          @click="stop(scope.row)"/>
+          @click="toEdit(scope.row.id)"/>
+        <ConfirmButton
+          @click="remove(scope.row)"/>
       </template>
     </DataTable>
   </Page>
 </template>
 <script>
+import CrudMixin from '@/mixins/crud'
+import configMixin from './mixins/config'
+
 export default {
   name: 'VendorList',
+  mixins: [ CrudMixin, configMixin ],
   data () {
     return {
-      loading: false,
-      searchValue: null,
-      columns: [
+      searchValue: null
+    }
+  },
+  computed: {
+    columns () {
+      return [
         {
           label: '供应商名称',
           prop: 'vendorName'
@@ -63,9 +69,7 @@ export default {
           width: '120px'
         }
       ]
-    }
-  },
-  computed: {
+    },
     params () {
       let params = [ { where: { and: [], or: [] } } ]
       params[0].where.and.push({ enableFlag: 'System_EnableFlag_1' })
@@ -73,40 +77,6 @@ export default {
         params[0].where.or.push({ vendorName: { like: this.searchValue } })
       }
       return params
-    }
-  },
-  methods: {
-    query () {
-      this.$refs.table.fetch()
-    },
-    add () {
-      this.$router.push('/masterData/vendor/add')
-    },
-    view (data) {
-      this.$router.push('/masterData/vendor/view/' + data.id)
-    },
-    edit (data) {
-      this.$router.push('/masterData/vendor/edit/' + data.id)
-    },
-    stop (data) {
-      this.$confirm('是否停用' + data.vendorName + '供应商', this.$t('confirm_info'), {
-        distinguishCancelAndClose: true,
-        closeOnClickModal: false,
-        confirmButtonText: this.$t('ok'),
-        cancelButtonText: this.$t('cancel')
-      })
-        .then(() => {
-          this.loading = true
-          let param = { id: data.id, enableFlag: 'System_EnableFlag_0' }
-          this.$axios.post('VendorService/update', [param])
-            .then(resp => {
-              this.$refs.table.fetch()
-            }).finally(() => {
-              this.loading = false
-            })
-        })
-        .catch(action => {
-        })
     }
   }
 }

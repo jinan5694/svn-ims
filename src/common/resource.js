@@ -10,6 +10,10 @@ const resource = [
         label: '商品管理'
       },
       {
+        path: '/masterData/prodBatch/list',
+        label: '批次管理'
+      },
+      {
         path: '/masterData/customer/list',
         label: '客户管理'
       },

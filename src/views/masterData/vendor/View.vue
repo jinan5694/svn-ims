@@ -6,45 +6,23 @@
       <BackButton/>
     </template>
     <Form
-      v-if="flag"
       ref="form"
-      :data="data"
-      :view-flag="flag"/>
+      :editable="false"/>
   </Page>
 </template>
 <script>
+import CrudMixin from '@/mixins/crud'
+import configMixin from './mixins/config'
 import Form from './components/Form.vue'
 
 export default {
   name: 'VendorView',
+  mixins: [ CrudMixin, configMixin ],
   components: {
     Form
   },
-  data () {
-    return {
-      loading: false,
-      flag: false,
-      data: {}
-    }
-  },
   created () {
     this.getData()
-  },
-  methods: {
-    getData () {
-      const id = this.$route.params.id
-      if (id) {
-        this.loading = true
-        this.$axios.get('/VendorService/get', { params: [id] })
-          .then(resp => {
-            this.data = resp.data
-            this.flag = true
-          })
-          .finally(() => {
-            this.loading = false
-          })
-      }
-    }
   }
 }
 </script>

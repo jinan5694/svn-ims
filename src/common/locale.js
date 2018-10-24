@@ -22,6 +22,7 @@ export default {
   },
   placeholder: {
     prodName: '商品名称',
+    prod_batch: '批次号/描述',
     customerName: '客户名称',
     vendorName: '供应商名称',
     warehouse: '仓库代码/名称',

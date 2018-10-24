@@ -6,14 +6,14 @@
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.customerName')"
-        @search="query"/>
+        @search="fetch"/>
       <Button
         button-type="add"
-        @click="add"/>
+        @click="toAdd"/>
     </template>
     <DataTable
       ref="table"
-      url="/CustomerService/query"
+      :url="urlQuery"
       :params="params"
       :columns="columns">
       <template
@@ -21,25 +21,39 @@
         slot-scope="scope">
         <Button
           button-type="view"
-          @click="view(scope.row)"/>
+          @click="toView(scope.row.id)"/>
         <Button
           button-type="edit"
-          @click="edit(scope.row)"/>
-        <Button
-          button-type="stop"
-          @click="stop(scope.row)"/>
+          @click="toEdit(scope.row.id)"/>
+        <ConfirmButton
+          @click="remove(scope.row)"/>
       </template>
     </DataTable>
   </Page>
 </template>
 <script>
+import CrudMixin from '@/mixins/crud'
+import configMixin from './mixins/config'
+
 export default {
   name: 'CustomerList',
+  mixins: [ CrudMixin, configMixin ],
   data () {
     return {
-      loading: false,
-      searchValue: null,
-      columns: [
+      searchValue: null
+    }
+  },
+  computed: {
+    params () {
+      let params = [ { where: { and: [], or: [] } } ]
+      params[0].where.and.push({ enableFlag: 'System_EnableFlag_1' })
+      if (this.searchValue) {
+        params[0].where.or.push({ customerName: { like: this.searchValue } })
+      }
+      return params
+    },
+    columns () {
+      return [
         {
           label: '客户名称',
           prop: 'customerName'
@@ -77,48 +91,9 @@ export default {
       ]
     }
   },
-  computed: {
-    params () {
-      let params = [ { where: { and: [], or: [] } } ]
-      params[0].where.and.push({ enableFlag: 'System_EnableFlag_1' })
-      if (this.searchValue) {
-        params[0].where.or.push({ customerName: { like: this.searchValue } })
-      }
-      return params
-    }
-  },
   methods: {
-    query () {
+    fetch () {
       this.$refs.table.fetch()
-    },
-    add () {
-      this.$router.push('/masterData/customer/add')
-    },
-    view (data) {
-      this.$router.push('/masterData/customer/view/' + data.id)
-    },
-    edit (data) {
-      this.$router.push('/masterData/customer/edit/' + data.id)
-    },
-    stop (data) {
-      this.$confirm('是否停用' + data.customerName + '客户', this.$t('confirm_info'), {
-        distinguishCancelAndClose: true,
-        closeOnClickModal: false,
-        confirmButtonText: this.$t('ok'),
-        cancelButtonText: this.$t('cancel')
-      })
-        .then(() => {
-          this.loading = true
-          let param = { id: data.id, enableFlag: 'System_EnableFlag_0' }
-          this.$axios.post('CustomerService/update', [param])
-            .then(resp => {
-              this.$refs.table.fetch()
-            }).finally(() => {
-              this.loading = false
-            })
-        })
-        .catch(action => {
-        })
     }
   }
 }

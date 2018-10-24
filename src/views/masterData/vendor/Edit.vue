@@ -5,21 +5,21 @@
     <template slot="toolbar">
       <Button
         button-type="save"
-        @click="save"/>
+        @click="handleSaveOrUpdate"/>
       <BackButton/>
     </template>
     <Form
-      v-if="flag"
-      ref="form"
-      :data="data"
-      :edit-flag="flag"/>
+      ref="form"/>
   </Page>
 </template>
 <script>
+import CrudMixin from '@/mixins/crud'
+import configMixin from './mixins/config'
 import Form from './components/Form.vue'
 
 export default {
   name: 'VendorEdit',
+  mixins: [ CrudMixin, configMixin ],
   components: {
     Form
   },
@@ -32,43 +32,6 @@ export default {
   },
   created () {
     this.getData()
-  },
-  methods: {
-    save () {
-      this.validate().then(() => {
-        return this.saveData()
-      }).then((resp) => {
-        this.$message({ message: this.$t('message.success'), type: 'success' })
-        this.$router.push('/masterData/vendor/list')
-      })
-    },
-    saveData () {
-      const url = '/VendorService/update'
-      const param = this.$refs.form.getForm()
-      this.loading = true
-      return this.$axios.post(url, [param]).then((resp) => {
-        return resp
-      }).finally(() => {
-        this.loading = false
-      })
-    },
-    validate () {
-      return this.$refs.form.validate()
-    },
-    getData () {
-      const id = this.$route.params.id
-      if (id) {
-        this.loading = true
-        this.$axios.get('/VendorService/get', { params: [id] })
-          .then(resp => {
-            this.data = resp.data
-            this.flag = true
-          })
-          .finally(() => {
-            this.loading = false
-          })
-      }
-    }
   }
 }
 </script>

@@ -12,6 +12,7 @@ import Search from './Search'
 import Page from './Page'
 import BackButton from './BackButton'
 import Button from './Button'
+import Unit from './Unit'
 
 const components = [
   ConfirmButton,
@@ -21,7 +22,8 @@ const components = [
   Page,
   BackButton,
   Button,
-  Search
+  Search,
+  Unit
 ]
 
 components.forEach(component => {

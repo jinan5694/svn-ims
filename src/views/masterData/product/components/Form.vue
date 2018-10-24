@@ -10,7 +10,7 @@
         prop="prodName">
         <el-input
           v-model="form.prodName"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -18,15 +18,16 @@
         prop="">
         <el-input
           v-model="form.prodCode"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="32"/>
       </el-form-item>
       <el-form-item
         label="计量单位"
         prop="">
-        <el-input
+        <Unit
           v-model="form.unit"
-          :disabled="viewFlag"
+          :disabled="disabled"
+          class="unit"
           maxlength="50"/>
       </el-form-item>
       <el-form-item
@@ -34,7 +35,7 @@
         prop="">
         <el-input
           v-model="form.specmodel"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -42,7 +43,7 @@
         prop="">
         <el-input
           v-model="form.brand"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -50,7 +51,7 @@
         prop="">
         <el-input
           v-model="form.qualityGuaranteePeriod"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="12"/>
       </el-form-item>
       <el-form-item
@@ -58,14 +59,15 @@
         prop="">
         <el-input
           v-model="form.prodType"
-          :disabled="viewFlag"/>
+          :disabled="disabled"/>
       </el-form-item>
       <el-form-item
         label="备注"
         prop="">
         <el-input
           v-model="form.remark"
-          :disabled="viewFlag"
+          :disabled="disabled"
+          type="textarea"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -73,7 +75,7 @@
         prop="">
         <el-input
           v-model="form.purchasePrice"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="12"/>
       </el-form-item>
       <el-form-item
@@ -81,7 +83,7 @@
         prop="">
         <el-input
           v-model="form.sellingPrice"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="12"/>
       </el-form-item>
       <el-form-item
@@ -89,7 +91,7 @@
         prop="">
         <el-input
           v-model="form.stockTopLimit"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="12"/>
       </el-form-item>
       <el-form-item
@@ -97,31 +99,20 @@
         prop="">
         <el-input
           v-model="form.stockLowerLimit"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="12"/>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import _ from 'lodash'
 
 export default {
   name: 'ProductForm',
   props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    viewFlag: {
+    editable: {
       type: Boolean,
-      default: false
-    },
-    editFlag: {
-      type: Boolean,
-      default: false
+      default: true
     }
   },
   data () {
@@ -140,20 +131,22 @@ export default {
         warehouseToplimit: null,
         warehouseLowerlimit: null
 
-      },
-      rules: {
+      }
+    }
+  },
+  computed: {
+    disabled () {
+      return !this.editable
+    },
+    rules () {
+      return {
         prodName: [{ required: true, message: '请输入商品名称', trigger: ['blur', 'change'] }]
       }
     }
   },
-  created () {
-    this.initData()
-  },
   methods: {
-    initData () {
-      if (this.viewFlag || this.editFlag) {
-        this.form = _.assign({}, this.data)
-      }
+    setForm (form) {
+      this.form = form
     },
     getForm () {
       return this.form
@@ -165,4 +158,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.unit {
+  width: 300px;
+}
 </style>

@@ -4,6 +4,7 @@ function init (vue) {
   return fetchUser(vue).then(() => {
     const tasks = []
     tasks.push(fetchDicts(vue))
+    tasks.push(fetchVendors(vue))
 
     return Axios.all(tasks)
   })
@@ -17,6 +18,10 @@ function fetchUser (vue) {
 // 获取字典数据
 function fetchDicts (vue) {
   return vue.$store.dispatch('setDicts', vue)
+}
+// 获取供应商
+function fetchVendors (vue) {
+  return vue.$store.dispatch('setVendors', vue)
 }
 
 export {

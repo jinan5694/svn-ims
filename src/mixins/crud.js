@@ -47,7 +47,11 @@ export default {
       const params = this.$refs.form.getForm()
       const url = params.id ? this.urlUpdate : this.urlSave
       return this.$axios.post(url, [params]).then((resp) => {
-        return resp
+        if (resp.success) {
+          return resp
+        } else {
+          Promise.reject(resp)
+        }
       }).catch(error => {
         this.$message({ type: 'error', message: error })
       }).finally(() => {

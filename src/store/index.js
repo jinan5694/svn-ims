@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+
+import Business from './modules/Business'
 import Dictionary from './modules/Dictionary'
 import User from './modules/User'
 
@@ -18,6 +20,7 @@ export default new Vuex.Store({
 
   },
   modules: {
+    Business,
     Dictionary,
     User
   }

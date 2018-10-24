@@ -22,6 +22,28 @@ routes.push({
   component: () => import('@/views/masterData/product/Edit.vue')
 })
 
+// prod batch
+routes.push({
+  meta: { title: '批次列表' },
+  path: 'masterData/prodBatch/list',
+  component: () => import('@/views/masterData/prodBatch/List.vue')
+})
+routes.push({
+  meta: { title: '批次新建' },
+  path: 'masterData/prodBatch/add',
+  component: () => import('@/views/masterData/prodBatch/Add.vue')
+})
+routes.push({
+  meta: { title: '批次编辑' },
+  path: 'masterData/prodBatch/edit/:id',
+  component: () => import('@/views/masterData/prodBatch/Edit.vue')
+})
+routes.push({
+  meta: { title: '批次查看' },
+  path: 'masterData/prodBatch/view/:id',
+  component: () => import('@/views/masterData/prodBatch/View.vue')
+})
+
 // customer
 routes.push({
   meta: { title: '客户列表' },

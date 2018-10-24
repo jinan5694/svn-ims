@@ -10,7 +10,7 @@
         prop="customerName">
         <el-input
           v-model="form.customerName"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -18,7 +18,7 @@
         prop="">
         <el-input
           v-model="form.customerTel"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="30"/>
       </el-form-item>
       <el-form-item
@@ -26,14 +26,14 @@
         prop="">
         <el-input
           v-model="form.customerCategory"
-          :disabled="viewFlag"/>
+          :disabled="disabled"/>
       </el-form-item>
       <el-form-item
         label="联系人"
         prop="">
         <el-input
           v-model="form.contact"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="32"/>
       </el-form-item>
       <el-form-item
@@ -41,7 +41,7 @@
         prop="">
         <el-input
           v-model="form.customerTelOther"
-          :disabled="viewFlag"
+          :disabled="disabled"
           maxlength="30"/>
       </el-form-item>
       <el-form-item
@@ -49,7 +49,8 @@
         prop="">
         <el-input
           v-model="form.billingAddr"
-          :disabled="viewFlag"
+          :disabled="disabled"
+          type="textarea"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -57,7 +58,8 @@
         prop="">
         <el-input
           v-model="form.addr"
-          :disabled="viewFlag"
+          :disabled="disabled"
+          type="textarea"
           maxlength="255"/>
       </el-form-item>
       <el-form-item
@@ -65,31 +67,20 @@
         prop="">
         <el-input
           v-model="form.remark"
-          :disabled="viewFlag"
+          :disabled="disabled"
+          type="textarea"
           maxlength="255"/>
       </el-form-item>
     </el-form>
   </div>
 </template>
 <script>
-import _ from 'lodash'
-
 export default {
   name: 'CustomerForm',
   props: {
-    data: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    viewFlag: {
+    editable: {
       type: Boolean,
-      default: false
-    },
-    editFlag: {
-      type: Boolean,
-      default: false
+      default: true
     }
   },
   data () {
@@ -104,20 +95,22 @@ export default {
         addr: null,
         remark: null
 
-      },
-      rules: {
+      }
+    }
+  },
+  computed: {
+    disabled () {
+      return !this.editable
+    },
+    rules () {
+      return {
         customerName: [{ required: true, message: '请输入客户名称', trigger: ['blur', 'change'] }]
       }
     }
   },
-  created () {
-    this.initData()
-  },
   methods: {
-    initData () {
-      if (this.viewFlag || this.editFlag) {
-        this.form = _.assign({}, this.data)
-      }
+    setForm (form) {
+      this.form = form
     },
     getForm () {
       return this.form

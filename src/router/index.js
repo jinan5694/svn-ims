@@ -28,6 +28,12 @@ const router = new Router({
           meta: { title: '工作台' },
           component: () => import('@/views/Dashboard.vue')
         },
+        {
+          path: '/play',
+          name: 'play',
+          meta: { title: '实验室' },
+          component: () => import('@/views/Play.vue')
+        },
         ...routes,
         {
           path: '*',
