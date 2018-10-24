@@ -107,9 +107,8 @@ export default {
       }
       if (this.searchKey !== '') {
         params.where.or = [
-          { warehouseNo: { like: this.searchKey } },
-          { warehouseCode: { like: this.searchKey } },
-          { warehouseName: { like: this.searchKey } }
+          { batchCode: { like: this.searchKey } },
+          { batchDesc: { like: this.searchKey } }
         ]
       }
       const path = ['product']
