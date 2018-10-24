@@ -45,4 +45,8 @@ $form-width: 300px;
     width: $form-width;
   }
 }
+
+.is-disabled .el-cascader__label span {
+  color: #c0c4cc;
+}
   

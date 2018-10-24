@@ -5,7 +5,7 @@
     <template slot="toolbar">
       <Search
         v-model="searchKey"
-        :placeholder="$t('placeholder.warehouse')"
+        :placeholder="$t('placeholder.zone')"
         @search="fetch"/>
       <Button
         button-type="add"
@@ -17,22 +17,12 @@
       :params="params"
       :columns="columns">
       <template
-        slot="warehouseCategory"
+        slot="zoneType"
         slot-scope="{row, index}">
         {{
           $translate({
-            key: 'Inventory_Attributes',
-            value: row.warehouseCategory
-          })
-        }}
-      </template>
-      <template
-        slot="pricingMethod"
-        slot-scope="{row, index}">
-        {{
-          $translate({
-            key: 'Inventory_PricingMethod',
-            value: row.pricingMethod
+            key: 'Inventory_ZoneType',
+            value: row.zoneType
           })
         }}
       </template>
@@ -47,7 +37,7 @@
           @click="toEdit(row.id)"/>
         <ConfirmButton
           text="停用"
-          msg="确定停用该仓库？"
+          msg="确定停用该库区？"
           @click="remove(row)"/>
       </template>
     </DataTable>
@@ -69,34 +59,25 @@ export default {
       return [
         {
           label: '仓库代码',
-          prop: 'warehouseCode'
+          prop: 'warehouse.warehouseCode'
         },
         {
-          label: '仓库名称',
-          prop: 'warehouseName'
+          label: '库区代码',
+          prop: 'zoneCode'
         },
         {
-          label: '仓库属性',
-          prop: 'warehouseCategory',
-          slotName: 'warehouseCategory'
+          label: '库区名称',
+          prop: 'zoneName'
         },
         {
-          label: '计价方式',
-          prop: 'pricingMethod',
-          slotName: 'pricingMethod'
+          label: '库区类型',
+          prop: 'zoneType',
+          slotName: 'zoneType'
         },
-        {
-          label: '联系人',
-          prop: 'contact'
-        },
-        {
-          label: '电话',
-          prop: 'tel'
-        },
-        {
-          label: '默认库区',
-          prop: 'addr'
-        },
+        // {
+        //   label: '默认库位',
+        //   prop: 'pricingMethod'
+        // },
         {
           label: '备注',
           prop: 'remark'
@@ -119,12 +100,11 @@ export default {
       }
       if (this.searchKey !== '') {
         params.where.or = [
-          { warehouseNo: { like: this.searchKey } },
-          { warehouseCode: { like: this.searchKey } },
-          { warehouseName: { like: this.searchKey } }
+          { zoneCode: { like: this.searchKey } },
+          { zoneName: { like: this.searchKey } }
         ]
       }
-      const path = ['zone']
+      const path = ['warehouse']
       return [params, path]
     }
   }

@@ -12,7 +12,7 @@ function translate (params) {
 
   if (options.key === '') {
     console.warn('[translate] params.key is required.')
-    return false
+    return options.unMatchStr
   }
   let dicts = this.$store.state.Dictionary.dicts
   let currentDict = dicts[options.key]
@@ -28,7 +28,7 @@ function translate (params) {
     return options.unMatchStr
   }
   console.warn('[translate] dist not found. key is:' + options.key)
-  return false
+  return options.unMatchStr
 }
 
 /**

@@ -6,13 +6,6 @@
       :rules="rules"
       label-width="100px">
       <el-form-item
-        label="仓库编号"
-        prop="warehouseNo">
-        <el-input
-          v-model="form.warehouseNo"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
         label="仓库代码"
         prop="warehouseCode">
         <el-input
@@ -53,6 +46,13 @@
         </el-select>
       </el-form-item>
       <el-form-item
+        label="联系人"
+        prop="contact">
+        <el-input
+          v-model="form.contact"
+          :disabled="disabled"/>
+      </el-form-item>
+      <el-form-item
         label="电话"
         prop="tel">
         <el-input
@@ -66,13 +66,6 @@
           v-model="form.addr"
           :disabled="disabled"
           type="textarea"/>
-      </el-form-item>
-      <el-form-item
-        label="联系人"
-        prop="contact">
-        <el-input
-          v-model="form.contact"
-          :disabled="disabled"/>
       </el-form-item>
       <el-form-item
         label="备注"
@@ -98,14 +91,13 @@ export default {
     return {
       form: {
         id: null,
-        warehouseNo: null,
         warehouseCode: null,
         warehouseName: null,
         warehouseCategory: null,
         pricingMethod: null,
+        contact: null,
         tel: null,
         addr: null,
-        contact: null,
         remark: null
       }
     }
@@ -122,11 +114,6 @@ export default {
     },
     rules () {
       return {
-        warehouseNo: [{
-          required: true,
-          message: '请输入仓库编号',
-          trigger: ['blur']
-        }],
         warehouseCode: [{
           required: true,
           message: '请输入仓库代码',
@@ -137,24 +124,14 @@ export default {
           message: '请输入仓库名称',
           trigger: ['blur']
         }],
-        tel: [{
-          required: true,
-          message: '请输入电话',
-          trigger: ['blur']
-        }],
-        addr: [{
-          required: true,
-          message: '请输入地址',
-          trigger: ['blur']
-        }],
         contact: [{
           required: true,
           message: '请输入联系人',
           trigger: ['blur']
         }],
-        remark: [{
+        tel: [{
           required: true,
-          message: '请输入仓库编号',
+          message: '请输入电话',
           trigger: ['blur']
         }]
       }

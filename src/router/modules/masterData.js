@@ -78,14 +78,58 @@ routes.push({
   component: () => import('@/views/masterData/warehouse/Add.vue')
 })
 routes.push({
-  meta: { title: '仓库查看' },
+  meta: { title: '仓库编辑' },
   path: 'masterData/warehouse/edit/:id',
   component: () => import('@/views/masterData/warehouse/Edit.vue')
 })
 routes.push({
-  meta: { title: '仓库编辑' },
+  meta: { title: '仓库查看' },
   path: 'masterData/warehouse/view/:id',
   component: () => import('@/views/masterData/warehouse/View.vue')
+})
+
+// zone
+routes.push({
+  meta: { title: '库区列表' },
+  path: 'masterData/zone/list',
+  component: () => import('@/views/masterData/zone/List.vue')
+})
+routes.push({
+  meta: { title: '库区新建' },
+  path: 'masterData/zone/add',
+  component: () => import('@/views/masterData/zone/Add.vue')
+})
+routes.push({
+  meta: { title: '库区编辑' },
+  path: 'masterData/zone/edit/:id',
+  component: () => import('@/views/masterData/zone/Edit.vue')
+})
+routes.push({
+  meta: { title: '库区查看' },
+  path: 'masterData/zone/view/:id',
+  component: () => import('@/views/masterData/zone/View.vue')
+})
+
+// bin
+routes.push({
+  meta: { title: '库位列表' },
+  path: 'masterData/bin/list',
+  component: () => import('@/views/masterData/bin/List.vue')
+})
+routes.push({
+  meta: { title: '库位新建' },
+  path: 'masterData/bin/add',
+  component: () => import('@/views/masterData/bin/Add.vue')
+})
+routes.push({
+  meta: { title: '库位编辑' },
+  path: 'masterData/bin/edit/:id',
+  component: () => import('@/views/masterData/bin/Edit.vue')
+})
+routes.push({
+  meta: { title: '库位查看' },
+  path: 'masterData/bin/view/:id',
+  component: () => import('@/views/masterData/bin/View.vue')
 })
 
 export default routes

@@ -24,7 +24,9 @@ export default {
     prodName: '商品名称',
     customerName: '客户名称',
     vendorName: '供应商名称',
-    warehouse: '仓库编号/代码/名称'
+    warehouse: '仓库代码/名称',
+    zone: '库区代码/名称',
+    bin: '库位代码/名称'
   }
 
 }
