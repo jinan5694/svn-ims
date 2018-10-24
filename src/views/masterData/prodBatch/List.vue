@@ -37,7 +37,7 @@
 import CrudMixin from '@/mixins/crud'
 import configMixin from './mixins/config'
 
-import { timeToDate } from '@/common/utils'
+import { timeToDate, translateBiz } from '@/common/utils'
 
 export default {
   mixins: [ CrudMixin, configMixin ],
@@ -82,7 +82,8 @@ export default {
         },
         {
           label: '供应商',
-          prop: 'vendor'
+          prop: 'vendor',
+          formatter: row => translateBiz(row.vendor, this.vendors).vendorName
         },
         {
           label: '备注',
@@ -113,6 +114,9 @@ export default {
       }
       const path = ['product']
       return [params, path]
+    },
+    vendors () {
+      return this.$store.state.Business.vendors
     }
   }
 }

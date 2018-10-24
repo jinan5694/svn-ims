@@ -7,6 +7,12 @@ const timeToDate = time => {
   return time.split(' ')[0]
 }
 
+// 翻译业务数据
+const translateBiz = (id, bizs) => {
+  return bizs.find(item => item.id === id) || {}
+}
+
 export {
-  timeToDate
+  timeToDate,
+  translateBiz
 }

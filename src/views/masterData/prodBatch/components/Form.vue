@@ -47,7 +47,7 @@
           v-model="form.lastPurchaseTime"
           :disabled="disabled"
           type="datetime"
-          placeholder="选择生产日期"
+          placeholder="选择最后采购时间"
           value-format="yyyy-MM-dd HH:mm:ss"/>
       </el-form-item>
       <el-form-item
@@ -67,7 +67,7 @@
           v-model="form.expirationDate"
           :disabled="disabled"
           type="date"
-          placeholder="选择生产日期"
+          placeholder="选择失效日期"
           value-format="yyyy-MM-dd"/>
       </el-form-item>
       <el-form-item
@@ -75,7 +75,8 @@
         prop="vendor">
         <el-select
           v-model="form.vendor"
-          :disabled="disabled">
+          :disabled="disabled"
+          placeholder="选择供应商">
           <el-option
             v-for="item in vendors"
             :key="item.id"
