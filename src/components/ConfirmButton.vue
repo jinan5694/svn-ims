@@ -1,40 +1,40 @@
 <template>
-  <div class="confirm-button">
-    <el-popover
-      ref="confirmPopover"
-      v-model="isDisplay"
-      :width="popoverWidth"
-      placement="top"
-      trigger="click">
-      <div class="content">
-        <i class="el-icon-warning"/>
+  <el-popover
+    v-model="visible"
+    class="confirm-button"
+    placement="bottom-end"
+    title="提示"
+    trigger="click"
+    :width="width">
+    <div class="content">
+      <div class="message">
+        <Icon name="warning"/>
         {{ msg }}
       </div>
       <div class="footer">
-        <el-button @click="handleCancel">取消</el-button>
         <el-button
-          :loading="!isDisplay"
-          type="primary"
-          @click="handleDone">确定</el-button>
+          type="text"
+          @click="handleDone">{{ $t('ok') }}</el-button>
+        <el-button
+          type="text"
+          @click="handleCancel">{{ $t('cancel') }}</el-button>
       </div>
-      <el-button
-        v-popover:confirmPopover
-        :loading="loading"
-        :type="buttonType"
-      >{{ buttonText }}</el-button>
-    </el-popover>
-  </div>
+    </div>
+    <el-button
+      slot="reference"
+      :type="type">{{ text }}</el-button>
+  </el-popover>
 </template>
 
 <script>
 export default {
   name: 'ConfirmButton',
   props: {
-    buttonText: {
+    text: {
       type: String,
       default: '删除'
     },
-    buttonType: {
+    type: {
       type: String,
       default: 'text'
     },
@@ -46,22 +46,22 @@ export default {
       type: String,
       default: '确定删除？'
     },
-    popoverWidth: {
+    width: {
       type: Number,
       default: 180
     }
   },
   data () {
     return {
-      isDisplay: false
+      visible: false
     }
   },
   methods: {
     handleCancel () {
-      this.isDisplay = false
+      this.visible = false
     },
     handleDone () {
-      this.isDisplay = false
+      this.visible = false
       this.$emit('click')
     }
   }
@@ -70,29 +70,26 @@ export default {
 
 <style lang="scss" scoped>
 .confirm-button {
-  display: inline-block;
+  margin-left: 10px;
+  &:first-child {
+    margin-left: 0;
+  }
 }
 .content {
-  .el-icon-warning {
-    color: #E6A23C;
+  .message {
+    display: flex;
+    align-items: center;
+    .material-icons {
+      font-size: 18px;
+      color: orange;
+      margin-right: 5px;
+    }
+    font-size: 12px;
+    color: #666;
   }
-  font-size: 12px;
-}
-.footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px;
-}
-</style>
-<style lang="scss">
-.confirm-button {
-  line-height: 1;
-}
-// 设置按钮前后间距
-.el-button + .confirm-button,
-.confirm-button + .el-button,
-.confirm-button + .confirm-button {
-  margin-left: 10px;
-
+  .footer {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 </style>

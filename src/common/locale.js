@@ -18,7 +18,7 @@ export default {
 
   // 提示用在this.$message()中
   message: {
-    success: '成功'
+    success: '操作成功'
   },
   placeholder: {
     prodName: '商品名称',

@@ -1,5 +1,5 @@
 <template>
-  <div class="form">
+  <div class="form-container">
     <el-form
       ref="form"
       :model="form"

@@ -1,5 +1,7 @@
 <template>
-  <Page>
+  <Page
+    v-loading="loading"
+    :element-loading-text="$t('loading_text')">
     <template slot="toolbar">
       <Search
         v-model="searchKey"
@@ -9,10 +11,9 @@
         button-type="add"
         @click="toAdd"/>
     </template>
-    <ConfirmButton>test</ConfirmButton>
     <DataTable
       ref="table"
-      url="/WarehouseService/query"
+      :url="urlQuery"
       :params="params"
       :columns="columns">
       <template
@@ -44,21 +45,23 @@
         <Button
           button-type="edit"
           @click="toEdit(row.id)"/>
-        <ConfirmButton>test</ConfirmButton>
+        <ConfirmButton @click="remove(row)"/>
       </template>
     </DataTable>
   </Page>
 </template>
 <script>
+import CrudMixin from '@/mixins/crud'
+import configMixin from './mixins/config'
 
 export default {
+  mixins: [ CrudMixin, configMixin ],
   data () {
     return {
       searchKey: ''
     }
   },
   computed: {
-    // 建议 params 参数放在计算属性中，可以方便的与其他变量整合
     columns () {
       return [
         {
@@ -103,7 +106,7 @@ export default {
           label: '操作',
           slotName: 'operator',
           align: 'center',
-          width: 100
+          width: 200
         }
       ]
     },
@@ -123,23 +126,6 @@ export default {
         ]
       }
       return [params]
-    }
-  },
-  watch: {
-
-  },
-  methods: {
-    fetch () {
-      this.$refs.table.fetch()
-    },
-    toAdd () {
-      this.$router.push('/masterData/warehouse/add')
-    },
-    toView (id) {
-      this.$router.push('/masterData/warehouse/view/' + id)
-    },
-    toEdit (id) {
-      this.$router.push('/masterData/warehouse/edit/' + id)
     }
   }
 }
