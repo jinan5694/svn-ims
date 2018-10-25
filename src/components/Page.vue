@@ -42,7 +42,7 @@ export default {
 
     .toolbar {
       display: flex;
-      min-height: 28px;
+      min-height: 32px;
       * + * {
         margin-left: 8px;
       }

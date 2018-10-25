@@ -75,14 +75,6 @@
           :disabled="disabled"/>
       </el-form-item>
       <el-form-item
-        label="地址"
-        prop="addr">
-        <el-input
-          v-model="form.addr"
-          :disabled="disabled"
-          type="textarea"/>
-      </el-form-item>
-      <el-form-item
         label="备注"
         prop="remark">
         <el-input
@@ -112,7 +104,6 @@ export default {
         pricingMethod: null,
         contact: null,
         tel: null,
-        addr: null,
         remark: null,
         // 默认库区
         defaultZoneId: null

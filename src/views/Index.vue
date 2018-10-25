@@ -52,6 +52,7 @@ export default {
   box-shadow: $box-shadow;
 }
 .aside-box {
+  overflow: hidden;
   box-shadow: $box-shadow;
 }
 .main {

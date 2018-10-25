@@ -10,6 +10,8 @@ import './plugins/locale'
 import './plugins/filters'
 // components register
 import './components/register.js'
+// css
+import './css/index.scss'
 
 Vue.config.productionTip = false
 

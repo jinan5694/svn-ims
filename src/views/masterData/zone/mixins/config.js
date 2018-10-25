@@ -5,6 +5,11 @@ export default {
       path: ['bin']
     }
   },
+  computed: {
+    urlUpdate () {
+      return `/${this.serviceName}/cascadeSaveOrUpdate`
+    }
+  },
   methods: {
     toList () {
       this.$router.push('/masterData/zone/list')

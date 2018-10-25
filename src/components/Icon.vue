@@ -1,5 +1,5 @@
 <template>
-  <i class="material-icons">{{ name }}</i>
+  <i class="icon material-icons">{{ name }}</i>
 </template>
 
 <script>

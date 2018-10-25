@@ -1,37 +1,48 @@
 
 const resource = [
   {
-    path: 'master',
     icon: 'settings',
-    label: '主数据',
+    label: '商品',
+    path: 'part',
     children: [
       {
-        path: '/masterData/product/list',
-        label: '商品管理'
+        label: '采购订单',
+        path: '/part/purchase/list'
+      }
+    ]
+  },
+  {
+    icon: 'settings',
+    label: '主数据',
+    path: 'master',
+    children: [
+      {
+        label: '商品管理',
+        path: '/masterData/product/list'
       },
       {
-        path: '/masterData/prodBatch/list',
-        label: '批次管理'
+        label: '批次管理',
+        path: '/masterData/prodBatch/list'
       },
       {
-        path: '/masterData/customer/list',
-        label: '客户管理'
+        label: '客户管理',
+        path: '/masterData/customer/list'
       },
       {
-        path: '/masterData/vendor/list',
-        label: '供应商管理'
+        label: '供应商管理',
+        path: '/masterData/vendor/list'
       },
       {
-        path: '/masterData/warehouse/list',
-        label: '仓库管理'
+        label: '仓库管理',
+        path: '/masterData/warehouse/list'
       },
       {
-        path: '/masterData/zone/list',
-        label: '库区管理'
+        label: '库区管理',
+        path: '/masterData/zone/list'
       },
       {
-        path: '/masterData/bin/list',
-        label: '库位管理'
+        label: '库位管理',
+        path: '/masterData/bin/list'
       }
     ]
   }
