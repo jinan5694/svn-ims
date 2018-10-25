@@ -1,7 +1,13 @@
 export default {
   data () {
     return {
-      serviceName: 'WarehouseService'
+      serviceName: 'WarehouseService',
+      path: ['zone']
+    }
+  },
+  computed: {
+    urlUpdate () {
+      return `/${this.serviceName}/cascadeSaveOrUpdate`
     }
   },
   methods: {

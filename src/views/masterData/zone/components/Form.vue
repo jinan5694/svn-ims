@@ -45,11 +45,21 @@
             :value="item.code"/>
         </el-select>
       </el-form-item>
-      <!-- <el-form-item
+      <el-form-item
+        v-show="form.id"
         label="默认库位"
-        prop="defaultBin">
-        defaultBin
-      </el-form-item> -->
+        prop="defaultBinId">
+        <el-select
+          v-model="form.defaultBinId"
+          :disabled="disabled"
+          @change="handleDefaultBinChange">
+          <el-option
+            v-for="item in bins"
+            :key="item.id"
+            :label="item.binCode"
+            :value="item.id"/>
+        </el-select>
+      </el-form-item>
       <el-form-item
         label="备注"
         prop="remark">
@@ -81,13 +91,16 @@ export default {
         zoneCode: null,
         zoneName: null,
         zoneType: null,
-        // defaultBin: null,
+        defaultBinId: null,
         remark: null
       },
       warehouse: []
     }
   },
   computed: {
+    bins () {
+      return this.form.bin
+    },
     disabled () {
       return !this.editable
     },
@@ -132,7 +145,26 @@ export default {
     getForm () {
       return this.form
     },
+    getDefaultBinId (form) {
+      const defaultBin = form.bin.find(item => {
+        return item.defaultBinFlag === 'System_YesNo_1'
+      })
+      return defaultBin ? defaultBin.id : null
+    },
+    handleDefaultBinChange (id) {
+      this.setDefaultBinFlag(id)
+    },
+    setDefaultBinFlag (id) {
+      this.form.bin.forEach(item => {
+        if (item.id === id) {
+          item.defaultBinFlag = 'System_YesNo_1'
+        } else {
+          item.defaultBinFlag = 'System_YesNo_0'
+        }
+      })
+    },
     setForm (form) {
+      form.defaultBinId = this.getDefaultBinId(form)
       this.form = form
     },
     validate () {
@@ -142,7 +174,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.form {
-  width: 400px;
-}
+
 </style>

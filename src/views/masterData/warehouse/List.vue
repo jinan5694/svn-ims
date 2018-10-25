@@ -95,7 +95,12 @@ export default {
         },
         {
           label: '默认库区',
-          prop: 'addr'
+          formatter: row => {
+            const defaultZone = row.zone.find(item => {
+              return item.defaultZoneFlag === 'System_YesNo_1'
+            })
+            return defaultZone && defaultZone.zoneCode
+          }
         },
         {
           label: '备注',
@@ -105,7 +110,7 @@ export default {
           label: '操作',
           slotName: 'operator',
           align: 'center',
-          width: 200
+          width: 150
         }
       ]
     },

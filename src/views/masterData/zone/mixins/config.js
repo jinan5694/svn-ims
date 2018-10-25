@@ -1,7 +1,8 @@
 export default {
   data () {
     return {
-      serviceName: 'ZoneService'
+      serviceName: 'ZoneService',
+      path: ['bin']
     }
   },
   methods: {

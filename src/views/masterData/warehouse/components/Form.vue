@@ -46,6 +46,21 @@
         </el-select>
       </el-form-item>
       <el-form-item
+        v-show="form.id"
+        label="默认库区"
+        prop="defaultZoneId">
+        <el-select
+          v-model="form.defaultZoneId"
+          :disabled="disabled"
+          @change="handleDfaultZoneChange">
+          <el-option
+            v-for="item in zones"
+            :key="item.id"
+            :label="item.zoneCode"
+            :value="item.id"/>
+        </el-select>
+      </el-form-item>
+      <el-form-item
         label="联系人"
         prop="contact">
         <el-input
@@ -98,7 +113,9 @@ export default {
         contact: null,
         tel: null,
         addr: null,
-        remark: null
+        remark: null,
+        // 默认库区
+        defaultZoneId: null
       }
     }
   },
@@ -135,13 +152,35 @@ export default {
           trigger: ['blur']
         }]
       }
+    },
+    zones () {
+      return this.form.zone
     }
   },
   methods: {
     getForm () {
       return this.form
     },
+    getDefaultZoneId (form) {
+      const defaultZone = form.zone.find(item => {
+        return item.defaultZoneFlag === 'System_YesNo_1'
+      })
+      return defaultZone ? defaultZone.id : null
+    },
+    handleDfaultZoneChange (id) {
+      this.setDefaultZoneFlag(id)
+    },
+    setDefaultZoneFlag (id) {
+      this.form.zone.forEach(item => {
+        if (item.id === id) {
+          item.defaultZoneFlag = 'System_YesNo_1'
+        } else {
+          item.defaultZoneFlag = 'System_YesNo_0'
+        }
+      })
+    },
     setForm (form) {
+      form.defaultZoneId = this.getDefaultZoneId(form)
       this.form = form
     },
     validate () {

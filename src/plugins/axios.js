@@ -48,8 +48,8 @@ instance.interceptors.response.use(response => {
     return data
   } else {
     // 业务异常，自行处理
-    console.error(`[business exception] ${data.exceptionMessage}`)
-    return Promise.reject(data)
+    console.error('[business exception]', JSON.stringify(data, null, 2))
+    return Promise.reject(data.exceptionMessage)
   }
 }, error => {
   vue.$message.error({

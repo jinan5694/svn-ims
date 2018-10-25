@@ -74,10 +74,15 @@ export default {
           prop: 'zoneType',
           slotName: 'zoneType'
         },
-        // {
-        //   label: '默认库位',
-        //   prop: 'pricingMethod'
-        // },
+        {
+          label: '默认库位',
+          formatter: row => {
+            const defaultBin = row.bin.find(item => {
+              return item.defaultBinFlag === 'System_YesNo_1'
+            })
+            return defaultBin && defaultBin.binCode
+          }
+        },
         {
           label: '备注',
           prop: 'remark'
@@ -86,7 +91,7 @@ export default {
           label: '操作',
           slotName: 'operator',
           align: 'center',
-          width: 200
+          width: 150
         }
       ]
     },
@@ -104,7 +109,7 @@ export default {
           { zoneName: { like: this.searchKey } }
         ]
       }
-      const path = ['warehouse']
+      const path = ['warehouse', 'bin']
       return [params, path]
     }
   }

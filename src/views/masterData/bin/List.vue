@@ -86,7 +86,7 @@ export default {
           label: '操作',
           slotName: 'operator',
           align: 'center',
-          width: 200
+          width: 150
         }
       ]
     },

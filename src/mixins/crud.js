@@ -3,7 +3,8 @@ import _ from 'lodash'
 export default {
   data () {
     return {
-      loading: false
+      loading: false,
+      path: []
     }
   },
   computed: {
@@ -38,8 +39,10 @@ export default {
           type: 'success'
         })
         this.toList()
-      }).catch(err => {
-        console.warn('validate faild', err)
+      }).catch(error => {
+        if (error) {
+          console.error(error.exceptionMessage)
+        }
       })
     },
     saveOrUpdate () {
@@ -49,11 +52,11 @@ export default {
       return this.$axios.post(url, [params]).then((resp) => {
         if (resp.success) {
           return resp
-        } else {
-          Promise.reject(resp)
         }
+        return Promise.reject(resp)
       }).catch(error => {
         this.$message({ type: 'error', message: error })
+        return Promise.reject(error)
       }).finally(() => {
         this.loading = false
       })
@@ -64,7 +67,7 @@ export default {
     getData () {
       if (this.id) {
         this.loading = true
-        this.$axios.get(this.urlGet, { params: [this.id] }).then(resp => {
+        this.$axios.get(this.urlGet, { params: [this.id, this.path] }).then(resp => {
           this.$refs.form.setForm(resp.data)
         }).catch(error => {
           this.$message({ type: 'error', message: error })

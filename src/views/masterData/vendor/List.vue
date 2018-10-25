@@ -66,7 +66,8 @@ export default {
           label: '操作',
           prop: '',
           slotName: 'operations',
-          width: '120px'
+          align: 'center',
+          width: 150
         }
       ]
     },
