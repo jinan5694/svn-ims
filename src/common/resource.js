@@ -1,7 +1,6 @@
-
 const resource = [
   {
-    icon: 'settings',
+    icon: 'dns',
     label: '商品',
     path: 'part',
     children: [
@@ -12,8 +11,8 @@ const resource = [
     ]
   },
   {
-    icon: 'settings',
-    label: '主数据',
+    icon: 'folder',
+    label: '档案',
     path: 'master',
     children: [
       {
