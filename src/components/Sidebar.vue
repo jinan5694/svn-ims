@@ -1,51 +1,57 @@
-<template>
-  <div class="sidebar">
-    <el-menu
-      :collapse="isCollapse"
-      :default-active="active"
-      :router="true">
-      <el-menu-item index="/">
-        <div class="item">
-          <Icon name="home"/>
-          <div class="title">首页</div>
-        </div>
-      </el-menu-item>
-      <el-submenu
-        v-for="(menu, index) in menus"
-        :key="index"
-        :index="menu.path">
-        <template slot="title">
-          <div class="item">
-            <Icon :name="menu.icon"/>
-            <div class="title">{{ menu.label }}</div>
-          </div>
-        </template>
-        <template v-for="(submenu, index) in menu.children">
-          <el-menu-item
-            :key="index"
-            :index="submenu.path">{{ submenu.label }}</el-menu-item>
-        </template>
-      </el-submenu>
-    </el-menu>
-  </div>
-</template>
-
 <script>
-import resource from '@/common/resource.js'
+import resources from '@/common/resource'
 
 export default {
-  name: 'Siderbar',
-  data () {
-    return {
-      isCollapse: true
-    }
+  render () {
+    return (
+      <div class="sidebar">
+        <el-menu
+          collapse={ true }
+          defaultActive={ this.active }
+          router={ true }>
+          {
+            resources.map(item => {
+              if (item.children && item.children.length) {
+                return (
+                  <el-submenu index={ item.path }>
+                    { this.getItem(item, 'title') }
+                    {
+                      item.children.map(subItem => {
+                        return (
+                          <el-menu-item index={ subItem.path }>
+                            { subItem.label }
+                          </el-menu-item>
+                        )
+                      })
+                    }
+                  </el-submenu>
+                )
+              } else {
+                return (
+                  <el-menu-item index={ item.path } >
+                    { this.getItem(item) }
+                  </el-menu-item>
+                )
+              }
+            })
+          }
+        </el-menu>
+      </div>
+    )
   },
   computed: {
     active () {
       return this.$route.path
-    },
-    menus () {
-      return resource
+    }
+  },
+  methods: {
+    getItem (item, slot) {
+      return (
+        <div class="item" { ...slot && { slot: slot }}>
+          <icon name={ item.icon } />
+          <div class="title">{ item.label }</div>
+        </div>
+      )
     }
   }
 }
@@ -56,7 +62,7 @@ export default {
   height: 100%;
   border-right: 1px solid #e6e6e6;
   padding-top: 16px;
-  // 图标 + 文字样式
+  // icon & text
   .item {
     display: flex;
     flex-direction: column;

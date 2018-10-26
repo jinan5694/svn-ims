@@ -1,5 +1,10 @@
 const resource = [
   {
+    icon: 'home',
+    label: '首页',
+    path: '/'
+  },
+  {
     icon: 'dns',
     label: '商品',
     path: 'part',

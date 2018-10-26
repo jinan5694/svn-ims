@@ -7,8 +7,10 @@
       <div class="item">
         {{ user.name }}
       </div>
-      <div class="item">
-        <Icon name="notifications"/>
+      <div
+        class="item"
+        @click="toPlay">
+        <Icon name="gamepad"/>
       </div>
       <div class="item">
         <Icon name="settings"/>
@@ -46,6 +48,9 @@ export default {
       }).catch(() => {
         // do nothing
       })
+    },
+    toPlay () {
+      this.$router.push('/play')
     }
   }
 }
