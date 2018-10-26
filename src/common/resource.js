@@ -13,7 +13,7 @@ const resource = [
   {
     icon: 'folder',
     label: '档案',
-    path: 'master',
+    path: 'masterData',
     children: [
       {
         label: '商品管理',
@@ -42,6 +42,17 @@ const resource = [
       {
         label: '库位管理',
         path: '/masterData/bin/list'
+      }
+    ]
+  },
+  {
+    icon: 'settings',
+    label: '系统',
+    path: 'system',
+    children: [
+      {
+        label: '员工管理',
+        path: '/system/employee/list'
       }
     ]
   }

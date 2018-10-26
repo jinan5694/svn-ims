@@ -22,9 +22,6 @@ export default {
         lineHeight: `${this.size}px`
       }
     }
-  },
-  created () {
-    // debugger
   }
 }
 </script>

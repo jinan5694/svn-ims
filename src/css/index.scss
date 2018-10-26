@@ -52,54 +52,31 @@ $form-width: 300px;
 
 // 修复级联选择器disabled状态样式问题
 .is-disabled .el-cascader__label span {
-  color: #c0c4cc;
+  color: $color-text-placeholder;
 }
 
 // 覆盖menu样式
-$color-menu-hover: mix($color-white, $color-primary, 70%) !default;
 $height-submenu: 50px;
 .el-menu--collapse {
   .el-menu-item, 
-  .el-submenu {
+  .el-submenu .el-submenu__title {
     height: 64px;
     padding: 0 !important;
     color: #666;
-    &.is-active {
+  }
+  .is-active {
+    &.el-menu-item, 
+    &.el-submenu .el-submenu__title,
+    &.el-submenu .el-submenu__title .icon {
       color: $color-primary;
-      .el-submenu__title {
-        color: $color-primary;
-        .icon {
-          color: $color-primary;
-        }
-      }
-    }
-    .el-submenu__title {
-      height: 64px;
-      padding: 0 !important;
-      color: #666;
     }
   }
 }
-
 .el-menu--popup {
   .el-menu-item {
     height: $height-submenu;
     line-height: $height-submenu;
   }
 }
-
-// .el-menu-item, .el-submenu {
-//   height: 64px;
-//   &.is-active {
-
-//   }
-// }
-
-// .el-submenu.is-active, .item.is-active {
-//   background-color: $--menu-item-hover-fill;
-// }
-// .el-submenu__title {
-//   padding: 0 !important;
-//   height: 64px;
-// }
+// 覆盖menu样式 - end ^_^
   

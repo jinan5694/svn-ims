@@ -27,7 +27,9 @@ export default {
     vendorName: '供应商名称',
     warehouse: '仓库代码/名称',
     zone: '库区代码/名称',
-    bin: '库位代码/名称'
+    bin: '库位代码/名称',
+    // system
+    employee: '员工编号/姓名'
   }
 
 }

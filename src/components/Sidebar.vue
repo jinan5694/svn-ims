@@ -1,5 +1,5 @@
 <template>
-  <div class="__sidebar">
+  <div class="sidebar">
     <el-menu
       :collapse="isCollapse"
       :default-active="active"
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.__sidebar {
+.sidebar {
   height: 100%;
   border-right: 1px solid #e6e6e6;
   padding-top: 16px;
