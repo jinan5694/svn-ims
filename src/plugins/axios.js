@@ -48,7 +48,7 @@ instance.interceptors.response.use(response => {
     return data
   } else {
     // 业务异常，自行处理
-    console.error('[business exception]', JSON.stringify(data, null, 2))
+    console.error('[business exception]', getExceptionMsg(response))
     return Promise.reject(data.exceptionMessage)
   }
 }, error => {
@@ -59,5 +59,16 @@ instance.interceptors.response.use(response => {
   console.error(error)
   return Promise.reject(error)
 })
+
+function getExceptionMsg (resp) {
+  const msg = {
+    url: _.get(resp, 'config.url'),
+    params: _.get(resp, 'config.params'),
+    success: _.get(resp, 'data.success'),
+    status: _.get(resp, 'data.status'),
+    exceptionStackTrace: _.get(resp, 'data.exceptionStackTrace')
+  }
+  return JSON.stringify(msg, null, 2)
+}
 
 Vue.prototype.$axios = instance

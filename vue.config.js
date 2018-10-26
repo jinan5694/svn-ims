@@ -10,11 +10,10 @@ module.exports = {
     port: 8088,
     proxy: {
       '/api': {
+        changeOrigin: true,
         target: 'http://cloudbrain.aicloudata.com/gateway/psi-dev/api',
-        ws: true,
-        changeOrigin: true
+        ws: true
       }
     }
-  },
-  runtimeCompiler: true
+  }
 }

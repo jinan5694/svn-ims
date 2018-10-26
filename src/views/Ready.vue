@@ -5,8 +5,12 @@
     element-loading-text="系统准备中">
     <el-alert
       v-show="readyFailed"
+      class="alert"
+      close-text="重试"
       title="系统准备失败"
-      type="error"/>
+      type="error"
+      show-icon
+      @close="handleClose"/>
   </div>
 </template>
 
@@ -22,15 +26,25 @@ export default {
     }
   },
   created () {
-    init(this).then(resp => {
-      this.$store.commit('readyComplete')
-    }).catch(err => {
-      if (err) {
-        this.readyFailed = true
-      }
-    }).finally(() => {
-      this.loading = false
-    })
+    this.init()
+  },
+  methods: {
+    handleClose () {
+      this.loading = true
+      this.readyFailed = false
+      this.init()
+    },
+    init () {
+      init(this).then(resp => {
+        this.$store.commit('readyComplete')
+      }).catch(err => {
+        if (err) {
+          this.readyFailed = true
+        }
+      }).finally(() => {
+        this.loading = false
+      })
+    }
   }
 }
 </script>
@@ -38,5 +52,9 @@ export default {
 <style lang='scss' scoped>
 .ready {
   height: 100%;
+  .alert {
+    width: 250px;
+    margin: 50px auto;
+  }
 }
 </style>

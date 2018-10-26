@@ -34,6 +34,8 @@
 import CrudMixin from '@/mixins/crud'
 import configMixin from './mixins/config'
 
+import { timeToDate } from '@/common/utils'
+
 export default {
   mixins: [ CrudMixin, configMixin ],
   data () {
@@ -62,11 +64,13 @@ export default {
         },
         {
           label: '入职日期',
-          prop: 'entryDate'
+          prop: 'entryDate',
+          formatter: row => timeToDate(row.entryDate)
         },
         {
           label: '出生日期',
-          prop: 'dateOfBirth'
+          prop: 'dateOfBirth',
+          formatter: row => timeToDate(row.dateOfBirth)
         },
         {
           label: '操作',
