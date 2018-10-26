@@ -62,7 +62,12 @@ $height-submenu: 50px;
   .el-submenu .el-submenu__title {
     height: 64px;
     padding: 0 !important;
-    color: #666;
+  }
+  .el-menu-item,
+  .el-menu-item .icon,
+  .el-submenu__title,
+  .el-submenu__title .icon {
+    color: #333;
   }
   .is-active {
     &.el-menu-item, 
