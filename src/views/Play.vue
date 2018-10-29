@@ -1,14 +1,13 @@
 <template>
   <Page>
-    <Test/>
+    play
   </Page>
 </template>
 <script>
-import Test from '@/components/Test'
 
 export default {
   components: {
-    Test
+
   },
   data () {
     return {
