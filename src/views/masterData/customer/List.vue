@@ -17,6 +17,16 @@
       :params="params"
       :columns="columns">
       <template
+        slot="customerCategory"
+        slot-scope="scope">
+        {{
+          $translate({
+            key: 'AfterSales_CustomerCate',
+            value: scope.row.customerCategory
+          })
+        }}
+      </template>
+      <template
         slot="operations"
         slot-scope="scope">
         <Button
@@ -64,7 +74,7 @@ export default {
         },
         {
           label: '客户类型',
-          prop: 'customerCategory'
+          slotName: 'customerCategory'
         },
         {
           label: '联系人',
@@ -74,10 +84,10 @@ export default {
           label: '联系电话',
           prop: 'customerTelOther'
         },
-        {
-          label: '状态',
-          prop: 'status'
-        },
+        // {
+        //   label: '状态',
+        //   prop: 'status'
+        // },
         {
           label: '备注',
           prop: 'remark'

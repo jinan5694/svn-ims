@@ -56,7 +56,7 @@ instance.interceptors.response.use(response => {
     title: '异常',
     message: '服务器异常'
   })
-  console.error(error)
+  console.error(JSON.stringify(_.get(error, 'response.data'), null, 2))
   return Promise.reject(error)
 })
 

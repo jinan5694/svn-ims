@@ -56,7 +56,7 @@ $form-width: 300px;
 }
 
 // 覆盖menu样式
-$height-submenu: 50px;
+$height-submenu: 40px;
 .el-menu--collapse {
   .el-menu-item, 
   .el-submenu .el-submenu__title {
@@ -67,7 +67,7 @@ $height-submenu: 50px;
   .el-menu-item .icon,
   .el-submenu__title,
   .el-submenu__title .icon {
-    color: #333;
+    color: #666;
   }
   .is-active {
     &.el-menu-item, 

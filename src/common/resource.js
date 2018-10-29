@@ -16,6 +16,17 @@ const resource = [
     ]
   },
   {
+    icon: 'storage',
+    label: '仓库',
+    path: 'bound',
+    children: [
+      {
+        label: '入库',
+        path: '/bound/inbound/list'
+      }
+    ]
+  },
+  {
     icon: 'folder',
     label: '档案',
     path: 'masterData',

@@ -4,25 +4,27 @@
  */
 import Vue from 'vue'
 
+import BackButton from './BackButton'
+import Button from './Button'
 import ConfirmButton from './ConfirmButton'
 import DataTable from './DataTable'
 import Icon from './Icon'
 import Logo from './Logo'
 import Search from './Search'
 import Page from './Page'
-import BackButton from './BackButton'
-import Button from './Button'
+import TopBottomLayout from './TopBottomLayout'
 import Unit from './Unit'
 
 const components = [
+  BackButton,
+  Button,
   ConfirmButton,
   DataTable,
   Icon,
   Logo,
   Page,
-  BackButton,
-  Button,
   Search,
+  TopBottomLayout,
   Unit
 ]
 

@@ -57,9 +57,16 @@
       <el-form-item
         label="商品类型"
         prop="">
-        <el-input
-          v-model="form.prodType"
-          :disabled="disabled"/>
+        <el-select
+          v-model="form.prodCategory"
+          :disabled="disabled">
+          <el-option
+            v-for="item in prodCategorys"
+            :key="item.value"
+            :label="item.label"
+            :value="item.code"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item
         label="备注"
@@ -124,7 +131,7 @@ export default {
         specmodel: null,
         brand: null,
         qualityGuaranteePeriod: null,
-        prodType: null,
+        prodCategory: null,
         remark: null,
         purchasePrice: null,
         sellingPrice: null,
@@ -142,6 +149,9 @@ export default {
       return {
         prodName: [{ required: true, message: '请输入商品名称', trigger: ['blur', 'change'] }]
       }
+    },
+    prodCategorys () {
+      return this.$getDictByKey('AfterSales_ProdSubCate')
     }
   },
   methods: {

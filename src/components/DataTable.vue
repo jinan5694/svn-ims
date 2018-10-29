@@ -63,7 +63,7 @@ const TABLE_COL_DEFAULT = {
 // 分页组件默认值
 const PAGINATION_DEFAULT = {
   'background': true,
-  'page-sizes': [10, 20, 50],
+  'page-sizes': [5, 10, 20],
   'layout': 'prev, pager, next, ->, sizes, total'
 }
 

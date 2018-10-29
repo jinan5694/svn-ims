@@ -5,7 +5,7 @@
     <template slot="toolbar">
       <Search
         v-model="searchValue"
-        :placeholder="$t('placeholder.prodName')"
+        :placeholder="$t('placeholder.customerName')"
         @search="fetch"/>
       <Button
         button-type="add"
@@ -17,26 +17,6 @@
       :params="params"
       :columns="columns">
       <template
-        slot="unit"
-        slot-scope="scope">
-        {{
-          $translate({
-            key: 'AfterSales_Unit',
-            value: scope.row.unit
-          })
-        }}
-      </template>
-      <template
-        slot="prodCategory"
-        slot-scope="scope">
-        {{
-          $translate({
-            key: 'AfterSales_ProdSubCate',
-            value: scope.row.prodCategory
-          })
-        }}
-      </template>
-      <template
         slot="operations"
         slot-scope="scope">
         <Button
@@ -47,8 +27,17 @@
           @click="toEdit(scope.row.id)"/>
         <ConfirmButton
           @click="remove(scope.row)"/>
+        <Button
+          button-type="inWarehouse"
+          @click="toWarehouse(scope.row.id)"/>
+        <Button
+          button-type="print"
+          @click="toPrint(scope.row.id)"/>
       </template>
     </DataTable>
+    <div style="height:100px">
+      123
+    </div>
   </Page>
 </template>
 <script>
@@ -56,7 +45,7 @@ import CrudMixin from '@/mixins/crud'
 import configMixin from './mixins/config'
 
 export default {
-  name: 'ProductList',
+  name: 'PurchaseList',
   mixins: [ CrudMixin, configMixin ],
   data () {
     return {
@@ -68,35 +57,39 @@ export default {
       let params = [ { where: { and: [], or: [] } } ]
       params[0].where.and.push({ enableFlag: 'System_EnableFlag_1' })
       if (this.searchValue) {
-        params[0].where.or.push({ prodName: { like: this.searchValue } })
+        params[0].where.or.push({ orderNo: { like: this.searchValue } })
       }
       return params
     },
     columns () {
       return [
         {
-          label: '商品名称',
-          prop: 'prodName'
+          label: '单号',
+          prop: 'orderNo'
         },
         {
-          label: '商品编码',
-          prop: 'prodCode'
+          label: '创建日期',
+          prop: 'postingDate'
         },
         {
-          label: '计量单位',
-          slotName: 'unit'
+          label: '供应商代码',
+          prop: 'vendorNo'
         },
         {
-          label: '规格型号',
-          prop: 'specmodel'
+          label: '供应商名称',
+          prop: 'vendorName'
         },
         {
-          label: '商品类型',
-          slotName: 'prodCategory'
+          label: '采购日期',
+          prop: 'postingDate'
         },
         {
-          label: '品牌',
-          prop: 'brand'
+          label: '状态',
+          prop: 'status'
+        },
+        {
+          label: '总价',
+          prop: 'status'
         },
         {
           label: '备注',
@@ -107,9 +100,14 @@ export default {
           prop: '',
           slotName: 'operations',
           align: 'center',
-          width: 150
+          width: '200px'
         }
       ]
+    }
+  },
+  methods: {
+    fetch () {
+      this.$refs.table.fetch()
     }
   }
 }

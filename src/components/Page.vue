@@ -34,7 +34,8 @@ export default {
   flex-direction: column;
   min-height: 100%;
   .header {
-    padding: 16px 32px;
+    padding: $page-content-padding;
+    padding-left: $base-padding-large;
     background-color: #fff;
     display: flex;
     justify-content: space-between;
@@ -42,16 +43,18 @@ export default {
 
     .toolbar {
       display: flex;
-      min-height: 32px;
+      min-height: $size-large;
       * + * {
-        margin-left: 8px;
+        margin-left: $base-margin-small;
       }
     }
   }
   .content {
-    margin: 16px;
-    padding: 16px;
+    margin: $page-content-margin;
+    padding: $page-content-padding;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
     flex: 1;
   }
 }

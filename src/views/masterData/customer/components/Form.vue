@@ -24,9 +24,15 @@
       <el-form-item
         label="客户类别"
         prop="">
-        <el-input
+        <el-select
           v-model="form.customerCategory"
-          :disabled="disabled"/>
+          :disabled="disabled">
+          <el-option
+            v-for="item in customerCategorys"
+            :key="item.value"
+            :label="item.label"
+            :value="item.code"/>
+        </el-select>
       </el-form-item>
       <el-form-item
         label="联系人"
@@ -106,6 +112,9 @@ export default {
       return {
         customerName: [{ required: true, message: '请输入客户名称', trigger: ['blur', 'change'] }]
       }
+    },
+    customerCategorys () {
+      return this.$getDictByKey('AfterSales_CustomerCate')
     }
   },
   methods: {
