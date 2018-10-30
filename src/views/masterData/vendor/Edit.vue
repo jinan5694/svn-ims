@@ -19,10 +19,10 @@ import Form from './components/Form.vue'
 
 export default {
   name: 'VendorEdit',
-  mixins: [ CrudMixin, configMixin ],
   components: {
     Form
   },
+  mixins: [ CrudMixin, configMixin ],
   data () {
     return {
       loading: false,

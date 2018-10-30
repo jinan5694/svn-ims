@@ -1,11 +1,11 @@
 <template>
   <el-popover
     v-model="visible"
+    :width="width"
     class="confirm-button"
     placement="bottom-end"
     title="提示"
-    trigger="click"
-    :width="width">
+    trigger="click">
     <div class="content">
       <div class="message">
         <Icon name="warning"/>

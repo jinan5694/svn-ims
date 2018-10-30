@@ -18,10 +18,10 @@ import Form from './components/Form.vue'
 
 export default {
   name: 'CustomerAdd',
-  mixins: [ CrudMixin, configMixin ],
   components: {
     Form
-  }
+  },
+  mixins: [ CrudMixin, configMixin ]
 }
 </script>
 <style lang="scss" scoped>

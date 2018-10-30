@@ -19,7 +19,7 @@
       </div>
       <div slot="bottom">
         <div class="title">商品</div>
-        <ItemTable :order-no="orderNo"/>
+        <ItemTable :data="data"/>
       </div>
     </TopBottomLayout>
   </Page>
@@ -31,15 +31,15 @@ import HeadTable from './components/HeadTable'
 import ItemTable from './components/ItemTable'
 
 export default {
-  mixins: [ configMixin ],
   components: {
     HeadTable,
     ItemTable
   },
+  mixins: [ configMixin ],
   data () {
     return {
       searchKey: '',
-      orderNo: null
+      data: []
     }
   },
   methods: {
@@ -47,7 +47,7 @@ export default {
       this.$refs.headTable.fetch()
     },
     handleCurrentChange (row) {
-      this.orderNo = row.id
+      this.data = row.zone
     }
   }
 }

@@ -19,10 +19,10 @@ import configMixin from './mixins/config'
 import Form from './components/Form.vue'
 
 export default {
-  mixins: [ CrudMixin, configMixin ],
   components: {
     Form
-  }
+  },
+  mixins: [ CrudMixin, configMixin ]
 }
 </script>
 <style lang="scss" scoped>

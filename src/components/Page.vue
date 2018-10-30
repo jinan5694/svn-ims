@@ -53,9 +53,8 @@ export default {
     margin: $page-content-margin;
     padding: $page-content-padding;
     background-color: #fff;
-    display: flex;
-    flex-direction: column;
     flex: 1;
+    display: block;
   }
 }
 </style>

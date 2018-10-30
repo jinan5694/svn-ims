@@ -5,6 +5,7 @@
 import Vue from 'vue'
 
 import BackButton from './BackButton'
+import BaseTable from './BaseTable'
 import Button from './Button'
 import ConfirmButton from './ConfirmButton'
 import DataTable from './DataTable'
@@ -17,6 +18,7 @@ import Unit from './Unit'
 
 const components = [
   BackButton,
+  BaseTable,
   Button,
   ConfirmButton,
   DataTable,

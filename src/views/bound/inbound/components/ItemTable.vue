@@ -1,10 +1,8 @@
 <template>
-  <DataTable
+  <BaseTable
     ref="table"
-    :url="urlQuery"
-    :params="params"
     :columns="columns"
-    :pagination-config="paginationConfig">
+    :data="data">
     <template
       slot="operator"
       slot-scope="{row, index}">
@@ -19,7 +17,7 @@
         msg="确定停用该仓库？"
         @click="remove(row)"/>
     </template>
-  </DataTable>
+  </BaseTable>
 </template>
 
 <script>
@@ -29,9 +27,9 @@ import configMixin from '../mixins/config'
 export default {
   mixins: [ CrudMixin, configMixin ],
   props: {
-    orderNo: {
-      type: String,
-      default: null
+    data: {
+      type: Array,
+      default: () => []
     }
   },
   data () {

@@ -2,6 +2,21 @@
 import resources from '@/common/resource'
 
 export default {
+  computed: {
+    active () {
+      return this.$route.path
+    }
+  },
+  methods: {
+    getItem (item, slot) {
+      return (
+        <div class="item" { ...slot && { slot: slot }}>
+          <icon name={ item.icon } />
+          <div class="title">{ item.label }</div>
+        </div>
+      )
+    }
+  },
   render () {
     return (
       <div class="sidebar">
@@ -38,21 +53,6 @@ export default {
         </el-menu>
       </div>
     )
-  },
-  computed: {
-    active () {
-      return this.$route.path
-    }
-  },
-  methods: {
-    getItem (item, slot) {
-      return (
-        <div class="item" { ...slot && { slot: slot }}>
-          <icon name={ item.icon } />
-          <div class="title">{ item.label }</div>
-        </div>
-      )
-    }
   }
 }
 </script>

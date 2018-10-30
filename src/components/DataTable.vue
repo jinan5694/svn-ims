@@ -4,36 +4,21 @@
     :element-loading-text="$t('loading_text')"
     class="data-table">
     <div class="table">
-      <el-table
+      <BaseTable
         ref="table"
+        :columns="columns"
         :data="data"
-        v-bind="tableBinds"
+        v-bind="tableConfig.props"
         v-on="tableConfig.events">
-        <template v-for="(column, index) in _columns">
-          <el-table-column
-            v-if="needSlot(column)"
-            :key="columnKey(column, index)"
-            v-bind="column">
-            <template slot-scope="scope">
-              <slot
-                :index="scope.$index"
-                :name="getSlotName(column)"
-                :row="scope.row"/>
-            </template>
-          </el-table-column>
-          <el-table-column
-            v-else
-            :key="columnKey(column, index)"
-            v-bind="column"/>
-        </template>
-      </el-table>
+        <slot/>
+      </BaseTable>
     </div>
     <div class="pagination">
       <el-pagination
         v-bind="paginationBinds"
-        v-on="paginationConfig.events"
         :current-page.sync="page.pageNumber"
         :total="total"
+        v-on="paginationConfig.events"
         @current-change="handleCurrentChange"
         @size-change="handleSizeChange"/>
     </div>
@@ -46,19 +31,6 @@
  * params 默认值设置，请在 /common/params.js 中处理
  */
 import _ from 'lodash'
-
-// 表格组件默认值
-const TABLE_DEFAULT = {
-  // 最小行高
-  'size': 'mini',
-  // 斑马纹
-  'stripe': true
-}
-
-// 表格组件列默认值
-const TABLE_COL_DEFAULT = {
-  'show-overflow-tooltip': true
-}
 
 // 分页组件默认值
 const PAGINATION_DEFAULT = {
@@ -91,7 +63,7 @@ export default {
       type: Object,
       default: () => {
         return {
-          props: TABLE_DEFAULT,
+          props: {},
           events: {}
         }
       }
@@ -121,15 +93,6 @@ export default {
     }
   },
   computed: {
-    _columns () {
-      // 给传进来的 columns 设置默认值
-      return this.columns.map(column => {
-        return _.assign({}, TABLE_COL_DEFAULT, column)
-      })
-    },
-    tableBinds () {
-      return _.assign({}, TABLE_DEFAULT, this.tableConfig.props)
-    },
     paginationBinds () {
       return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
     }
@@ -138,20 +101,10 @@ export default {
     this.fetch()
   },
   methods: {
-    // v-for key generator
-    columnKey (column, index) {
-      return `${index}_${column.prop || ''}`
-    },
     getParams () {
       // clone 是为了不修改原数据
       const params = _.cloneDeep(this.params)
       return _.set(params, '[0].page', _.assign({}, this.page))
-    },
-    getSlotName (column) {
-      return column.type === 'expand' ? 'expand' : column.slotName
-    },
-    needSlot (column) {
-      return column.type === 'expand' || column.slotName
     },
     // events
     handleCurrentChange (pageNumber) {
