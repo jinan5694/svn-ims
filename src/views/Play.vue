@@ -1,18 +1,24 @@
 <template>
   <Page>
+    <div>{{ form }}</div>
     <GridForm
       :items="items"
       :model="form"
       :number-of-columns="4">
-      <!-- <div slot="date">
-        <el-date-picker v-model="form.date"/>
-      </div> -->
       <el-date-picker
         slot="date"
         v-model="form.date"/>
       <div slot="name">
         <el-input v-model="form.name"/>
       </div>
+      <InputNumber
+        ref="in"
+        slot="age"
+        v-model="form.age"
+        type="number"
+        @change="handleChange"
+        @blur="handleBlur"
+        @focus="handleFocus"/>
       <div slot="address">
         <el-input
           v-model="form.address"
@@ -32,6 +38,7 @@ export default {
       form: {
         name: null,
         date: null,
+        age: null,
         address: null
       },
       items: [
@@ -41,12 +48,16 @@ export default {
         },
         {
           label: '姓名',
-          prop: 'name',
-          span: 1
+          prop: 'name'
+        },
+        {
+          label: '年龄',
+          prop: 'age'
         },
         {
           label: '地址',
-          prop: 'address'
+          prop: 'address',
+          span: 2
         }
       ]
     }
@@ -75,8 +86,19 @@ export default {
   watch: {
 
   },
+  mounted () {
+    this.$refs.in.focus()
+  },
   methods: {
-
+    handleChange (value) {
+      console.log('change', value)
+    },
+    handleBlur (event) {
+      console.log('blur')
+    },
+    handleFocus (event) {
+      console.log('focus')
+    }
   }
 }
 </script>
