@@ -1,5 +1,5 @@
 <template>
-  <div class="form-container">
+  <div class="form">
     <Info ref="info"/>
     <Table ref="table"/>
   </div>
@@ -42,7 +42,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.form {
-  width: 400px;
-}
+
 </style>

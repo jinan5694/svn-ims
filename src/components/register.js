@@ -9,6 +9,7 @@ import BaseTable from './BaseTable'
 import Button from './Button'
 import ConfirmButton from './ConfirmButton'
 import DataTable from './DataTable'
+import GridForm from './GridForm'
 import Icon from './Icon'
 import Logo from './Logo'
 import Search from './Search'
@@ -22,6 +23,7 @@ const components = [
   Button,
   ConfirmButton,
   DataTable,
+  GridForm,
   Icon,
   Logo,
   Page,

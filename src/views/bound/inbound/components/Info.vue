@@ -1,55 +1,14 @@
 <template>
-
-  <el-form
+  <GridForm
     ref="form"
     :model="form"
     :rules="rules"
     label-width="80px">
-
-    <el-row :gutter="20">
-      <el-col :span="6">
-        <el-form-item
-          label="备注"
-          prop="remark">
-          <el-input
-            v-model="form.remark"
-            :disabled="disabled"/>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item
-          label="备注"
-          prop="remark">
-          <el-input
-            v-model="form.remark"
-            :disabled="disabled"/>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item
-          label="备注"
-          prop="remark">
-          <el-input
-            v-model="form.remark"
-            :disabled="disabled"/>
-        </el-form-item>
-      </el-col>
-      <el-col :span="6">
-        <el-form-item
-          label="备注"
-          prop="remark">
-          <el-input
-            v-model="form.remark"
-            :disabled="disabled"/>
-        </el-form-item>
-      </el-col>
-    </el-row>
-
-  </el-form>
+    <!-- slots -->
+  </GridForm>
 </template>
 <script>
 export default {
-  name: 'Form',
   props: {
     editable: {
       type: Boolean,

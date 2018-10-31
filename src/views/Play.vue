@@ -1,21 +1,24 @@
 <template>
   <Page>
-    <BaseTable
-      :columns="columns"
-      :data="data"
-    >
-      <div
-        slot="address"
-        slot-scope="{index, row}">
-        <div>out test</div>
-        <span>{{ index }}</span>
+    <GridForm
+      :items="items"
+      :model="form"
+      :number-of-columns="4">
+      <!-- <div slot="date">
+        <el-date-picker v-model="form.date"/>
+      </div> -->
+      <el-date-picker
+        slot="date"
+        v-model="form.date"/>
+      <div slot="name">
+        <el-input v-model="form.name"/>
       </div>
-      <div
-        slot="name"
-        slot-scope="{index, row}">
-        <div>name is: {{ row.name }}</div>
+      <div slot="address">
+        <el-input
+          v-model="form.address"
+          type="textarea"/>
       </div>
-    </BaseTable>
+    </GridForm>
   </Page>
 </template>
 <script>
@@ -26,13 +29,25 @@ export default {
   },
   data () {
     return {
-      data: [
-        { date: '2018-10-30', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄' },
-        { date: '2018-10-30', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄' },
-        { date: '2018-10-30', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄' },
-        { date: '2018-10-30', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄' },
-        { date: '2018-10-30', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄' },
-        { date: '2018-10-30', name: '王小虎', address: '上海市普陀区金沙江路 1518 弄' }
+      form: {
+        name: null,
+        date: null,
+        address: null
+      },
+      items: [
+        {
+          label: '日期',
+          prop: 'date'
+        },
+        {
+          label: '姓名',
+          prop: 'name',
+          span: 1
+        },
+        {
+          label: '地址',
+          prop: 'address'
+        }
       ]
     }
   },
