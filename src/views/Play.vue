@@ -4,7 +4,7 @@
     <GridForm
       :items="items"
       :model="form"
-      :number-of-columns="4">
+      :rules="rules">
       <el-date-picker
         slot="date"
         v-model="form.date"/>
@@ -63,24 +63,13 @@ export default {
     }
   },
   computed: {
-    columns () {
-      return [
-        {
-          label: '日期',
-          prop: 'date',
-          align: 'center'
-        },
-        {
-          label: '姓名',
-          prop: 'name',
-          slotName: 'name2'
-        },
-        {
-          label: '地址',
-          prop: 'address',
-          slotName: 'address'
-        }
-      ]
+    rules () {
+      return {
+        date: [{ required: true }],
+        name: [{ required: true }],
+        age: [{ required: true }],
+        address: [{ required: true }]
+      }
     }
   },
   watch: {
