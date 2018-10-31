@@ -33,7 +33,7 @@ export default {
       return column.type === 'expand' ? 'expand' : column.slotName
     },
     getScopedSlots (instance, name) {
-      if (instance.$scopedSlots === undefined) {
+      if (instance === undefined) {
         return null
       }
       if (instance.$scopedSlots[name]) {
@@ -57,6 +57,8 @@ export default {
             }
           }
           data.scopedSlots = scopedSlots
+        } else {
+          console.warn('[BaseTable] slot defined but not found. name is: ' + slotName)
         }
       }
       return <el-table-column {...data} />

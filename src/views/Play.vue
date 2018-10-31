@@ -47,7 +47,7 @@ export default {
         {
           label: '姓名',
           prop: 'name',
-          slotName: 'name'
+          slotName: 'name2'
         },
         {
           label: '地址',
