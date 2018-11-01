@@ -4,10 +4,7 @@
     <GridForm
       :items="items"
       :model="form"
-      :number-of-columns="4">
-      <!-- <div slot="date">
-        <el-date-picker v-model="form.date"/>
-      </div> -->
+      :rules="rules">
       <el-date-picker
         slot="date"
         v-model="form.date"/>
@@ -15,10 +12,13 @@
         <el-input v-model="form.name"/>
       </div>
       <InputNumber
+        ref="in"
         slot="age"
         v-model="form.age"
-        :max="100"
-        :min="0"/>
+        type="number"
+        @change="handleChange"
+        @blur="handleBlur"
+        @focus="handleFocus"/>
       <div slot="address">
         <el-input
           v-model="form.address"
@@ -50,8 +50,7 @@ export default {
         },
         {
           label: '姓名',
-          prop: 'name',
-          span: 1
+          prop: 'name'
         },
         {
           label: '年龄',
@@ -66,33 +65,30 @@ export default {
     }
   },
   computed: {
-    columns () {
-      return [
-        {
-          label: '日期',
-          prop: 'date',
-          align: 'center'
-        },
-        {
-          label: '姓名',
-          prop: 'name',
-          slotName: 'name2'
-        },
-        {
-          label: '地址',
-          prop: 'address',
-          slotName: 'address'
-        }
-      ]
+    rules () {
+      return {
+        date: [{ required: true }],
+        name: [{ required: true }],
+        age: [{ required: true }],
+        address: [{ required: true }]
+      }
     }
   },
   watch: {
 
   },
+  mounted () {
+    this.$refs.in.focus()
+  },
   methods: {
     handleChange (value) {
-      debugger
-      console.log(value)
+      console.log('change', value)
+    },
+    handleBlur (event) {
+      console.log('blur')
+    },
+    handleFocus (event) {
+      console.log('focus')
     }
   }
 }
