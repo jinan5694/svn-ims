@@ -84,4 +84,11 @@ $height-submenu: 40px;
   }
 }
 // 覆盖menu样式 - end ^_^
+
+// 表单元素宽度自适应
+.el-select,
+.el-date-editor.el-input {
+  width: 100%;
+}
+
   

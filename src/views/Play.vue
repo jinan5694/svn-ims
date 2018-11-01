@@ -40,6 +40,13 @@
           type="textarea"
           @change="handleChange"/>
       </div>
+      <el-select
+        slot="sex"
+        v-model="form.sex"/>
+      <el-date-picker
+        slot="time"
+        v-model="form.time"
+        type="datetime"/>
     </GridForm>
   </Page>
 </template>
@@ -57,9 +64,15 @@ export default {
         name: null,
         age: null,
         date: null,
+        sex: null,
+        time: null,
         address: null
       },
       items: [
+        {
+          label: '日期',
+          prop: 'date'
+        },
         {
           label: '日期',
           prop: 'date'
@@ -71,6 +84,28 @@ export default {
         {
           label: '年龄',
           prop: 'age'
+        },
+        {
+          label: '性别',
+          prop: 'sex',
+          span: 1
+        },
+        {
+          label: '姓名',
+          prop: 'name'
+        },
+        {
+          label: '姓名',
+          prop: 'name'
+        },
+        {
+          label: '姓名',
+          prop: 'name'
+        },
+        {
+          label: '时间',
+          prop: 'time',
+          span: 2
         },
         {
           label: '地址',
