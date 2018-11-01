@@ -11,6 +11,7 @@ import ConfirmButton from './ConfirmButton'
 import DataTable from './DataTable'
 import GridForm from './GridForm'
 import Icon from './Icon'
+import InputNumber from './InputNumber'
 import Logo from './Logo'
 import Search from './Search'
 import Page from './Page'
@@ -25,6 +26,7 @@ const components = [
   DataTable,
   GridForm,
   Icon,
+  InputNumber,
   Logo,
   Page,
   Search,

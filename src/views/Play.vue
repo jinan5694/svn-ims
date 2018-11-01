@@ -1,5 +1,6 @@
 <template>
   <Page>
+    <div>{{ form }}</div>
     <GridForm
       :items="items"
       :model="form"
@@ -13,10 +14,16 @@
       <div slot="name">
         <el-input v-model="form.name"/>
       </div>
+      <InputNumber
+        slot="age"
+        v-model="form.age"
+        :max="100"
+        :min="0"/>
       <div slot="address">
         <el-input
           v-model="form.address"
-          type="textarea"/>
+          type="textarea"
+          @change="handleChange"/>
       </div>
     </GridForm>
   </Page>
@@ -24,6 +31,7 @@
 <script>
 import BaseTable from '@/components/BaseTable'
 export default {
+  name: 'Play',
   components: {
     BaseTable
   },
@@ -31,6 +39,7 @@ export default {
     return {
       form: {
         name: null,
+        age: null,
         date: null,
         address: null
       },
@@ -45,8 +54,13 @@ export default {
           span: 1
         },
         {
+          label: '年龄',
+          prop: 'age'
+        },
+        {
           label: '地址',
-          prop: 'address'
+          prop: 'address',
+          span: 2
         }
       ]
     }
@@ -76,7 +90,10 @@ export default {
 
   },
   methods: {
-
+    handleChange (value) {
+      debugger
+      console.log(value)
+    }
   }
 }
 </script>
