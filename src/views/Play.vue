@@ -1,5 +1,20 @@
 <template>
   <Page>
+    <BaseButton
+      type="add"
+      @click="handleClick"/>
+    <BaseButton type="save"/>
+    <BaseButton type="search"/>
+    <BaseButton type="print"/>
+    <BaseButton type="back"/>
+
+    <BaseButton type="view"/>
+    <BaseButton type="edit"/>
+    <BaseButton type="stop"/>
+    <BaseButton
+      :loading="true"
+      type="edit"/>
+    <BaseButton type="test">test</BaseButton>
     <div>{{ form }}</div>
     <GridForm
       :items="items"
@@ -29,11 +44,12 @@
   </Page>
 </template>
 <script>
-import BaseTable from '@/components/BaseTable'
+import BaseButton from '@/components/BaseButton'
+
 export default {
   name: 'Play',
   components: {
-    BaseTable
+    BaseButton
   },
   data () {
     return {
@@ -78,7 +94,7 @@ export default {
 
   },
   mounted () {
-    this.$refs.in.focus()
+    // this.$refs.in.focus()
   },
   methods: {
     handleChange (value) {
@@ -89,6 +105,9 @@ export default {
     },
     handleFocus (event) {
       console.log('focus')
+    },
+    handleClick () {
+      console.log('click')
     }
   }
 }

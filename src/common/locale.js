@@ -7,7 +7,7 @@ export default {
   ok: '确定',
   cancel: '取消',
   close: '关闭',
-  save: '保 存',
+  save: '保存',
   loading_text: '拼命加载中',
   view: '查看',
   edit: '编辑',
