@@ -43,9 +43,9 @@ export default {
 
     .toolbar {
       display: flex;
-      min-height: $size-large;
+      min-height: 28px;
       * + * {
-        margin-left: $base-margin-small;
+        margin-left: 10px;
       }
     }
   }

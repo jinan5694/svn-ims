@@ -9,11 +9,23 @@ export default {
     vendors: []
   },
   mutations: {
+    setEmployees (state, employees) {
+      state.employees = employees
+    },
     setVendors (state, vendors) {
       state.vendors = vendors
     }
   },
   actions: {
+    setEmployees ({ commit }, vue) {
+      const url = '/EmployeeService/query'
+      const params = [
+        { where: { and: [{ enableFlag: 'System_EnableFlag_1' }] } }
+      ]
+      return vue.$axios.get(url, { params: params }).then(resp => {
+        commit('setEmployees', resp.data)
+      })
+    },
     setVendors ({ commit }, vue) {
       const url = '/VendorService/query'
       const params = [

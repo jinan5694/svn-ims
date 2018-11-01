@@ -93,3 +93,10 @@ export default {
   }
 }
 </style>
+<style lang="scss">
+.el-button + .confirm-button,
+.confirm-button + .el-button,
+.confirm-button + .confirm-button {
+  margin-left: 10px;
+}
+</style>

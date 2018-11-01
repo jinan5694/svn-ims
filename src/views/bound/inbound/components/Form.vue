@@ -7,6 +7,9 @@
 <script>
 import Info from './Info'
 import Table from './Table'
+
+import Axios from 'axios'
+
 export default {
   components: {
     Info,
@@ -36,7 +39,11 @@ export default {
       this.form = form
     },
     validate () {
-      return new Promise()
+      const tasks = [
+        this.$refs.info.validate()
+        // this.$refs.table.validate
+      ]
+      return Axios.all(tasks)
     }
   }
 }

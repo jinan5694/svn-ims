@@ -1,6 +1,6 @@
 <script>
 const DEFAULT_PROPS = {
-  labelWidth: '100px'
+  'label-width': '80px'
 }
 
 const DEFAULT_EVENTS = {
@@ -65,6 +65,11 @@ export default {
       return 24 / this.numberOfColumns
     }
   },
+  methods: {
+    validate () {
+      return this.$refs.form.validate()
+    }
+  },
   render () {
     const rows = this.rows.map(row => {
       return (
@@ -90,7 +95,7 @@ export default {
       props: this.props,
       on: this.events
     }
-    return <el-form { ...data }>{ rows }</el-form>
+    return <el-form ref="form" { ...data }>{ rows }</el-form>
   }
 }
 </script>

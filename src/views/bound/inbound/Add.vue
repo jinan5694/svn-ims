@@ -6,6 +6,9 @@
       <Button
         button-type="save"
         @click="handleSaveOrUpdate"/>
+      <el-button
+        type="primary"
+        @click="handleInbound">入库</el-button>
       <BackButton/>
     </template>
     <Form ref="form"/>
@@ -22,7 +25,16 @@ export default {
   components: {
     Form
   },
-  mixins: [ CrudMixin, configMixin ]
+  mixins: [ CrudMixin, configMixin ],
+  methods: {
+    handleInbound () {
+      this.$refs.form.validate().then(valid => {
+        console.log('success')
+      }).catch(() => {
+        console.log('faild')
+      })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

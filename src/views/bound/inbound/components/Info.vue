@@ -1,10 +1,47 @@
 <template>
   <GridForm
     ref="form"
+    :items="items"
     :model="form"
-    :rules="rules"
-    label-width="80px">
-    <!-- slots -->
+    :rules="rules">
+    <el-input
+      slot="orderNo"
+      v-model="form.orderNo"
+      disabled/>
+    <el-select
+      slot="purchaseOrder.id"
+      v-model="form.purchaseOrder.id">
+      <el-option
+        v-for="item in vendors"
+        :key="item.id"
+        :label="item.vendorName"
+        :value="item.id"/>
+    </el-select>
+    <el-select
+      slot="sourceOrg"
+      v-model="form.sourceOrg">
+      <el-option
+        v-for="item in vendors"
+        :key="item.id"
+        :label="item.vendorName"
+        :value="item.id"/>
+    </el-select>
+    <el-date-picker
+      slot="postingDate"
+      v-model="form.postingDate"
+      value-format="yyyy-MM-dd"/>
+    <el-select
+      slot="operator"
+      v-model="form.operator">
+      <el-option
+        v-for="item in employees"
+        :key="item.id"
+        :label="item.employeeName"
+        :value="item.id"/>
+    </el-select>
+    <el-input
+      slot="remark"
+      v-model="form.remark"/>
   </GridForm>
 </template>
 <script>
@@ -19,15 +56,15 @@ export default {
     return {
       form: {
         id: null,
-        warehouseCode: null,
-        warehouseName: null,
-        warehouseCategory: null,
-        pricingMethod: null,
-        contact: null,
-        tel: null,
-        remark: null,
-        // 默认库区
-        defaultZoneId: null
+        orderNo: null, // 入库单号
+        purchaseOrder: {
+          id: null,
+          orderNo: null // 采购单号
+        },
+        sourceOrg: null, // 供应商 （id）
+        postingDate: null, // 入库日期
+        operator: null, // 操作员 （id）
+        remark: null
       }
     }
   },
@@ -35,64 +72,71 @@ export default {
     disabled () {
       return !this.editable
     },
-    inventoryAttributes () {
-      return this.$getDictByKey('Inventory_Attributes')
-    },
-    inventoryPricingMethod () {
-      return this.$getDictByKey('Inventory_PricingMethod')
+    items () {
+      return [
+        {
+          label: '入库单号',
+          prop: 'orderNo'
+        },
+        {
+          label: '采购单',
+          prop: 'purchaseOrder.id'
+        },
+        {
+          label: '供应商',
+          prop: 'sourceOrg'
+        },
+        {
+          label: '入库日期',
+          prop: 'postingDate'
+        },
+        {
+          label: '操作员',
+          prop: 'operator'
+        },
+        {
+          label: '备注',
+          prop: 'remark',
+          span: 2
+        }
+      ]
     },
     rules () {
       return {
-        warehouseCode: [{
+        'purchaseOrder.id': [{
           required: true,
-          message: '请输入仓库代码',
-          trigger: ['blur']
+          message: '请选择采购单',
+          trigger: ['blur', 'change']
         }],
-        warehouseName: [{
+        sourceOrg: [{
           required: true,
-          message: '请输入仓库名称',
-          trigger: ['blur']
+          message: '请选择供应商',
+          trigger: ['blur', 'change']
         }],
-        contact: [{
+        postingDate: [{
           required: true,
-          message: '请输入联系人',
-          trigger: ['blur']
+          message: '请选择入库日期',
+          trigger: ['blur', 'change']
         }],
-        tel: [{
+        operator: [{
           required: true,
-          message: '请输入电话',
-          trigger: ['blur']
+          message: '请选择操作员',
+          trigger: ['blur', 'change']
         }]
       }
     },
-    zones () {
-      return this.form.zone
+    employees () {
+      return this.$store.state.Business.employees
+    },
+    vendors () {
+      return this.$store.state.Business.vendors
     }
   },
   methods: {
     getForm () {
       return this.form
     },
-    getDefaultZoneId (form) {
-      const defaultZone = form.zone.find(item => {
-        return item.defaultZoneFlag === 'System_YesNo_1'
-      })
-      return defaultZone ? defaultZone.id : null
-    },
-    handleDfaultZoneChange (id) {
-      this.setDefaultZoneFlag(id)
-    },
-    setDefaultZoneFlag (id) {
-      this.form.zone.forEach(item => {
-        if (item.id === id) {
-          item.defaultZoneFlag = 'System_YesNo_1'
-        } else {
-          item.defaultZoneFlag = 'System_YesNo_0'
-        }
-      })
-    },
     setForm (form) {
-      form.defaultZoneId = this.getDefaultZoneId(form)
       this.form = form
     },
     validate () {
@@ -101,8 +145,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.form {
-  width: 400px;
-}
-</style>
