@@ -91,4 +91,13 @@ $height-submenu: 40px;
   width: 100%;
 }
 
+.table-validate {
+  .el-form-item {
+    margin-bottom: 0;
+  }
+  .el-form-item__content {
+    line-height: 1;
+  }
+}
+
   

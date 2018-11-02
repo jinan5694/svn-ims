@@ -1,8 +1,8 @@
 export default {
   data () {
     return {
-      serviceName: 'WarehouseService',
-      path: ['zone']
+      serviceName: 'InStorageService',
+      path: []
     }
   },
   computed: {

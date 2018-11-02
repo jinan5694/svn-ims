@@ -1,5 +1,41 @@
 <template>
   <Page>
+    <p>{{ value }}</p>
+    <In
+      v-model="value"
+      :max="10"/>
+    <Number/><br >
+    <hr>
+    <Number value="0"/><br >
+    <Number :value="0"/><br >
+    <Number
+      :value="0"
+      amount/><br ><hr>
+
+    <Number value="1"/><br >
+    <Number :value="1"/><br >
+    <Number
+      :value="1"
+      amount/><br ><hr>
+
+    <Number value="1.2345"/><br >
+    <Number :value="1.2345"/><br >
+    <Number
+      :value="1.2345"
+      amount/><br ><hr>
+
+    <Number value="test"/><br >
+    <!-- <Number :value="test"/><br > -->
+    <Number
+      value="test"
+      amount/><br ><hr>
+
+    <Number value="-3456.7789"/><br >
+    <Number :value="-3456.7789"/><br >
+    <Number
+      :value="-3456.7789"
+      amount/><br ><hr>
+
     <BaseButton
       type="add"
       @click="handleClick"/>
@@ -52,14 +88,17 @@
 </template>
 <script>
 import BaseButton from '@/components/BaseButton'
+import In from '@/components/in'
 
 export default {
   name: 'Play',
   components: {
-    BaseButton
+    BaseButton,
+    In
   },
   data () {
     return {
+      value: 5,
       form: {
         name: null,
         age: null,

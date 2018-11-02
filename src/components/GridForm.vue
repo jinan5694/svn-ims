@@ -81,7 +81,7 @@ export default {
                 <el-col span={ span }>
                   <el-form-item {...{ props: item }}>
                     {
-                      this.$slots[item.prop]
+                      this.$slots[item.slotName || item.prop]
                     }
                   </el-form-item>
                 </el-col>

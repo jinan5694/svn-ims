@@ -1,21 +1,7 @@
 <script>
-const DEFAULT_PROPS = {
-  controls: false,
-  max: 999999,
-  min: 0
-}
-// types
-const TYPES = {
-  number: {
-    precision: 0
-  },
-  amount: {
-    precision: 2
-  }
-}
-
+import _ from 'lodash'
 export default {
-  name: 'InputNumber',
+  functional: true,
   props: {
     type: {
       type: String,
@@ -23,41 +9,16 @@ export default {
       validtor (value) {
         return ['number', 'amount'].includes(value)
       }
-    },
-    value: {
-      type: Number,
-      default: null
     }
   },
-  computed: {
-    props () {
-      return Object.assign({}, DEFAULT_PROPS, TYPES[this.type], this.$attrs)
-    }
-  },
-  methods: {
-    focus () {
-      this.$refs.inputNumber.focus()
-    },
-    inputHandler (value) {
-      this.$emit('input', value)
-    }
-  },
-  render (h) {
-    const self = this
-    return h('el-input-number', {
-      ref: 'inputNumber',
-      class: {
-        'custom-input-number': true
-      },
-      props: this.props,
-      domProps: {
-        value: self.value
-      },
-      on: {
-        input: self.inputHandler,
-        ...self.$listeners
-      }
-    })
+  render (h, ctx) {
+    const data = ctx.data
+    // custom
+    _.set(ctx.data, 'props.controls', false)
+    _.set(ctx.data, 'props.precision', ctx.props.type === 'amount' ? 2 : 0)
+    _.set(ctx.data, 'class.custom-input-number', true)
+
+    return h('el-input-number', data, ctx.children)
   }
 }
 </script>

@@ -1,14 +1,15 @@
 <template>
   <div class="form">
-    <Info ref="info"/>
+    <Info
+      ref="info"
+      @order-change="handleOrderChange"/>
     <Table ref="table"/>
   </div>
 </template>
 <script>
+import _ from 'lodash'
 import Info from './Info'
 import Table from './Table'
-
-import Axios from 'axios'
 
 export default {
   components: {
@@ -29,21 +30,75 @@ export default {
   computed: {
     disabled () {
       return !this.editable
+    },
+    defaultItem () {
+      return {
+        product: {
+          id: null,
+          prodName: null,
+          prodCode: null,
+          unit: null,
+          specmodel: null,
+          brand: null
+        },
+        prodBatch: { // 批次
+          batchCode: null
+        },
+        warehouse: {
+          warehouse: null,
+          zone: null,
+          bin: null
+        }, // inner
+        destLoc: { // 仓库
+          id: null
+        },
+        destZone: { // 库区
+          id: null
+        },
+        destBin: { // 库位
+          id: null
+        },
+        movementQty: 0, // 入库数量
+        price: 0, // 商品中带出的，可以修改
+        amount: 0 // 根据数量和金额计算
+      }
     }
   },
   methods: {
+    handleOrderChange (order) {
+      const items = order.productItems.map(item => {
+        return _.assign({}, _.cloneDeep(this.defaultItem), {
+          product: item.product,
+          movementQty: item.qty,
+          inQty: item.inQty
+        })
+      })
+      this.$refs.table.setItems(items)
+    },
     getForm () {
-      return this.form
+      return {
+        ...this.$refs.info.getForm(),
+        items: this.$refs.table.getItems()
+      }
     },
     setForm (form) {
-      this.form = form
+      this.$refs.info.setForm(form)
+      this.$refs.table.setItems(form.items)
     },
     validate () {
+      debugger
       const tasks = [
-        this.$refs.info.validate()
-        // this.$refs.table.validate
+        this.$refs.info.validate(),
+        this.$refs.table.validate()
       ]
-      return Axios.all(tasks)
+      return Promise.all(tasks).then(valid => {
+        debugger
+        return true
+      }).catch(error => {
+        if (error) {
+          debugger
+        }
+      })
     }
   }
 }

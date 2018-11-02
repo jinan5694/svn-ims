@@ -13,6 +13,7 @@ import GridForm from './GridForm'
 import Icon from './Icon'
 import InputNumber from './InputNumber'
 import Logo from './Logo'
+import Number from './Number'
 import Search from './Search'
 import Page from './Page'
 import TopBottomLayout from './TopBottomLayout'
@@ -28,6 +29,7 @@ const components = [
   Icon,
   InputNumber,
   Logo,
+  Number,
   Page,
   Search,
   TopBottomLayout,

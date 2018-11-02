@@ -9,12 +9,13 @@
       v-model="form.orderNo"
       disabled/>
     <el-select
-      slot="purchaseOrder.id"
-      v-model="form.purchaseOrder.id">
+      slot="purchaseOrder"
+      v-model="form.purchaseOrder.id"
+      @change="handlePurchaseChange">
       <el-option
-        v-for="item in vendors"
+        v-for="item in orders"
         :key="item.id"
-        :label="item.vendorName"
+        :label="item.orderNo"
         :value="item.id"/>
     </el-select>
     <el-select
@@ -65,7 +66,8 @@ export default {
         postingDate: null, // 入库日期
         operator: null, // 操作员 （id）
         remark: null
-      }
+      },
+      orders: []
     }
   },
   computed: {
@@ -80,7 +82,8 @@ export default {
         },
         {
           label: '采购单',
-          prop: 'purchaseOrder.id'
+          prop: 'purchaseOrder.id',
+          slotName: 'purchaseOrder'
         },
         {
           label: '供应商',
@@ -132,7 +135,22 @@ export default {
       return this.$store.state.Business.vendors
     }
   },
+  created () {
+    this.queryPurchaseOrders()
+  },
   methods: {
+    handlePurchaseChange (id) {
+      const order = this.orders.find(item => item.id === id)
+      this.form.purchaseOrder.id = order.id
+      this.$emit('order-change', order)
+    },
+    queryPurchaseOrders () {
+      const url = '/PurchaseOrderService/query'
+      const params = { where: { and: [] } }
+      this.$axios.get(url, { params: [params] }).then(resp => {
+        this.orders = resp.data
+      })
+    },
     getForm () {
       return this.form
     },
