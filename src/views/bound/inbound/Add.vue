@@ -28,10 +28,13 @@ export default {
   mixins: [ CrudMixin, configMixin ],
   methods: {
     handleInbound () {
-      this.$refs.form.validate().then(valid => {
-        console.log('success')
-      }).catch(() => {
-        console.log('faild')
+      this.$refs.form.validate().then(() => {
+        debugger
+      }).catch(err => {
+        debugger
+        if (err) {
+
+        }
       })
     }
   }

@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import FormMixin from '@/mixins/form'
 import { toNumber } from '@/common/utils'
 
 import WarehouseCascader from '@/components/WarehouseCascader'
@@ -68,46 +69,47 @@ export default {
   components: {
     WarehouseCascader
   },
+  mixins: [ FormMixin ],
   data () {
     return {
       form: {
-        items: []
+        items: [{}]
       }
     }
   },
   computed: {
     columns () {
       return [
-        {
-          label: '商品名称',
-          prop: 'product.prodName'
-        },
-        {
-          label: '商品编码',
-          prop: 'product.prodCode'
-        },
-        {
-          label: '单位',
-          prop: 'product.unit'
-        },
-        {
-          label: '规格型号',
-          prop: 'product.specmodel'
-        },
-        {
-          label: '品牌',
-          prop: 'product.brand'
-        },
-        {
-          label: '批次',
-          prop: 'prodBatch.batchCode',
-          slotName: 'batch'
-        },
-        {
-          label: '仓库',
-          prop: 'destLoc.id',
-          slotName: 'warehouse'
-        },
+        // {
+        //   label: '商品名称',
+        //   prop: 'product.prodName'
+        // },
+        // {
+        //   label: '商品编码',
+        //   prop: 'product.prodCode'
+        // },
+        // {
+        //   label: '单位',
+        //   prop: 'product.unit'
+        // },
+        // {
+        //   label: '规格型号',
+        //   prop: 'product.specmodel'
+        // },
+        // {
+        //   label: '品牌',
+        //   prop: 'product.brand'
+        // },
+        // {
+        //   label: '批次',
+        //   prop: 'prodBatch.batchCode',
+        //   slotName: 'batch'
+        // },
+        // {
+        //   label: '仓库',
+        //   prop: 'destLoc.id',
+        //   slotName: 'warehouse'
+        // },
         {
           label: '入库数量',
           prop: 'movementQty',
@@ -131,8 +133,8 @@ export default {
     // rules
     rules () {
       return {
-        batch: [{ required: true, message: '请输入批次', trigger: ['blur'] }],
-        warehouse: [{ required: true, message: '请选择仓库', trigger: ['blur', 'change'] }],
+        // batch: [{ required: true, message: '请输入批次', trigger: ['blur'] }],
+        // warehouse: [{ required: true, message: '请选择仓库', trigger: ['blur', 'change'] }],
         qty: [{ required: true, message: '请输入数量', trigger: ['blur'] }],
         price: [{ required: true, message: '请输入金额', trigger: ['blur'] }]
       }
@@ -143,7 +145,7 @@ export default {
       handler (items) {
         items.forEach(item => {
           // 仓库
-          if (item.warehouse.warehouse) {
+          if (item.warehouse && item.warehouse.warehouse) {
             item.destLoc.id = item.warehouse.warehouse
             item.destZone.id = item.warehouse.zone
             item.destBin.id = item.warehouse.bin
@@ -170,14 +172,7 @@ export default {
       }))
     },
     validate () {
-      return this.$refs.form.validate().then(valid => {
-        return valid
-      }).catch(error => {
-        debugger
-        if (error) {
-          Promise.reject(error)
-        }
-      })
+      return this.validatePromise('form')
     }
   }
 }

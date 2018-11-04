@@ -107,17 +107,17 @@ export default {
     rules () {
       return {
         'purchaseOrder.id': [{
-          required: true,
+          // required: true,
           message: '请选择采购单',
           trigger: ['blur', 'change']
         }],
         sourceOrg: [{
-          required: true,
+          // required: true,
           message: '请选择供应商',
           trigger: ['blur', 'change']
         }],
         postingDate: [{
-          required: true,
+          // required: true,
           message: '请选择入库日期',
           trigger: ['blur', 'change']
         }],

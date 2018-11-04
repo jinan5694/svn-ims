@@ -1,4 +1,5 @@
 <script>
+import FormMixins from '@/mixins/form'
 const DEFAULT_PROPS = {
   'label-width': '80px'
 }
@@ -9,6 +10,7 @@ const DEFAULT_EVENTS = {
 
 export default {
   name: 'GridForm',
+  mixins: [FormMixins],
   props: {
     // items 中定义 span 属性表示合并行。默认为 1， 不能大于 numberOfColumns
     items: {
@@ -27,11 +29,11 @@ export default {
     }
   },
   computed: {
-    props () {
-      return Object.assign({}, DEFAULT_PROPS, this.$attrs)
+    formProps () {
+      return { ...DEFAULT_PROPS, ...this.$attrs }
     },
     events () {
-      return Object.assign({}, DEFAULT_EVENTS, this.$listeners)
+      return { ...DEFAULT_EVENTS, ...this.$listeners }
     },
     // 处理合并信息
     rows () {
@@ -67,7 +69,7 @@ export default {
   },
   methods: {
     validate () {
-      return this.$refs.form.validate()
+      return this.validatePromise('form')
     }
   },
   render () {
@@ -92,7 +94,7 @@ export default {
       )
     })
     const data = {
-      props: this.props,
+      props: this.formProps,
       on: this.events
     }
     return <el-form ref="form" { ...data }>{ rows }</el-form>

@@ -86,19 +86,11 @@ export default {
       this.$refs.table.setItems(form.items)
     },
     validate () {
-      debugger
       const tasks = [
         this.$refs.info.validate(),
         this.$refs.table.validate()
       ]
-      return Promise.all(tasks).then(valid => {
-        debugger
-        return true
-      }).catch(error => {
-        if (error) {
-          debugger
-        }
-      })
+      return Promise.all(tasks)
     }
   }
 }
