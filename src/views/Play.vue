@@ -1,181 +1,89 @@
 <template>
   <Page>
     <p>{{ value }}</p>
-    <In
+    <el-button @click="value += 1">add</el-button>
+    <!-- <input
       v-model="value"
-      :max="10"/>
-    <Number/><br >
-    <hr>
-    <Number value="0"/><br >
-    <Number :value="0"/><br >
-    <Number
-      :value="0"
-      amount/><br ><hr>
+      type="text"> -->
 
-    <Number value="1"/><br >
-    <Number :value="1"/><br >
-    <Number
-      :value="1"
-      amount/><br ><hr>
+    <div>input temp</div>
+    <InputTemp
+      v-model="value"
+      clearable
+      @input="handleInput"
+      @change="handleChange"/>
 
-    <Number value="1.2345"/><br >
-    <Number :value="1.2345"/><br >
-    <Number
-      :value="1.2345"
-      amount/><br ><hr>
+    <div>input render</div>
+    <InputRender
+      v-model="value"
+      clearable
+      @input="handleInput"
+      @change="handleChange"/>
 
-    <Number value="test"/><br >
-    <!-- <Number :value="test"/><br > -->
-    <Number
-      value="test"
-      amount/><br ><hr>
+    <div>input functional</div>
+    <InputFunc
+      v-model="value"
+      clearable
+      @input="handleInput"
+      @change="handleChange"/>
 
-    <Number value="-3456.7789"/><br >
-    <Number :value="-3456.7789"/><br >
-    <Number
-      :value="-3456.7789"
-      amount/><br ><hr>
+    <div>element-ui</div>
+    <el-input
+      v-model="value"
+      clearable
+      @input="handleInput"
+      @change="handleChange"/>
 
-    <BaseButton
-      type="add"
-      @click="handleClick"/>
-    <BaseButton type="save"/>
-    <BaseButton type="search"/>
-    <BaseButton type="print"/>
-    <BaseButton type="back"/>
+    <div>native</div>
+    <input
+      v-model="value"
+      clearable
+      @input="handleInput"
+      @change="handleChange">
 
-    <BaseButton type="view"/>
-    <BaseButton type="edit"/>
-    <BaseButton type="stop"/>
-    <BaseButton
-      :loading="true"
-      type="edit"/>
-    <BaseButton type="test">test</BaseButton>
-    <div>{{ form }}</div>
-    <GridForm
-      :items="items"
-      :model="form"
-      :rules="rules">
-      <el-date-picker
-        slot="date"
-        v-model="form.date"/>
-      <div slot="name">
-        <el-input v-model="form.name"/>
-      </div>
-      <InputNumber
-        ref="in"
-        slot="age"
-        v-model="form.age"
-        type="number"
-        @change="handleChange"
-        @blur="handleBlur"
-        @focus="handleFocus"/>
-      <div slot="address">
-        <el-input
-          v-model="form.address"
-          type="textarea"
-          @change="handleChange"/>
-      </div>
-      <el-select
-        slot="sex"
-        v-model="form.sex"/>
-      <el-date-picker
-        slot="time"
-        v-model="form.time"
-        type="datetime"/>
-    </GridForm>
+    <div>InputNumber</div>
+    <InputNumber
+      v-model="value"
+      controls
+      @input="handleInput"
+      @change="handleChange" />
   </Page>
 </template>
 <script>
 import BaseButton from '@/components/BaseButton'
+import Inputt from '@/components/Input'
 import In from '@/components/in'
+
+import InputTemp from '@/test/input-temp'
+import InputRender from '@/test/input-render'
+import InputFunc from '@/test/input-func'
 
 export default {
   name: 'Play',
   components: {
     BaseButton,
-    In
+    In,
+    Inputt,
+    InputTemp,
+    InputRender,
+    InputFunc
   },
   data () {
     return {
-      value: 5,
-      form: {
-        name: null,
-        age: null,
-        date: null,
-        sex: null,
-        time: null,
-        address: null
-      },
-      items: [
-        {
-          label: '日期',
-          prop: 'date'
-        },
-        {
-          label: '日期',
-          prop: 'date'
-        },
-        {
-          label: '姓名',
-          prop: 'name'
-        },
-        {
-          label: '年龄',
-          prop: 'age'
-        },
-        {
-          label: '性别',
-          prop: 'sex',
-          span: 1
-        },
-        {
-          label: '姓名',
-          prop: 'name'
-        },
-        {
-          label: '姓名',
-          prop: 'name'
-        },
-        {
-          label: '姓名',
-          prop: 'name'
-        },
-        {
-          label: '时间',
-          prop: 'time',
-          span: 2
-        },
-        {
-          label: '地址',
-          prop: 'address',
-          span: 2
-        }
-      ]
-    }
-  },
-  computed: {
-    rules () {
-      return {
-        date: [{ required: true }],
-        name: [{ required: true }],
-        age: [{ required: true }],
-        address: [{ required: true }]
-      }
+      value: 5
     }
   },
   watch: {
-
-  },
-  mounted () {
-    // this.$refs.in.focus()
+    value (value) {
+      console.log('play watch, value is:', value)
+    }
   },
   methods: {
     handleChange (value) {
-      console.log('change', value)
+      console.log('play change', value)
     },
-    handleBlur (event) {
-      console.log('blur')
+    handleInput (value) {
+      console.log('play input', value)
     },
     handleFocus (event) {
       console.log('focus')
@@ -183,6 +91,7 @@ export default {
     handleClick () {
       console.log('click')
     }
+
   }
 }
 </script>
