@@ -14,8 +14,9 @@ import Icon from './Icon'
 import InputNumber from './InputNumber'
 import Logo from './Logo'
 import Number from './Number'
-import Search from './Search'
 import Page from './Page'
+import Search from './Search'
+import Toolbar from './Toolbar'
 import TopBottomLayout from './TopBottomLayout'
 import Unit from './Unit'
 
@@ -32,6 +33,7 @@ const components = [
   Number,
   Page,
   Search,
+  Toolbar,
   TopBottomLayout,
   Unit
 ]

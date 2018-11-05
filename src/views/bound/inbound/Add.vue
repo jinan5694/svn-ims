@@ -6,9 +6,6 @@
       <Button
         button-type="save"
         @click="handleSaveOrUpdate"/>
-      <el-button
-        type="primary"
-        @click="handleInbound">入库</el-button>
       <BackButton/>
     </template>
     <Form ref="form"/>

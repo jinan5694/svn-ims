@@ -49,10 +49,11 @@
       <el-form-item
         label="保质期天数"
         prop="">
-        <el-input
+        <InputNumber
           v-model="form.qualityGuaranteePeriod"
           :disabled="disabled"
-          maxlength="12"/>
+          :max="999999"
+          :min="0"/>
       </el-form-item>
       <el-form-item
         label="商品类型"
@@ -80,34 +81,42 @@
       <el-form-item
         label="采购价"
         prop="">
-        <el-input
+        <InputNumber
           v-model="form.purchasePrice"
           :disabled="disabled"
-          maxlength="12"/>
+          :precision="2"
+          :max="999999"
+          :min="0"/>
       </el-form-item>
       <el-form-item
         label="销售价"
         prop="">
-        <el-input
+        <InputNumber
           v-model="form.sellingPrice"
           :disabled="disabled"
-          maxlength="12"/>
+          :precision="2"
+          :max="999999"
+          :min="0"/>
       </el-form-item>
       <el-form-item
         label="高储"
         prop="">
-        <el-input
+        <InputNumber
           v-model="form.stockTopLimit"
           :disabled="disabled"
-          maxlength="12"/>
+          :precision="2"
+          :max="999999"
+          :min="0"/>
       </el-form-item>
       <el-form-item
         label="低储"
         prop="">
-        <el-input
+        <InputNumber
           v-model="form.stockLowerLimit"
           :disabled="disabled"
-          maxlength="12"/>
+          :precision="2"
+          :max="999999"
+          :min="0"/>
       </el-form-item>
     </el-form>
   </div>

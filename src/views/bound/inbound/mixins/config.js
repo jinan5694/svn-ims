@@ -20,6 +20,10 @@ export default {
     },
     toEdit (id) {
       this.$router.push('/bound/inbound/edit/' + id)
+    },
+    // 入库单是否可以编辑，删除等操作
+    orderEditable (order) {
+      return order.docStatus === 'AfterSales_DOCStatus_InStorageDOCStatus_ISDOCS001'
     }
   }
 }

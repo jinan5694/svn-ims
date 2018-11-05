@@ -3,11 +3,12 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 // plugins
-import './plugins/element'
 import './plugins/axios'
+import './plugins/element'
 import './plugins/dictionary'
-import './plugins/locale'
 import './plugins/filters'
+import './plugins/locale'
+import './plugins/lodash'
 // components register
 import './components/register.js'
 // css

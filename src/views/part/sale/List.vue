@@ -3,7 +3,7 @@
     <template slot="toolbar">
       <Search
         v-model="searchValue"
-        :placeholder="$t('placeholder.purchase')"
+        :placeholder="$t('placeholder.sale')"
         @search="fetch"/>
       <Button
         button-type="add"
@@ -11,7 +11,7 @@
     </template>
     <TopBottomLayout>
       <div slot="top">
-        <Toolbar title="采购单"/>
+        <Toolbar title="销售单"/>
         <HeadTable
           ref="headTable"
           :search-key="searchValue"

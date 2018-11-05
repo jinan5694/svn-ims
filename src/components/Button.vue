@@ -49,13 +49,25 @@ export default {
           type: 'primary',
           label: this.$t('search')
         },
-        inWarehouse: {
-          type: 'text',
-          label: this.$t('in_warehouse')
-        },
         print: {
           type: 'text',
           label: this.$t('print')
+        },
+        delete: {
+          type: 'text',
+          label: this.$t('delete')
+        },
+        batchAdd: {
+          type: 'primary',
+          label: this.$t('batch_add')
+        },
+        cancel: {
+          type: '',
+          label: this.$t('cancel')
+        },
+        ok: {
+          type: 'primary',
+          label: this.$t('ok')
         }
       }
     }

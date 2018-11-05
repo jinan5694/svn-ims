@@ -3,7 +3,8 @@
     ref="form"
     :items="items"
     :model="form"
-    :rules="rules">
+    :rules="rules"
+    :disabled="disabled">
     <el-input
       slot="orderNo"
       v-model="form.orderNo"
@@ -30,6 +31,7 @@
     <el-date-picker
       slot="postingDate"
       v-model="form.postingDate"
+      disabled
       value-format="yyyy-MM-dd"/>
     <el-select
       slot="operator"
@@ -46,6 +48,7 @@
   </GridForm>
 </template>
 <script>
+import moment from 'moment'
 export default {
   props: {
     editable: {
@@ -137,6 +140,7 @@ export default {
   },
   created () {
     this.queryPurchaseOrders()
+    this.setPostingDate()
   },
   methods: {
     handlePurchaseChange (id) {
@@ -146,7 +150,14 @@ export default {
     },
     queryPurchaseOrders () {
       const url = '/PurchaseOrderService/query'
-      const params = { where: { and: [] } }
+      const params = {
+        where: {
+          or: [
+            { orderStatus: 'AfterSales_OrderStatus_POStatus_POS001' }, // 新建
+            { orderStatus: 'AfterSales_OrderStatus_POStatus_POS002' } // 部分入库
+          ]
+        }
+      }
       this.$axios.get(url, { params: [params] }).then(resp => {
         this.orders = resp.data
       })
@@ -156,6 +167,12 @@ export default {
     },
     setForm (form) {
       this.form = form
+    },
+    setPostingDate () {
+      if (this.editable && !this.id) {
+        // is add page
+        this.form.postingDate = moment().format('YYYY-MM-DD')
+      }
     },
     validate () {
       return this.$refs.form.validate()

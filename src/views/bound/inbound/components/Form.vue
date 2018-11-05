@@ -1,9 +1,14 @@
 <template>
   <div class="form">
+    <Toolbar title="基本信息"/>
     <Info
       ref="info"
+      :editable="editable"
       @order-change="handleOrderChange"/>
-    <Table ref="table"/>
+    <Toolbar title="商品信息"/>
+    <Table
+      ref="table"
+      :editable="editable"/>
   </div>
 </template>
 <script>
@@ -69,8 +74,9 @@ export default {
       const items = order.productItems.map(item => {
         return _.assign({}, _.cloneDeep(this.defaultItem), {
           product: item.product,
-          movementQty: item.qty,
-          inQty: item.inQty
+          // 计划入库数量 = 采购数量 - 已入库数量
+          movementQty: item.qty - item.inQty,
+          price: item.price
         })
       })
       this.$refs.table.setItems(items)

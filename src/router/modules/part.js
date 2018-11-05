@@ -21,5 +21,16 @@ routes.push({
 //   path: 'part/purchase/edit/:id',
 //   component: () => import('@/views/part/purchase/Edit.vue')
 // })
+// sale
+routes.push({
+  meta: { title: '销售新建' },
+  path: 'part/sale/add',
+  component: () => import('@/views/part/sale/Add.vue')
+})
+routes.push({
+  meta: { title: '销售列表' },
+  path: 'part/sale/list',
+  component: () => import('@/views/part/sale/List.vue')
+})
 
 export default routes

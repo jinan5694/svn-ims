@@ -22,6 +22,7 @@
     </div>
     <el-button
       slot="reference"
+      :loading="loading"
       :type="type">{{ text }}</el-button>
   </el-popover>
 </template>

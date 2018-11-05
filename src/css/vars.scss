@@ -5,7 +5,7 @@
 /* color */
 $color-primary: teal;
 $color-white: #fff;
-$color-dark: #001529;
+$color-dark: #000;
 
 $color-background: #f0f2f5;
 $color-text-placeholder: #c0c4cc !default;
@@ -28,3 +28,9 @@ $page-content-padding: $base-padding;
 
 /* box-shadow */
 $box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !default;
+
+$color-primary-light1: mix($color-white, $color-primary, 10%) !default;
+$color-primary-light2: mix($color-white, $color-primary, 30%) !default;
+$color-primary-light3: mix($color-white, $color-primary, 50%) !default;
+$color-primary-light4: mix($color-white, $color-primary, 70%) !default;
+$color-primary-light5: mix($color-white, $color-primary, 90%) !default;

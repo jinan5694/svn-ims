@@ -15,8 +15,10 @@ export default {
   add: '新建',
   search: '搜索',
   confirm_info: '确认信息',
-  in_warehouse: '入库',
   print: '打印',
+  batch_add: '批量添加',
+  product_select: '商品选择',
+  delete: '删除',
 
   // 提示用在this.$message()中
   message: {
@@ -33,7 +35,10 @@ export default {
     // system
     employee: '员工编号/姓名',
     // bound
-    inbound: '入库单号/订单编号'
+    inbound: '入库单号/订单编号',
+    // 采购销售
+    purchase: '采购单号',
+    sale: '销售单号'
   }
 
 }

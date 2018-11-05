@@ -100,4 +100,26 @@ $height-submenu: 40px;
   }
 }
 
+// table empty height
+.el-table__empty-block {
+  min-height: 150px;
+}
+
+// dialog
+.el-dialog__header {
+  padding: 10px 20px;
+  border-bottom: 1px solid #eee;
+}
+.el-dialog__title {
+  font-size: 14px;
+  color: #666;
+}
+.el-dialog__headerbtn {
+  top: 15px;
+}
+.el-dialog__footer {
+  padding: 10px 20px;
+  border-top: 1px solid #eee;
+}
+
   

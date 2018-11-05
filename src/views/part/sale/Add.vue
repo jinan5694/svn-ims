@@ -17,7 +17,7 @@ import configMixin from './mixins/config'
 import Form from './components/Form.vue'
 
 export default {
-  name: 'PurchaseAdd',
+  name: 'SaleAdd',
   components: {
     Form
   },

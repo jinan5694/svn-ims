@@ -12,6 +12,10 @@ const resource = [
       {
         label: '采购订单',
         path: '/part/purchase/list'
+      },
+      {
+        label: '销售订单',
+        path: '/part/sale/list'
       }
     ]
   },

@@ -41,10 +41,6 @@ export default {
     columns () {
       return [
         {
-          label: 'ID',
-          prop: 'id'
-        },
-        {
           label: '商品名称',
           prop: 'prodName'
         },
@@ -54,7 +50,13 @@ export default {
         },
         {
           label: '单位',
-          prop: 'unit'
+          prop: 'unit',
+          formatter: row => {
+            return this.$translate({
+              key: 'AfterSales_Unit',
+              value: row.unit
+            })
+          }
         },
         {
           label: '规格型号',
@@ -78,7 +80,13 @@ export default {
         },
         {
           label: '状态',
-          prop: 'docItemStatus'
+          prop: 'docItemStatus',
+          formatter: row => {
+            return this.$translate({
+              key: 'AfterSales_DOCStatus_InStorageDOCStatus',
+              value: row.docItemStatus
+            })
+          }
         }
       ]
     },

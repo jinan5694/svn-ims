@@ -11,14 +11,14 @@
     </template>
     <TopBottomLayout>
       <div slot="top">
-        <div class="title">入库单</div>
+        <Toolbar title="入库单"/>
         <HeadTable
           ref="headTable"
           :search-key="searchKey"
           @current-change="handleCurrentChange"/>
       </div>
       <div slot="bottom">
-        <div class="title">商品</div>
+        <Toolbar title="商品"/>
         <ItemTable :data="data"/>
       </div>
     </TopBottomLayout>
@@ -47,18 +47,12 @@ export default {
       this.$refs.headTable.fetch()
     },
     handleCurrentChange (row) {
-      this.data = row.zone
+      this.data = row.items
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-$height-title: 24px;
-.title {
-  height: $height-title;
-  line-height: $height-title;
-  color: #999;
-  font-size: 14px;
-}
+
 </style>

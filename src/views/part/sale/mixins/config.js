@@ -1,15 +1,15 @@
 export default {
   data () {
     return {
-      serviceName: 'PurchaseOrderService'
+      serviceName: 'SaleOrderService'
     }
   },
   methods: {
     toList () {
-      this.$router.push('/part/purchase/list')
+      this.$router.push('/part/sale/list')
     },
     toAdd () {
-      this.$router.push('/part/purchase/add')
+      this.$router.push('/part/sale/add')
     },
     toView (id) {
       this.$router.push('/masterData/customer/view/' + id)

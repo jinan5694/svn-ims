@@ -13,7 +13,9 @@
         <slot/>
       </BaseTable>
     </div>
-    <div class="pagination">
+    <div
+      v-show="paginationVisible"
+      class="pagination">
       <el-pagination
         v-bind="paginationBinds"
         :current-page.sync="page.pageNumber"
@@ -95,6 +97,9 @@ export default {
   computed: {
     paginationBinds () {
       return _.assign({}, PAGINATION_DEFAULT, this.paginationConfig.props)
+    },
+    paginationVisible () {
+      return this.data.length
     }
   },
   created () {
@@ -158,9 +163,6 @@ export default {
 
 <style lang='scss'>
 .data-table {
-  .el-table__empty-block {
-    min-height: 200px;
-  }
   .pagination {
     margin: 5px 0;
   }

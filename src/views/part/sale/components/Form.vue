@@ -15,9 +15,9 @@
         <el-select
           v-model="form.sourceOrg">
           <el-option
-            v-for="item in vendors"
+            v-for="item in customers"
             :key="item.id"
-            :label="item.vendorName"
+            :label="item.customerName"
             :value="item.id"/>
         </el-select>
       </div>
@@ -65,7 +65,7 @@
 </template>
 <script>
 import EditItemTable from './EditItemTable.vue'
-import ProductSelect from './ProductSelect.vue'
+import ProductSelect from '@/views/part/purchase/components/ProductSelect.vue'
 
 export default {
   name: 'PurchaseForm',
@@ -82,6 +82,7 @@ export default {
   data () {
     return {
       visible: false,
+      customers: [],
       form: {
         orderNo: null,
         sourceOrg: null,
@@ -98,13 +99,10 @@ export default {
     },
     rules () {
       return {
-        sourceOrg: [{ required: true, message: '请选择供应商', trigger: ['blur', 'change'] }],
-        postingDate: [{ required: true, message: '请选择采购日期', trigger: ['blur', 'change'] }],
+        sourceOrg: [{ required: true, message: '请选择客户', trigger: ['blur', 'change'] }],
+        postingDate: [{ required: true, message: '请选择销售日期', trigger: ['blur', 'change'] }],
         operator: [{ required: true, message: '请选择操作员', trigger: ['blur', 'change'] }]
       }
-    },
-    vendors () {
-      return this.$store.state.Business.vendors
     },
     operators () {
       return this.$store.state.Business.employees
@@ -117,12 +115,12 @@ export default {
           span: 1
         },
         {
-          label: '供应商',
+          label: '客户',
           prop: 'sourceOrg',
           span: 1
         },
         {
-          label: '采购日期',
+          label: '销售日期',
           prop: 'postingDate',
           span: 1
         },
@@ -139,7 +137,17 @@ export default {
       ]
     }
   },
+  created () {
+    this.queryCustomer()
+  },
   methods: {
+    queryCustomer () {
+      const url = '/CustomerService/query'
+      const params = [{ where: { and: [{ enableFlag: 'System_EnableFlag_1' }] } }]
+      this.$axios.get(url, params).then((resp) => {
+        this.customers = resp.data
+      })
+    },
     setForm (form) {
       this.form = form
     },
@@ -200,9 +208,7 @@ export default {
               orderQty: 0,
               price: 0,
               amount: 0,
-              giftQty: 0,
-              qty: 0,
-              inQty: 0
+              outQty: 0
             })
           }
         })
