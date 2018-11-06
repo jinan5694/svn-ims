@@ -6,14 +6,15 @@
       :items="items"
       :model="form"
       :rules="rules"
-      :number-of-columns="4">
+      :number-of-columns="4"
+      :disabled="disabled">
       <div slot="orderNo">
         <el-input
           v-model="form.orderNo"/>
       </div>
-      <div slot="sourceOrg">
+      <div slot="destOrg">
         <el-select
-          v-model="form.sourceOrg">
+          v-model="form.destOrg.id">
           <el-option
             v-for="item in customers"
             :key="item.id"
@@ -24,14 +25,12 @@
       <div slot="postingDate">
         <el-date-picker
           v-model="form.postingDate"
-          :disabled="disabled"
           type="date"
           value-format="yyyy-MM-dd"/>
       </div>
       <div slot="operator">
         <el-select
-          v-model="form.operator"
-          :disabled="disabled">
+          v-model="form.operator">
           <el-option
             v-for="item in operators"
             :key="item.id"
@@ -42,7 +41,6 @@
       <div slot="remark">
         <el-input
           v-model="form.remark"
-          :disabled="disabled"
           type="textarea"
           maxlength="255"/>
       </div>
@@ -51,26 +49,31 @@
       v-if="visible"
       :visible.sync="visible"
       @select="select"/>
-    <Toolbar title="商品信息"/>
-    <div class="batch-add">
+    <Toolbar title="商品信息">
       <Button
+        v-if="!disabled"
         button-type="batchAdd"
         @click="batchAdd"/>
-    </div>
+    </Toolbar>
     <EditItemTable
-      ref="editItemTable"
+      v-if="!disabled"
+      ref="editItemTable"/>
+    <ItemTable
+      v-else
       :data="form.productItems"
-      @remove="remove"/>
+    />
   </div>
 </template>
 <script>
 import EditItemTable from './EditItemTable.vue'
+import ItemTable from './ItemTable.vue'
 import ProductSelect from '@/views/part/purchase/components/ProductSelect.vue'
 
 export default {
-  name: 'PurchaseForm',
+  name: 'SaleForm',
   components: {
     EditItemTable,
+    ItemTable,
     ProductSelect
   },
   props: {
@@ -85,7 +88,9 @@ export default {
       customers: [],
       form: {
         orderNo: null,
-        sourceOrg: null,
+        destOrg: {
+          id: null
+        },
         postingDate: null,
         operator: null,
         remark: null,
@@ -99,9 +104,10 @@ export default {
     },
     rules () {
       return {
-        sourceOrg: [{ required: true, message: '请选择客户', trigger: ['blur', 'change'] }],
+        destOrg: [{ required: true, message: '请选择客户', trigger: ['blur', 'change'] }],
         postingDate: [{ required: true, message: '请选择销售日期', trigger: ['blur', 'change'] }],
-        operator: [{ required: true, message: '请选择操作员', trigger: ['blur', 'change'] }]
+        operator: [{ required: true, message: '请选择操作员', trigger: ['blur', 'change'] }],
+        orderNo: [{ required: true, message: '请输入单据编号', trigger: ['blur', 'change'] }]
       }
     },
     operators () {
@@ -116,7 +122,7 @@ export default {
         },
         {
           label: '客户',
-          prop: 'sourceOrg',
+          prop: 'destOrg',
           span: 1
         },
         {
@@ -149,9 +155,13 @@ export default {
       })
     },
     setForm (form) {
+      if (this.$refs.editItemTable) {
+        this.$refs.editItemTable.setItems(form.productItems)
+      }
       this.form = form
     },
     getForm () {
+      this.form.productItems = this.$refs.editItemTable.getItems()
       return this.form
     },
     validate () {
@@ -160,7 +170,8 @@ export default {
           this.$refs.form.$children[0].validate(),
           this.$refs.editItemTable.validate()
         ]).then(results => {
-          if (this.form.productItems && this.form.productItems.length === 0) {
+          const items = this.$refs.editItemTable.getItems()
+          if (items && items.length === 0) {
             const errorMsg = '请添加商品'
             this.$message({
               type: 'warning',
@@ -183,24 +194,23 @@ export default {
         })
       })
     },
-    remove (index) {
-      this.form.productItems.splice(index, 1)
-    },
     batchAdd () {
       this.visible = true
     },
     select (datas) {
       if (datas && datas.length) {
+        let productItems = []
+        const items = this.$refs.editItemTable.getItems()
         datas.forEach((data) => {
           let f = false
-          for (let i = 0; i < this.form.productItems.length; i++) {
-            if (data.id === this.form.productItems[i].product.id) {
+          for (let i = 0; i < items.length; i++) {
+            if (data.id === items[i].product.id) {
               f = true
               break
             }
           }
           if (!f) {
-            this.form.productItems.push({
+            productItems.push({
               product: data,
               prodName: data.prodName,
               prodCode: data.prodCode,
@@ -212,6 +222,7 @@ export default {
             })
           }
         })
+        this.$refs.editItemTable.setItems(items.concat(productItems))
       }
     }
   }

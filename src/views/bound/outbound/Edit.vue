@@ -1,7 +1,7 @@
 <template>
   <Page
     v-loading="loading"
-    element-loading-text="拼命加载中">
+    :element-loading-text="$t('loading_text')">
     <template slot="toolbar">
       <Button
         button-type="save"
@@ -23,19 +23,11 @@ export default {
     Form
   },
   mixins: [ CrudMixin, configMixin ],
-  methods: {
-    handleInbound () {
-      this.$refs.form.validate().then(() => {
-        // debugger
-      }).catch(err => {
-        // debugger
-        if (err) {
-
-        }
-      })
-    }
+  created () {
+    this.getData()
   }
 }
 </script>
 <style lang="scss" scoped>
+
 </style>

@@ -28,4 +28,26 @@ routes.push({
   component: () => import('@/views/bound/inbound/View.vue')
 })
 
+// 出库单
+routes.push({
+  meta: { title: '出库单列表' },
+  path: 'bound/outbound/list',
+  component: () => import('@/views/bound/outbound/List.vue')
+})
+routes.push({
+  meta: { title: '新建出库单' },
+  path: 'bound/outbound/add',
+  component: () => import('@/views/bound/outbound/Add.vue')
+})
+routes.push({
+  meta: { title: '编辑出库单' },
+  path: 'bound/outbound/edit/:id',
+  component: () => import('@/views/bound/outbound/Edit.vue')
+})
+routes.push({
+  meta: { title: '查看出库单' },
+  path: 'bound/outbound/view/:id',
+  component: () => import('@/views/bound/outbound/View.vue')
+})
+
 export default routes

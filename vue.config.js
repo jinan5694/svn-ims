@@ -1,4 +1,5 @@
 module.exports = {
+  baseUrl: './',
   devServer: {
     // 打开浏览器
     open: true,

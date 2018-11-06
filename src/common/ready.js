@@ -5,6 +5,7 @@ function init (vue) {
     const tasks = []
 
     tasks.push(fetchDicts(vue))
+    tasks.push(fetchCustomers(vue))
     tasks.push(fetchVendors(vue))
     tasks.push(fetchEmployees(vue))
 
@@ -20,13 +21,17 @@ function fetchUser (vue) {
 function fetchDicts (vue) {
   return vue.$store.dispatch('setDicts', vue)
 }
-// 获取供应商
-function fetchVendors (vue) {
-  return vue.$store.dispatch('setVendors', vue)
+// 获取客户
+function fetchCustomers (vue) {
+  return vue.$store.dispatch('setCustomers', vue)
 }
 // 获取员工
 function fetchEmployees (vue) {
   return vue.$store.dispatch('setEmployees', vue)
+}
+// 获取供应商
+function fetchVendors (vue) {
+  return vue.$store.dispatch('setVendors', vue)
 }
 
 export {

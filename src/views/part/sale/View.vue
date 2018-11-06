@@ -1,39 +1,28 @@
 <template>
   <Page
     v-loading="loading"
-    element-loading-text="拼命加载中">
+    :element-loading-text="$t('loading_text')">
     <template slot="toolbar">
-      <Button
-        button-type="save"
-        @click="handleSaveOrUpdate"/>
       <BackButton/>
     </template>
-    <Form ref="form"/>
+    <Form
+      ref="form"
+      :editable="false"/>
   </Page>
 </template>
 <script>
-// mixins
 import CrudMixin from '@/mixins/crud'
 import configMixin from './mixins/config'
-// components
 import Form from './components/Form.vue'
 
 export default {
+  name: 'PurchaseView',
   components: {
     Form
   },
   mixins: [ CrudMixin, configMixin ],
-  methods: {
-    handleInbound () {
-      this.$refs.form.validate().then(() => {
-        // debugger
-      }).catch(err => {
-        // debugger
-        if (err) {
-
-        }
-      })
-    }
+  created () {
+    this.getData()
   }
 }
 </script>

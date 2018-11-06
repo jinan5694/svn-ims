@@ -12,10 +12,10 @@ export default {
       this.$router.push('/part/sale/add')
     },
     toView (id) {
-      this.$router.push('/masterData/customer/view/' + id)
+      this.$router.push('/part/sale/view/' + id)
     },
     toEdit (id) {
-      this.$router.push('/masterData/customer/edit/' + id)
+      this.$router.push('/part/sale/edit/' + id)
     }
   }
 }

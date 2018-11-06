@@ -6,21 +6,23 @@
     :columns="columns"
     :table-config="tableConfig">
     <template
-      slot="vendorCode"
+      slot="customerCategory"
       slot-scope="scope">
-      {{ vendorCode(scope.row.sourceOrg) }}
-    </template>
-    <template
-      slot="vendorName"
-      slot-scope="scope">
-      {{ vendorName(scope.row.sourceOrg) }}
+      {{
+        scope.row.destOrg ?
+          $translate({
+            key: 'AfterSales_CustomerCate',
+            value: scope.row.destOrg.customerCategory
+          })
+          : ''
+      }}
     </template>
     <template
       slot="orderStatus"
       slot-scope="scope">
       {{
         $translate({
-          key: 'AfterSales_OrderStatus_POStatus',
+          key: 'AfterSales_OrderStatus_SOStatus',
           value: scope.row.orderStatus
         })
       }}
@@ -80,11 +82,11 @@ export default {
         },
         {
           label: '客户名称',
-          slotName: 'vendorCode'
+          prop: 'destorg.customerName'
         },
         {
           label: '客户类型',
-          slotName: 'vendorName'
+          slotName: 'customerCategory'
         },
         {
           label: '销售日期',
@@ -132,22 +134,6 @@ export default {
     }
   },
   methods: {
-    vendorCode (sourceOrg) {
-      let vendor = this.$store.state.Business.vendors.filter((vendor) => {
-        return sourceOrg === vendor.id
-      })
-      if (vendor && vendor.length) {
-        return vendor[0].vendorCode
-      }
-    },
-    vendorName (sourceOrg) {
-      let vendor = this.$store.state.Business.vendors.filter((vendor) => {
-        return sourceOrg === vendor.id
-      })
-      if (vendor && vendor.length) {
-        return vendor[0].vendorName
-      }
-    },
     handleCurrentChange (row) {
       this.$emit('current-change', row)
     }

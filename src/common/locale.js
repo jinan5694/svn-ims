@@ -36,6 +36,7 @@ export default {
     employee: '员工编号/姓名',
     // bound
     inbound: '入库单号/订单编号',
+    outbound: '出库单号/订单编号',
     // 采购销售
     purchase: '采购单号',
     sale: '销售单号'

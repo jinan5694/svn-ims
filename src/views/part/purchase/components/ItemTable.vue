@@ -16,12 +16,12 @@
       }}
     </template>
     <template
-      slot="orderStatus"
+      slot="metarialStatus"
       slot-scope="scope">
       {{
         $translate({
           key: 'AfterSales_OrderStatus_POStatus',
-          value: scope.row.orderStatus
+          value: scope.row.metarialStatus
         })
       }}
     </template>
@@ -93,7 +93,7 @@ export default {
         },
         {
           label: '状态',
-          slotName: 'orderStatus'
+          slotName: 'metarialStatus'
         },
         {
           label: '入库数量',
@@ -108,10 +108,10 @@ export default {
       return columns
     }
   },
+  created () {
+    console.log(this.data)
+  },
   methods: {
-    remove (index) {
-      this.$emit('remove', index)
-    },
     getSummaries (param) {
       const { columns, data } = param
       const sums = []

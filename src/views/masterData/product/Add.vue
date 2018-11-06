@@ -1,7 +1,7 @@
 <template>
   <Page
     v-loading="loading"
-    element-loading-text="$t('loading_text')">
+    :element-loading-text="$t('loading_text')">
     <template slot="toolbar">
       <Button
         button-type="save"

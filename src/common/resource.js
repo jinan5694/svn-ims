@@ -27,6 +27,10 @@ const resource = [
       {
         label: '入库',
         path: '/bound/inbound/list'
+      },
+      {
+        label: '出库',
+        path: '/bound/outbound/list'
       }
     ]
   },

@@ -16,12 +16,12 @@
       }}
     </template>
     <template
-      slot="orderStatus"
+      slot="metarialStatus"
       slot-scope="scope">
       {{
         $translate({
-          key: 'AfterSales_OrderStatus_POStatus',
-          value: scope.row.orderStatus
+          key: 'AfterSales_OrderMetarialStatus',
+          value: scope.row.metarialStatus
         })
       }}
     </template>
@@ -85,7 +85,7 @@ export default {
         },
         {
           label: '状态',
-          slotName: 'orderStatus'
+          slotName: 'metarialStatus'
         },
         {
           label: '出库数量',

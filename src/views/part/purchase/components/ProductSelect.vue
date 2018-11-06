@@ -5,7 +5,8 @@
     :close-on-press-escape="false"
     :append-to-body="true"
     :before-close="close"
-    :title="$t('product_select')">
+    :title="$t('product_select')"
+    width="1200px">
     <div class="search">
       <Search
         v-model="searchValue"
@@ -114,7 +115,8 @@ export default {
     tableConfig () {
       return {
         events: {
-          'selection-change': this.handleSelectionChange
+          'selection-change': this.handleSelectionChange,
+          'row-click': this.handleRowClick
         }
       }
     }
@@ -128,6 +130,9 @@ export default {
     },
     handleSelectionChange (val) {
       this.multipleSelection = val
+    },
+    handleRowClick (val) {
+      this.$refs.table.$children[0].$children[0].toggleRowSelection(val)
     },
     select () {
       this.$emit('select', this.multipleSelection)

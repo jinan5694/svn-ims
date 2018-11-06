@@ -3,11 +3,10 @@
     ref="form"
     :model="form"
   >
-
     <BaseTable
       ref="table"
       :columns="columns"
-      :data="data"
+      :data="form.items"
       :summary-method="getSummaries"
       show-summary>
       <template
@@ -50,6 +49,13 @@
         </el-form-item>
       </template>
       <template
+        slot="OwningQty"
+        slot-scope="scope">
+        {{
+          scope.row.orderQty - scope.row.outQty
+        }}
+      </template>
+      <template
         slot="operations"
         slot-scope="{row, index}">
         <Button
@@ -65,16 +71,10 @@ import FormMixin from '@/mixins/form'
 
 export default {
   mixins: [ FormMixin ],
-  props: {
-    data: {
-      type: Array,
-      default: () => []
-    }
-  },
   data () {
     return {
       form: {
-        items: this.data
+        items: []
       }
     }
   },
@@ -116,14 +116,15 @@ export default {
           label: '金额',
           prop: 'amount'
         },
-        // {
-        //   label: '入库数量',
-        //   prop: 'inQty'
-        // },
-        // {
-        //   label: '欠货数量',
-        //   prop: 'inQty'
-        // },
+        {
+          label: '入库数量',
+          prop: 'inQty'
+        },
+        {
+          label: '欠货数量',
+          prop: 'OwningQty',
+          slotName: 'OwningQty'
+        },
         {
           label: '操作',
           slotName: 'operations'
@@ -139,6 +140,12 @@ export default {
     }
   },
   methods: {
+    setItems (data) {
+      this.form.items = data
+    },
+    getItems () {
+      return this.form.items
+    },
     getSummaries (param) {
       const { columns, data } = param
       const sums = []
@@ -169,6 +176,7 @@ export default {
           sums[index] = ''
         }
       })
+      sums[columns.length - 2] = sums[5] - sums[8]
       return sums
     },
     headerRequired: (h, { column, $index }) => {
@@ -176,7 +184,7 @@ export default {
       return h('span', [required, column.label])
     },
     remove (index) {
-      this.$emit('remove', index)
+      this.form.items.splice(index, 1)
     },
     calcQty (row) {
       let orderQty = row.orderQty

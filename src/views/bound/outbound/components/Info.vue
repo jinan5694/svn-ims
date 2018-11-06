@@ -10,9 +10,9 @@
       v-model="form.orderNo"
       disabled/>
     <el-select
-      slot="purchaseOrder"
-      v-model="form.purchaseOrder.id"
-      @change="handlePurchaseChange">
+      slot="saleOrder"
+      v-model="form.saleOrder.id"
+      @change="handleSaleOrderChange">
       <el-option
         v-for="item in orders"
         :key="item.id"
@@ -20,12 +20,12 @@
         :value="item.id"/>
     </el-select>
     <el-select
-      slot="sourceOrg"
-      v-model="form.sourceOrg">
+      slot="destOrg"
+      v-model="form.destOrg">
       <el-option
-        v-for="item in vendors"
+        v-for="item in customers"
         :key="item.id"
-        :label="item.vendorName"
+        :label="item.customerName"
         :value="item.id"/>
     </el-select>
     <el-date-picker
@@ -48,8 +48,8 @@
     <div slot="orderStatus">
       {{
         $translate({
-          key: 'AfterSales_OrderStatus_POStatus',
-          value: $_.get(form, 'purchaseOrder.orderStatus')
+          key: 'AfterSales_OrderStatus_SOStatus',
+          value: $_.get(form, 'saleOrder.orderStatus')
         })
       }}
     </div>
@@ -69,13 +69,13 @@ export default {
     return {
       form: {
         id: null,
-        orderNo: null, // 入库单号
-        purchaseOrder: {
+        orderNo: null, // 出库单号
+        saleOrder: {
           id: null,
-          orderNo: null // 采购单号
+          orderNo: null // 销售单号
         },
-        sourceOrg: null, // 供应商 （id）
-        postingDate: null, // 入库日期
+        destOrg: null, // 客户 （id）
+        postingDate: null, // 出库日期
         operator: null, // 操作员 （id）
         remark: null
       },
@@ -89,20 +89,20 @@ export default {
     items () {
       const items = [
         {
-          label: '入库单号',
+          label: '出库单号',
           prop: 'orderNo'
         },
         {
-          label: '采购单',
-          prop: 'purchaseOrder.id',
-          slotName: 'purchaseOrder'
+          label: '销售单',
+          prop: 'saleOrder.id',
+          slotName: 'saleOrder'
         },
         {
-          label: '供应商',
-          prop: 'sourceOrg'
+          label: '客户名称',
+          prop: 'destOrg'
         },
         {
-          label: '入库日期',
+          label: '出库日期',
           prop: 'postingDate'
         },
         {
@@ -150,27 +150,27 @@ export default {
     employees () {
       return this.$store.state.Business.employees
     },
-    vendors () {
-      return this.$store.state.Business.vendors
+    customers () {
+      return this.$store.state.Business.customers
     }
   },
   created () {
-    this.queryPurchaseOrders()
+    this.querySaleOrders()
     this.setPostingDate()
   },
   methods: {
-    handlePurchaseChange (id) {
+    handleSaleOrderChange (id) {
       const order = this.orders.find(item => item.id === id)
-      this.form.purchaseOrder.id = order.id
+      this.form.saleOrder.id = order.id
       this.$emit('order-change', order)
     },
-    queryPurchaseOrders () {
-      const url = '/PurchaseOrderService/query'
+    querySaleOrders () {
+      const url = '/SaleOrderService/query'
       const params = {
         where: {
           or: [
-            { orderStatus: 'AfterSales_OrderStatus_POStatus_POS001' }, // 新建
-            { orderStatus: 'AfterSales_OrderStatus_POStatus_POS002' } // 部分入库
+            { orderStatus: 'AfterSales_OrderStatus_SOStatus_SOS001' }, // 新建
+            { orderStatus: 'AfterSales_OrderStatus_SOStatus_SOS002' } // 部分出库
           ]
         }
       }

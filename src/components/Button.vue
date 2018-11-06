@@ -2,7 +2,6 @@
   <el-button
     v-bind="$attrs"
     :type="buttonTypes[buttonType].type"
-    size="mini"
     v-on="$listeners">
     {{ buttonTypes[buttonType].label }}
   </el-button>

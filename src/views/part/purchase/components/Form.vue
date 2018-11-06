@@ -6,7 +6,8 @@
       :items="items"
       :model="form"
       :rules="rules"
-      :number-of-columns="4">
+      :number-of-columns="4"
+      :disabled="disabled">
       <div slot="orderNo">
         <el-input
           v-model="form.orderNo"/>
@@ -51,26 +52,31 @@
       v-if="visible"
       :visible.sync="visible"
       @select="select"/>
-    <Toolbar title="商品信息"/>
-    <div class="batch-add">
+    <Toolbar title="商品信息">
       <Button
+        v-if="!disabled"
         button-type="batchAdd"
         @click="batchAdd"/>
-    </div>
+    </Toolbar>
     <EditItemTable
-      ref="editItemTable"
-      :data="form.productItems"
-      @remove="remove"/>
+      v-if="!disabled"
+      ref="editItemTable"/>
+    <ItemTable
+      v-else
+      ref="itemTable"
+      :data="form.productItems"/>
   </div>
 </template>
 <script>
 import EditItemTable from './EditItemTable.vue'
+import ItemTable from './ItemTable.vue'
 import ProductSelect from './ProductSelect.vue'
 
 export default {
   name: 'PurchaseForm',
   components: {
     EditItemTable,
+    ItemTable,
     ProductSelect
   },
   props: {
@@ -100,7 +106,8 @@ export default {
       return {
         sourceOrg: [{ required: true, message: '请选择供应商', trigger: ['blur', 'change'] }],
         postingDate: [{ required: true, message: '请选择采购日期', trigger: ['blur', 'change'] }],
-        operator: [{ required: true, message: '请选择操作员', trigger: ['blur', 'change'] }]
+        operator: [{ required: true, message: '请选择操作员', trigger: ['blur', 'change'] }],
+        orderNo: [{ required: true, message: '请输入单据编号', trigger: ['blur', 'change'] }]
       }
     },
     vendors () {
@@ -141,9 +148,13 @@ export default {
   },
   methods: {
     setForm (form) {
+      if (this.$refs.editItemTable) {
+        this.$refs.editItemTable.setItems(form.productItems)
+      }
       this.form = form
     },
     getForm () {
+      this.form.productItems = this.$refs.editItemTable.getItems()
       return this.form
     },
     validate () {
@@ -152,7 +163,8 @@ export default {
           this.$refs.form.$children[0].validate(),
           this.$refs.editItemTable.validate()
         ]).then(results => {
-          if (this.form.productItems && this.form.productItems.length === 0) {
+          const productItems = this.$refs.editItemTable.getItems()
+          if (productItems && productItems.length === 0) {
             const errorMsg = '请添加商品'
             this.$message({
               type: 'warning',
@@ -175,24 +187,23 @@ export default {
         })
       })
     },
-    remove (index) {
-      this.form.productItems.splice(index, 1)
-    },
     batchAdd () {
       this.visible = true
     },
     select (datas) {
       if (datas && datas.length) {
+        let productItems = []
+        const items = this.$refs.editItemTable.getItems()
         datas.forEach((data) => {
           let f = false
-          for (let i = 0; i < this.form.productItems.length; i++) {
-            if (data.id === this.form.productItems[i].product.id) {
+          for (let i = 0; i < items.length; i++) {
+            if (data.id === items[i].product.id) {
               f = true
               break
             }
           }
           if (!f) {
-            this.form.productItems.push({
+            productItems.push({
               product: data,
               prodName: data.prodName,
               prodCode: data.prodCode,
@@ -206,6 +217,7 @@ export default {
             })
           }
         })
+        this.$refs.editItemTable.setItems(items.concat(productItems))
       }
     }
   }
