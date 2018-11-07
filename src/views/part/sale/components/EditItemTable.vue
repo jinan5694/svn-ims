@@ -117,8 +117,8 @@ export default {
           prop: 'amount'
         },
         {
-          label: '入库数量',
-          prop: 'inQty'
+          label: '出库数量',
+          prop: 'outQty'
         },
         {
           label: '欠货数量',

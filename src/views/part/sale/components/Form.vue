@@ -150,7 +150,7 @@ export default {
     queryCustomer () {
       const url = '/CustomerService/query'
       const params = [{ where: { and: [{ enableFlag: 'System_EnableFlag_1' }] } }]
-      this.$axios.get(url, params).then((resp) => {
+      this.$axios.get(url, { params: params }).then((resp) => {
         this.customers = resp.data
       })
     },

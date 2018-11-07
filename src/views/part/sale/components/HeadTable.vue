@@ -82,7 +82,7 @@ export default {
         },
         {
           label: '客户名称',
-          prop: 'destorg.customerName'
+          prop: 'destOrg.customerName'
         },
         {
           label: '客户类型',
