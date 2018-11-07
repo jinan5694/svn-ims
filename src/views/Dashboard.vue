@@ -4,6 +4,7 @@
       <el-button type="primary">{{ $t('ok') }}</el-button>
       <el-button>{{ $t('back') }}</el-button>
     </template>
+    test
     <BaseTable
       :columns="columns"
       :data="tableData"
@@ -24,46 +25,37 @@ export default {
           id: '1',
           date: '2016-05-01',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-          rowspan: 3
+          address: '上海市普陀区金沙江路 1518 弄'
         },
         {
           id: '1',
           date: '2016-05-02',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-          rowspan: 0
+          address: '上海市普陀区金沙江路 1517 弄'
         },
         {
           id: '1',
           date: '2016-05-03',
           name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-          rowspan: 0
+          address: '上海市普陀区金沙江路 1519 弄'
         },
         {
           id: '2',
           date: '2016-05-01',
           name: '张曼玉',
-          address: '上海市普陀区金沙江路 1516 弄',
-          rowspan: 3,
-          colspan: 1
+          address: '上海市普陀区金沙江路 1516 弄'
         },
         {
           id: '2',
           date: '2016-05-02',
           name: '张曼玉',
-          address: '上海市普陀区金沙江路 1516 弄',
-          rowspan: 0,
-          colspan: 1
+          address: '上海市普陀区金沙江路 1516 弄'
         },
         {
           id: '2',
           date: '2016-05-03',
           name: '张曼玉',
-          address: '上海市普陀区金沙江路 1516 弄',
-          rowspan: 0,
-          colspan: 1
+          address: '上海市普陀区金沙江路 1516 弄'
         }
       ],
       ids: ['1', '2']
@@ -96,25 +88,20 @@ export default {
     spanMethod ({ row, column, rowIndex, columnIndex }) {
       // debugger
       console.log(`rowIndex:${rowIndex}, columnIndex:${columnIndex}`)
+
       if (columnIndex === 0) {
-        return {
-          rowspan: row.rowspan || 1,
-          colspan: row.colspan || 1
+        if (rowIndex % 3 === 0) {
+          return {
+            rowspan: 3,
+            colspan: 1
+          }
+        } else {
+          return {
+            rowspan: 0,
+            colspan: 1
+          }
         }
       }
-      // if (columnIndex < 2) {
-      //   if (rowIndex % 3 === 0) {
-      //     return {
-      //       rowspan: 3,
-      //       colspan: 1
-      //     }
-      //   } else {
-      //     return {
-      //       rowspan: 0,
-      //       colspan: 1
-      //     }
-      //   }
-      // }
     }
   }
 }
