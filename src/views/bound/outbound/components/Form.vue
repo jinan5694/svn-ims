@@ -5,21 +5,33 @@
       ref="info"
       :editable="editable"
       @order-change="handleOrderChange"/>
-    <Toolbar title="商品信息"/>
+    <Toolbar title="商品信息">
+      <el-button
+        :disabled="btnDisabled"
+        type="primary"
+        @click="showOutbound">添加</el-button>
+    </Toolbar>
     <Table
       ref="table"
       :editable="editable"/>
+    <OutboundPicker
+      ref="outboundPicker"
+      :items="productItems"
+      :outbound="outboundItems"
+      @select="handleOutbound"/>
   </div>
 </template>
 <script>
-import _ from 'lodash'
 import Info from './Info'
 import Table from './Table'
+// outbound picker
+import OutboundPicker from '@/views/components/outboundPicker/main.vue'
 
 export default {
   components: {
     Info,
-    Table
+    Table,
+    OutboundPicker
   },
   props: {
     editable: {
@@ -29,10 +41,15 @@ export default {
   },
   data () {
     return {
-      form: {}
+      form: {},
+      productItems: [],
+      outboundItems: []
     }
   },
   computed: {
+    btnDisabled () {
+      return this.productItems.length === 0
+    },
     disabled () {
       return !this.editable
     },
@@ -49,35 +66,42 @@ export default {
         prodBatch: { // 批次
           batchCode: null
         },
-        warehouse: {
-          warehouse: null,
-          zone: null,
-          bin: null
-        }, // inner
-        destLoc: { // 仓库
+        sourceLoc: { // 仓库
           id: null
         },
-        destZone: { // 库区
+        sourceZone: { // 库区
           id: null
         },
-        destBin: { // 库位
+        sourceBin: { // 库位
           id: null
         },
         movementQty: 0, // 入库数量
-        price: 0, // 商品中带出的，可以修改
+        costPrice: 0, // 商品中带出的，可以修改
         amount: 0 // 根据数量和金额计算
       }
     }
   },
   methods: {
     handleOrderChange (order) {
-      const items = order.productItems.map(item => {
-        return _.assign({}, _.cloneDeep(this.defaultItem), {
+      this.productItems = order.productItems.map(item => {
+        return {
+          id: item.product.id,
+          qty: item.orderQty
+        }
+      })
+    },
+    handleOutbound (products) {
+      const items = products.map(item => {
+        return {
           product: item.product,
-          // 计划入库数量 = 采购数量 - 已入库数量
-          movementQty: item.qty - item.inQty,
-          price: item.price
-        })
+          prodBatch: item.prodBatch,
+          sourceLoc: item.warehouse,
+          sourceZone: item.zone,
+          sourceBin: item.bin,
+          movementQty: item.movementQty,
+          price: item.costPrice,
+          costPrice: item.costPrice
+        }
       })
       this.$refs.table.setItems(items)
     },
@@ -87,9 +111,18 @@ export default {
         items: this.$refs.table.getItems()
       }
     },
+    // 从商品信息表中读取计划出库数量
+    getOutboundQty () {
+      this.outboundItems = this.$refs.table.getItems()
+    },
     setForm (form) {
       this.$refs.info.setForm(form)
-      this.$refs.table.setItems(form.items)
+      // this.$refs.table.setItems(form.items)
+    },
+    showOutbound () {
+      // 读取已出库数量
+      this.getOutboundQty()
+      this.$refs.outboundPicker.open()
     },
     validate () {
       const tasks = [

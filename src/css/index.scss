@@ -117,6 +117,9 @@ $height-submenu: 40px;
 .el-dialog__headerbtn {
   top: 15px;
 }
+.el-dialog__body {
+  padding: $size;
+}
 .el-dialog__footer {
   padding: 10px 20px;
   border-top: 1px solid #eee;

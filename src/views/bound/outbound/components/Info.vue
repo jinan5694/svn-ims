@@ -21,7 +21,7 @@
     </el-select>
     <el-select
       slot="destOrg"
-      v-model="form.destOrg">
+      v-model="form.destOrg.id">
       <el-option
         v-for="item in customers"
         :key="item.id"
@@ -74,7 +74,9 @@ export default {
           id: null,
           orderNo: null // 销售单号
         },
-        destOrg: null, // 客户 （id）
+        destOrg: {
+          id: null // 客户 （id）
+        },
         postingDate: null, // 出库日期
         operator: null, // 操作员 （id）
         remark: null
@@ -179,7 +181,9 @@ export default {
       })
     },
     getForm () {
-      return this.form
+      const clone = this.$_.cloneDeep(this.form)
+      delete clone.id
+      return clone
     },
     setForm (form) {
       this.form = form

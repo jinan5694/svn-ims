@@ -36,5 +36,15 @@ export default {
     height: 100%;
     line-height: $size-large;
   }
+  .actions {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .el-button {
+      padding: 5px 15px;
+    }
+  }
+
 }
 </style>

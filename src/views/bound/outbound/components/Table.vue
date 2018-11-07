@@ -123,23 +123,27 @@ export default {
         },
         {
           label: '批次',
-          prop: 'prodBatch.batchCode',
-          slotName: 'batch'
+          prop: 'prodBatch.batchCode'
         },
         {
           label: '仓库',
-          prop: 'destLoc.id',
-          slotName: 'warehouse'
+          prop: 'sourceLoc.warehouseName'
         },
         {
-          label: '入库数量',
-          prop: 'movementQty',
-          slotName: 'qty'
+          label: '仓库',
+          prop: 'sourceZone.zoneName'
         },
         {
-          label: '单价',
-          prop: 'price',
-          slotName: 'price'
+          label: '仓库',
+          prop: 'sourceBin.binName'
+        },
+        {
+          label: '出库数量',
+          prop: 'movementQty'
+        },
+        {
+          label: '成本单价',
+          prop: 'costPrice'
         },
         {
           label: '金额',
@@ -168,14 +172,8 @@ export default {
     'form.items': {
       handler (items) {
         items.forEach(item => {
-          // 仓库
-          if (this.$_.get(item, 'warehouse.warehouse')) {
-            item.destLoc.id = item.warehouse.warehouse
-            item.destZone.id = item.warehouse.zone
-            item.destBin.id = item.warehouse.bin
-          }
           // 金额 = 入库数量 * 单价
-          item.amount = toNumber(item.movementQty) * toNumber(item.price)
+          item.amount = toNumber(item.movementQty) * toNumber(item.costPrice)
         })
       },
       deep: true
@@ -184,9 +182,6 @@ export default {
   methods: {
     getItems () {
       return this.form.items
-    },
-    getWarehouse (row) {
-      return `${row.destLoc.warehouseName}/${row.destZone.zoneName}/${row.destBin.binName}`
     },
     handleCopy (index) {
       const item = this.$_.cloneDeep(this.form.items[index])
@@ -197,11 +192,6 @@ export default {
     },
     setItems (items) {
       this.$set(this.form, 'items', items.map(item => {
-        item.warehouse = {
-          warehouse: item.destLoc.id,
-          zone: item.destZone.id,
-          bin: item.destBin.id
-        }
         return item
       }))
     },
