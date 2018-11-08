@@ -1,37 +1,37 @@
 <template>
   <div class="form">
     <Toolbar title="基本信息"/>
-    <Info
-      ref="info"
+    <OutboundOrderHeader
+      ref="obOrderHeader"
       :editable="editable"
-      @order-change="handleOrderChange"/>
+      @sale-order-change="handleSaleOrderChange"/>
     <Toolbar title="商品信息">
       <el-button
-        :disabled="btnDisabled"
+        v-if="editable"
         type="primary"
-        @click="showOutbound">添加</el-button>
+        @click="showInventoryPicker">添加</el-button>
     </Toolbar>
-    <Table
-      ref="table"
+    <OutboundOrderItemTable
+      ref="obOrderItemTable"
       :editable="editable"/>
-    <OutboundPicker
-      ref="outboundPicker"
-      :items="productItems"
-      :outbound="outboundItems"
-      @select="handleOutbound"/>
+    <InventoryPicker
+      ref="inventoryPicker"
+      :sale-order-items="saleOrderItems"
+      :outbound-order-items="outboundOrderItems"
+      @inventory-change="handleInventoryChange"/>
   </div>
 </template>
 <script>
-import Info from './Info'
-import Table from './Table'
-// outbound picker
-import OutboundPicker from '@/views/components/outboundPicker/main.vue'
+import OutboundOrderHeader from './OutboundOrderHeader'
+import OutboundOrderItemTable from './OutboundOrderItemTable'
+// inventory picker
+import InventoryPicker from '@/views/components/InventoryPicker'
 
 export default {
   components: {
-    Info,
-    Table,
-    OutboundPicker
+    OutboundOrderHeader,
+    OutboundOrderItemTable,
+    InventoryPicker
   },
   props: {
     editable: {
@@ -42,14 +42,11 @@ export default {
   data () {
     return {
       form: {},
-      productItems: [],
-      outboundItems: []
+      saleOrderItems: [],
+      outboundOrderItems: []
     }
   },
   computed: {
-    btnDisabled () {
-      return this.productItems.length === 0
-    },
     disabled () {
       return !this.editable
     },
@@ -76,22 +73,21 @@ export default {
           id: null
         },
         movementQty: 0, // 入库数量
-        costPrice: 0, // 商品中带出的，可以修改
+        price: 0, // 商品中带出的，可以修改
         amount: 0 // 根据数量和金额计算
       }
     }
   },
   methods: {
-    handleOrderChange (order) {
-      this.productItems = order.productItems.map(item => {
-        return {
-          id: item.product.id,
-          qty: item.orderQty
-        }
+    handleSaleOrderChange (order) {
+      this.saleOrderItems = order.productItems
+      // this.$refs.obOrderItemTable.setItems([])
+      this.$nextTick(() => {
+        this.$refs.inventoryPicker.fetch()
       })
     },
-    handleOutbound (products) {
-      const items = products.map(item => {
+    handleInventoryChange (inventories) {
+      const items = inventories.map(item => {
         return {
           product: item.product,
           prodBatch: item.prodBatch,
@@ -99,37 +95,45 @@ export default {
           sourceZone: item.zone,
           sourceBin: item.bin,
           movementQty: item.movementQty,
-          price: item.costPrice,
-          costPrice: item.costPrice
+          price: item.costPrice
         }
       })
-      this.$refs.table.setItems(items)
+      // this.outboundOrderItems = items
+      this.$refs.obOrderItemTable.setItems(items)
     },
     getForm () {
       return {
-        ...this.$refs.info.getForm(),
-        items: this.$refs.table.getItems()
+        ...this.$refs.obOrderHeader.getForm(),
+        items: this.$refs.obOrderItemTable.getItems()
       }
     },
-    // 从商品信息表中读取计划出库数量
-    getOutboundQty () {
-      this.outboundItems = this.$refs.table.getItems()
-    },
     setForm (form) {
-      this.$refs.info.setForm(form)
-      // this.$refs.table.setItems(form.items)
+      this.$refs.obOrderHeader.setForm(form)
+      this.$refs.obOrderItemTable.setItems(form.items)
     },
-    showOutbound () {
+    getOutboundOrderItems () {
+      this.outboundOrderItems = this.$refs.obOrderItemTable.getItems()
+    },
+    showInventoryPicker () {
       // 读取已出库数量
-      this.getOutboundQty()
-      this.$refs.outboundPicker.open()
+      this.getOutboundOrderItems()
+      this.$refs.inventoryPicker.open()
     },
     validate () {
       const tasks = [
-        this.$refs.info.validate(),
-        this.$refs.table.validate()
+        this.$refs.obOrderHeader.validate()
       ]
-      return Promise.all(tasks)
+      return Promise.all(tasks).then(() => {
+        const orderItems = this.$refs.obOrderItemTable.getItems()
+        if (orderItems.length === 0) {
+          const errorMsg = '请添加出库商品'
+          this.$message({
+            message: errorMsg,
+            type: 'warning'
+          })
+          return Promise.reject(new Error(errorMsg))
+        }
+      })
     }
   }
 }

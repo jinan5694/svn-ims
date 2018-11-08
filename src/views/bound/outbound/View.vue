@@ -4,11 +4,11 @@
     :element-loading-text="$t('loading_text')">
     <template slot="toolbar">
       <ConfirmButton
-        :loading="inboundBtnLoading"
+        :loading="outboundBtnLoading"
         type="primary"
-        text="入库"
-        msg="确定入库？"
-        @click="handleInbound"/>
+        text="出库"
+        msg="确定出库？"
+        @click="handleOutbound"/>
       <BackButton/>
     </template>
     <Form
@@ -30,7 +30,7 @@ export default {
   mixins: [ CrudMixin, configMixin ],
   data () {
     return {
-      inboundBtnLoading: false
+      outboundBtnLoading: false
     }
   },
   created () {
@@ -49,10 +49,10 @@ export default {
         })
       }
     },
-    handleInbound () {
-      const url = `/${this.serviceName}/in`
+    handleOutbound () {
+      const url = `/${this.serviceName}/out`
       const data = this.getForm()
-      this.inboundBtnLoading = true
+      this.outboundBtnLoading = true
       this.$axios.post(url, [data]).then(resp => {
         this.$message({ type: 'success', message: this.$t('message.success') })
         this.toList()
@@ -61,14 +61,12 @@ export default {
           this.$message({ type: 'error', message: errorMsg })
         }
       }).finally(() => {
-        this.inboundBtnLoading = false
+        this.outboundBtnLoading = false
       })
-    },
-    getInboundData () {
-
     }
   }
 }
 </script>
 <style lang="scss" scoped>
+
 </style>

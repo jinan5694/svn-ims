@@ -23,7 +23,8 @@ export default {
     },
     // 入库单是否可以编辑，删除等操作
     orderEditable (order) {
-      return order.docStatus === 'AfterSales_DOCStatus_InStorageDOCStatus_ISDOCS001'
+      return true
+      // return order.docStatus === 'AfterSales_DOCStatus_OutStorageDOCStatus_ISDOCS001'
     }
   }
 }

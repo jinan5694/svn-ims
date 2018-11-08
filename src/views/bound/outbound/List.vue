@@ -12,14 +12,16 @@
     <TopBottomLayout>
       <div slot="top">
         <Toolbar title="出库单"/>
-        <HeadTable
-          ref="headTable"
+        <OutboundOrderTable
+          ref="obOrderTable"
           :search-key="searchKey"
           @current-change="handleCurrentChange"/>
       </div>
       <div slot="bottom">
         <Toolbar title="商品"/>
-        <ItemTable :data="data"/>
+        <OutboundOrderItemTable
+          ref="obOrderItemTable"
+          :editable="false"/>
       </div>
     </TopBottomLayout>
   </Page>
@@ -27,27 +29,26 @@
 <script>
 import configMixin from './mixins/config'
 
-import HeadTable from './components/HeadTable'
-import ItemTable from './components/ItemTable'
+import OutboundOrderTable from './components/OutboundOrderTable'
+import OutboundOrderItemTable from './components/OutboundOrderItemTable'
 
 export default {
   components: {
-    HeadTable,
-    ItemTable
+    OutboundOrderTable,
+    OutboundOrderItemTable
   },
   mixins: [ configMixin ],
   data () {
     return {
-      searchKey: '',
-      data: []
+      searchKey: ''
     }
   },
   methods: {
     fetch () {
-      this.$refs.headTable.fetch()
+      this.$refs.obOrderTable.fetch()
     },
     handleCurrentChange (row) {
-      this.data = row.items
+      this.$refs.obOrderItemTable.setItems(row.items)
     }
   }
 }

@@ -6,36 +6,6 @@
     :columns="columns"
     :table-config="tableConfig">
     <template
-      slot="orderStatus"
-      slot-scope="{row, index}">
-      {{
-        $translate({
-          key: 'AfterSales_OrderStatus_POStatus',
-          value: $_.get(row, 'purchaseOrder.orderStatus')
-        })
-      }}
-    </template>
-    <template
-      slot="warehouseCategory"
-      slot-scope="{row, index}">
-      {{
-        $translate({
-          key: 'Inventory_Attributes',
-          value: row.warehouseCategory
-        })
-      }}
-    </template>
-    <template
-      slot="pricingMethod"
-      slot-scope="{row, index}">
-      {{
-        $translate({
-          key: 'Inventory_PricingMethod',
-          value: row.pricingMethod
-        })
-      }}
-    </template>
-    <template
       slot="operator"
       slot-scope="{row, index}">
       <Button
@@ -67,11 +37,6 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-
-    }
-  },
   computed: {
     columns () {
       return [
@@ -80,13 +45,18 @@ export default {
           prop: 'id'
         },
         {
-          label: '订单编号',
+          label: '销售单编号',
           prop: 'saleOrder.orderNo'
         },
         {
-          label: '订单状态',
+          label: '销售单状态',
           prop: 'saleOrder.orderStatus',
-          slotName: 'orderStatus'
+          formatter: row => {
+            return this.$translate({
+              key: 'AfterSales_OrderStatus_SOStatus',
+              value: this.$_.get(row, 'saleOrder.orderStatus')
+            })
+          }
         },
         {
           label: '创建日期',
@@ -102,14 +72,19 @@ export default {
         },
         {
           label: '客户类别',
-          prop: 'destOrg.customerType'
+          formatter: row => {
+            return this.$translate({
+              key: 'AfterSales_CustomerCate',
+              value: row.destOrg.customerCategory
+            })
+          }
         },
         {
           label: '销售日期',
           formatter: row => timeToDate(row.saleOrder.postingDate)
         },
         {
-          label: '状态',
+          label: '库存状态',
           prop: 'docStatus',
           formatter: row => {
             return this.$translate({
@@ -146,6 +121,9 @@ export default {
           and: [
             { enableFlag: 'System_EnableFlag_1' }
           ]
+        },
+        order: {
+          updatedTime: 0
         }
       }
       if (this.searchKey !== '') {
@@ -153,7 +131,7 @@ export default {
           { id: { like: this.searchKey } }
         ]
       }
-      const path = ['saleOrder', 'items']
+      const path = []
       return [params, path]
     },
     tableConfig () {
@@ -165,6 +143,9 @@ export default {
           'current-change': this.handleCurrentChange
         }
       }
+    },
+    customers () {
+      return this.$store.state.Business.customers
     },
     vendors () {
       return this.$store.state.Business.vendors

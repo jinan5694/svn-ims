@@ -40,9 +40,7 @@ export default {
         })
         this.toList()
       }).catch(error => {
-        if (error) {
-          console.error(error.exceptionMessage)
-        }
+        throw new Error(error)
       })
     },
     saveOrUpdate () {

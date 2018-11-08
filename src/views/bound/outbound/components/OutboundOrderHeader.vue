@@ -6,9 +6,8 @@
     :rules="rules"
     :disabled="disabled">
     <el-input
-      slot="orderNo"
-      v-model="form.orderNo"
-      disabled/>
+      slot="orderId"
+      v-model="form.orderId"/>
     <el-select
       slot="saleOrder"
       v-model="form.saleOrder.id"
@@ -68,8 +67,7 @@ export default {
   data () {
     return {
       form: {
-        id: null,
-        orderNo: null, // 出库单号
+        orderId: null, // 出库单号
         saleOrder: {
           id: null,
           orderNo: null // 销售单号
@@ -92,7 +90,7 @@ export default {
       const items = [
         {
           label: '出库单号',
-          prop: 'orderNo'
+          prop: 'orderId'
         },
         {
           label: '销售单',
@@ -101,7 +99,8 @@ export default {
         },
         {
           label: '客户名称',
-          prop: 'destOrg'
+          prop: 'destOrg.id',
+          slotName: 'destOrg'
         },
         {
           label: '出库日期',
@@ -127,22 +126,27 @@ export default {
     },
     rules () {
       return {
-        'purchaseOrder.id': [{
-          // required: true,
-          message: '请选择采购单',
+
+        'orderId': [{
+          required: true,
+          message: '请输入出库单号',
+          trigger: ['blur']
+        }],
+        'saleOrder.id': [{
+          required: true,
+          message: '请选择销售单',
           trigger: ['blur', 'change']
         }],
-        sourceOrg: [{
-          // required: true,
-          message: '请选择供应商',
+        'destOrg.id': [{
+          required: true,
+          message: '请选择客户',
           trigger: ['blur', 'change']
         }],
-        postingDate: [{
-          // required: true,
+        'postingDate': [{
           message: '请选择入库日期',
           trigger: ['blur', 'change']
         }],
-        operator: [{
+        'operator': [{
           required: true,
           message: '请选择操作员',
           trigger: ['blur', 'change']
@@ -164,7 +168,7 @@ export default {
     handleSaleOrderChange (id) {
       const order = this.orders.find(item => item.id === id)
       this.form.saleOrder.id = order.id
-      this.$emit('order-change', order)
+      this.$emit('sale-order-change', order)
     },
     querySaleOrders () {
       const url = '/SaleOrderService/query'
@@ -181,9 +185,7 @@ export default {
       })
     },
     getForm () {
-      const clone = this.$_.cloneDeep(this.form)
-      delete clone.id
-      return clone
+      return this.form
     },
     setForm (form) {
       this.form = form
