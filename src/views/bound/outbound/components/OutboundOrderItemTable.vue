@@ -66,11 +66,11 @@ export default {
           prop: 'sourceLoc.warehouseName'
         },
         {
-          label: '仓库',
+          label: '库区',
           prop: 'sourceZone.zoneName'
         },
         {
-          label: '仓库',
+          label: '库位',
           prop: 'sourceBin.binName'
         },
         {
@@ -124,7 +124,6 @@ export default {
       this.items.splice(index, 1)
     },
     setItems (items) {
-      debugger
       this.items = items
     }
   }

@@ -1,10 +1,10 @@
 <template>
   <DataTable
     ref="table"
-    :url="urlQuery"
-    :params="params"
     :columns="columns"
-    :table-config="tableConfig">
+    :params="params"
+    :table-config="tableConfig"
+    :url="urlQuery">
     <template
       slot="orderStatus"
       slot-scope="{row, index}">
@@ -12,26 +12,6 @@
         $translate({
           key: 'AfterSales_OrderStatus_POStatus',
           value: $_.get(row, 'purchaseOrder.orderStatus')
-        })
-      }}
-    </template>
-    <template
-      slot="warehouseCategory"
-      slot-scope="{row, index}">
-      {{
-        $translate({
-          key: 'Inventory_Attributes',
-          value: row.warehouseCategory
-        })
-      }}
-    </template>
-    <template
-      slot="pricingMethod"
-      slot-scope="{row, index}">
-      {{
-        $translate({
-          key: 'Inventory_PricingMethod',
-          value: row.pricingMethod
         })
       }}
     </template>
@@ -45,6 +25,7 @@
         v-show="orderEditable(row)"
         button-type="edit"
         @click="toEdit(row.id)"/>
+      <!-- TODO: 实现列表入库，跳转到详情页 -->
       <!-- <el-button type="text">入库</el-button> -->
       <ConfirmButton
         v-show="orderEditable(row)"
@@ -54,9 +35,10 @@
 </template>
 
 <script>
+// mixins
 import CrudMixin from '@/mixins/crud'
 import configMixin from '../mixins/config'
-
+// utils
 import { timeToDate } from '@/common/utils'
 
 export default {
@@ -77,6 +59,7 @@ export default {
       return [
         {
           label: '入库单号',
+          // TODO: replace docCode
           prop: 'purchaseOrder.orderNo'
         },
         {
@@ -90,11 +73,13 @@ export default {
         },
         {
           label: '创建日期',
-          formatter: row => timeToDate(row.createdTime)
+          formatter: row => timeToDate(row.createdTime),
+          width: 90
         },
         {
           label: '入库日期',
-          formatter: row => timeToDate(row.postingDate)
+          formatter: row => timeToDate(row.postingDate),
+          width: 90
         },
         {
           label: '供应商代码',
@@ -116,7 +101,8 @@ export default {
         },
         {
           label: '采购日期',
-          formatter: row => timeToDate(row.postingDate)
+          formatter: row => timeToDate(row.postingDate),
+          width: 90
         },
         {
           label: '状态',
@@ -126,7 +112,8 @@ export default {
               key: 'AfterSales_DOCStatus_InStorageDOCStatus',
               value: row.docStatus
             })
-          }
+          },
+          width: 70
         },
         {
           label: '冲销状态',
@@ -136,7 +123,8 @@ export default {
               key: 'AfterSales_OrderWithdrawStatus',
               value: row.woStatus
             })
-          }
+          },
+          width: 70
         },
         {
           label: '备注',
@@ -160,10 +148,12 @@ export default {
       }
       if (this.searchKey !== '') {
         params.where.or = [
-          { id: { like: this.searchKey } }
+          { 'purchaseOrder.orderNo': { like: this.searchKey } }
+          // TODO: doc code
+          // { 'docCode': { like: this.searchKey } }
         ]
       }
-      const path = ['purchaseOrder', 'items']
+      const path = []
       return [params, path]
     },
     tableConfig () {

@@ -19,6 +19,11 @@ export default {
   batch_add: '批量添加',
   product_select: '商品选择',
   delete: '删除',
+  base_info: '基本信息',
+  product_info: '商品信息',
+  export_warehouse: '导出库存',
+  product: '商品',
+  take_stock: '盘点单',
 
   // 提示用在this.$message()中
   message: {
@@ -39,7 +44,8 @@ export default {
     outbound: '出库单号/订单编号',
     // 采购销售
     purchase: '采购单号',
-    sale: '销售单号'
+    sale: '销售单号',
+    takeStock: '盘点单号'
   }
 
 }

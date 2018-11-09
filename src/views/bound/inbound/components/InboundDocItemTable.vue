@@ -2,7 +2,7 @@
   <BaseTable
     ref="table"
     :columns="columns"
-    :data="data">
+    :data="items">
     <template
       slot="operator"
       slot-scope="{row, index}">
@@ -21,20 +21,12 @@
 </template>
 
 <script>
-import CrudMixin from '@/mixins/crud'
-import configMixin from '../mixins/config'
 
 export default {
-  mixins: [ CrudMixin, configMixin ],
   props: {
-    data: {
+    items: {
       type: Array,
       default: () => []
-    }
-  },
-  data () {
-    return {
-      // searchKey: ''
     }
   },
   computed: {
@@ -42,21 +34,21 @@ export default {
       return [
         {
           label: '商品名称',
-          prop: 'prodName'
+          prop: 'product.prodName'
         },
         {
           label: '商品编码',
-          prop: 'prodCode'
+          prop: 'product.prodCode'
         },
         {
           label: '单位',
-          prop: 'unit',
           formatter: row => {
             return this.$translate({
               key: 'AfterSales_Unit',
-              value: row.unit
+              value: this.$_.get(row, 'product.unit')
             })
-          }
+          },
+          width: 80
         },
         {
           label: '规格型号',
@@ -72,11 +64,13 @@ export default {
         },
         {
           label: '单价',
-          prop: 'costPrice'
+          prop: 'price',
+          width: 100
         },
         {
           label: '金额',
-          prop: 'costAmount'
+          prop: 'amount',
+          width: 100
         },
         {
           label: '状态',
@@ -86,40 +80,10 @@ export default {
               key: 'AfterSales_DOCStatus_InStorageDOCStatus',
               value: row.docItemStatus
             })
-          }
+          },
+          width: 80
         }
       ]
-    },
-    params () {
-      const params = {
-        where: {
-          and: [
-            { enableFlag: 'System_EnableFlag_1' }
-          ]
-        }
-      }
-      // id here
-      if (this.orderNo !== '') {
-        params.where.or = [
-          { id: { like: this.orderNo } }
-        ]
-      }
-      const path = ['zone']
-      return [params, path]
-    },
-    paginationConfig () {
-      return {
-        props: {
-          pageSize: 5
-        }
-      }
-    }
-  },
-  watch: {
-    orderNo () {
-      if (this.orderNo) {
-        this.fetch()
-      }
     }
   }
 }

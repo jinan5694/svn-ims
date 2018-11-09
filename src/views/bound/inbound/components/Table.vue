@@ -20,13 +20,13 @@
         <template v-else>{{ $_.get(row, 'prodBatch.batchCode') }}</template>
       </template>
       <template
-        slot="warehouse"
+        slot="dest"
         slot-scope="{row, index}">
         <el-form-item
           v-if="editable"
-          :prop="`items.${index}.destLoc.id`"
-          :rules="rules.warehouse">
-          <WarehouseCascader v-model="row.warehouse"/>
+          :prop="`items.${index}.dest`"
+          :rules="rules.dest">
+          <LocationCascader v-model="row.dest"/>
         </el-form-item>
         <template v-else>{{ getWarehouse(row) }}</template>
       </template>
@@ -39,8 +39,7 @@
           :rules="rules.qty">
           <InputNumber
             v-model="row.movementQty"
-            :min="0"
-            :max="row.movementQty"/>
+            :min="0"/>
         </el-form-item>
         <Number
           v-else
@@ -72,27 +71,56 @@
 import FormMixin from '@/mixins/form'
 import { toNumber } from '@/common/utils'
 
-import WarehouseCascader from '@/components/WarehouseCascader'
+import LocationCascader from '@/views/components/LocationCascader'
 
 export default {
   components: {
-    WarehouseCascader
+    LocationCascader
   },
   mixins: [ FormMixin ],
   props: {
     editable: {
       type: Boolean,
       default: true
+    },
+    items: {
+      type: Array,
+      default: () => []
     }
   },
   data () {
     return {
-      form: {
-        items: []
-      }
+
     }
   },
   computed: {
+    form () {
+      const itemTemplate = {
+        product: {},
+        prodBatch: { // 批次
+          batchCode: null
+        },
+        dest: null, // 仓库选择器
+        destLoc: { // 仓库
+          id: null
+        },
+        destZone: { // 库区
+          id: null
+        },
+        destBin: { // 库位
+          id: null
+        },
+        movementQty: 0, // 入库数量
+        price: 0, // 商品中带出的，可以修改
+        amount: 0 // 根据数量和金额计算
+      }
+      const items = this.items.map(item => {
+        return { ...this.$_.cloneDeep(itemTemplate), ...item }
+      })
+      return {
+        items: items
+      }
+    },
     columns () {
       const columns = [
         {
@@ -128,8 +156,9 @@ export default {
         },
         {
           label: '仓库',
-          prop: 'destLoc.id',
-          slotName: 'warehouse'
+          prop: 'dest',
+          slotName: 'dest',
+          width: 200
         },
         {
           label: '入库数量',
@@ -154,13 +183,38 @@ export default {
       }
       return columns
     },
+    defaultItem () {
+      return {
+        product: {},
+        prodBatch: { // 批次
+          batchCode: null
+        },
+        warehouse: {
+          warehouse: null,
+          zone: null,
+          bin: null
+        }, // inner
+        destLoc: { // 仓库
+          id: null
+        },
+        destZone: { // 库区
+          id: null
+        },
+        destBin: { // 库位
+          id: null
+        },
+        movementQty: 0, // 入库数量
+        price: 0, // 商品中带出的，可以修改
+        amount: 0 // 根据数量和金额计算
+      }
+    },
     // rules
     rules () {
       return {
-        batch: [{ required: true, message: '请输入批次', trigger: ['blur'] }],
-        warehouse: [{ required: true, message: '请选择仓库', trigger: ['blur', 'change'] }],
-        qty: [{ required: true, message: '请输入数量', trigger: ['blur'] }],
-        price: [{ required: true, message: '请输入金额', trigger: ['blur'] }]
+        batch: [{ required: true, message: '请输入批次', trigger: ['blur', 'change'] }],
+        dest: [{ required: true, message: '请选择仓库', trigger: ['blur', 'change'] }],
+        qty: [{ required: true, message: '请输入数量', trigger: ['blur', 'change'] }],
+        price: [{ required: true, message: '请输入金额', trigger: ['blur', 'change'] }]
       }
     }
   },
@@ -168,13 +222,16 @@ export default {
     'form.items': {
       handler (items) {
         items.forEach(item => {
-          // 仓库
-          if (this.$_.get(item, 'warehouse.warehouse')) {
-            item.destLoc.id = item.warehouse.warehouse
-            item.destZone.id = item.warehouse.zone
-            item.destBin.id = item.warehouse.bin
+          if (item.dest) {
+            const ids = item.dest.split(',')
+            item.destLoc.id = ids[0]
+            item.destZone.id = ids[1]
+            item.destBin.id = ids[2]
+          } else {
+            item.destLoc.id = null
+            item.destZone.id = null
+            item.destBin.id = null
           }
-          // 金额 = 入库数量 * 单价
           item.amount = toNumber(item.movementQty) * toNumber(item.price)
         })
       },

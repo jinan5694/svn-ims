@@ -45,11 +45,11 @@
     <el-input
       slot="remark"
       v-model="form.remark"/>
-    <div slot="orderStatus">
+    <div slot="docStatus">
       {{
         $translate({
-          key: 'AfterSales_OrderStatus_POStatus',
-          value: $_.get(form, 'purchaseOrder.orderStatus')
+          key: 'AfterSales_DOCStatus_InStorageDOCStatus',
+          value: form.docStatus
         })
       }}
     </div>
@@ -118,7 +118,7 @@ export default {
       if (this.$route.params.id) {
         items.push({
           label: '状态',
-          slotName: 'orderStatus'
+          slotName: 'docStatus'
         })
       }
       return items
@@ -162,6 +162,7 @@ export default {
     handlePurchaseChange (id) {
       const order = this.orders.find(item => item.id === id)
       this.form.purchaseOrder.id = order.id
+      this.form.sourceOrg = order.sourceOrg
       this.$emit('order-change', order)
     },
     queryPurchaseOrders () {

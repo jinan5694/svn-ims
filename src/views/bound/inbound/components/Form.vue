@@ -1,24 +1,25 @@
 <template>
   <div class="form">
     <Toolbar title="基本信息"/>
-    <Info
-      ref="info"
+    <InboundDocHeader
+      ref="inboundDocHeader"
       :editable="editable"
       @order-change="handleOrderChange"/>
-    <Toolbar title="商品信息"/>
+    <Toolbar title="商品"/>
     <Table
       ref="table"
-      :editable="editable"/>
+      :editable="editable"
+      :items="items"/>
   </div>
 </template>
 <script>
-import _ from 'lodash'
-import Info from './Info'
+
+import InboundDocHeader from './InboundDocHeader'
 import Table from './Table'
 
 export default {
   components: {
-    Info,
+    InboundDocHeader,
     Table
   },
   props: {
@@ -29,7 +30,7 @@ export default {
   },
   data () {
     return {
-      form: {}
+      items: []
     }
   },
   computed: {
@@ -71,29 +72,29 @@ export default {
   },
   methods: {
     handleOrderChange (order) {
-      const items = order.productItems.map(item => {
-        return _.assign({}, _.cloneDeep(this.defaultItem), {
+      this.items = order.productItems.map(item => {
+        // 将采购单中的相关信息传入
+        return {
           product: item.product,
           // 计划入库数量 = 采购数量 - 已入库数量
           movementQty: item.qty - item.inQty,
           price: item.price
-        })
+        }
       })
-      this.$refs.table.setItems(items)
     },
     getForm () {
       return {
-        ...this.$refs.info.getForm(),
+        ...this.$refs.inboundDocHeader.getForm(),
         items: this.$refs.table.getItems()
       }
     },
     setForm (form) {
-      this.$refs.info.setForm(form)
+      this.$refs.inboundDocHeader.setForm(form)
       this.$refs.table.setItems(form.items)
     },
     validate () {
       const tasks = [
-        this.$refs.info.validate(),
+        this.$refs.inboundDocHeader.validate(),
         this.$refs.table.validate()
       ]
       return Promise.all(tasks)

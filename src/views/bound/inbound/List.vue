@@ -12,42 +12,43 @@
     <TopBottomLayout>
       <div slot="top">
         <Toolbar title="入库单"/>
-        <HeadTable
-          ref="headTable"
+        <InboundDocTable
+          ref="inboundDocTable"
           :search-key="searchKey"
           @current-change="handleCurrentChange"/>
       </div>
       <div slot="bottom">
         <Toolbar title="商品"/>
-        <ItemTable :data="data"/>
+        <InboundDocItemTable :items="docItems"/>
       </div>
     </TopBottomLayout>
   </Page>
 </template>
 <script>
+// mixins
 import configMixin from './mixins/config'
-
-import HeadTable from './components/HeadTable'
-import ItemTable from './components/ItemTable'
+// components
+import InboundDocTable from './components/InboundDocTable'
+import InboundDocItemTable from './components/InboundDocItemTable'
 
 export default {
   components: {
-    HeadTable,
-    ItemTable
+    InboundDocTable,
+    InboundDocItemTable
   },
   mixins: [ configMixin ],
   data () {
     return {
       searchKey: '',
-      data: []
+      docItems: []
     }
   },
   methods: {
     fetch () {
-      this.$refs.headTable.fetch()
+      this.$refs.inboundDocTable.fetch()
     },
     handleCurrentChange (row) {
-      this.data = row.items
+      this.docItems = row.items
     }
   }
 }

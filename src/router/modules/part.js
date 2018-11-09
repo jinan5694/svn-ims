@@ -42,5 +42,26 @@ routes.push({
   path: 'part/sale/edit/:id',
   component: () => import('@/views/part/sale/Edit.vue')
 })
+// takeStock
+routes.push({
+  meta: { title: '盘点新建' },
+  path: 'part/takeStock/add',
+  component: () => import('@/views/part/takeStock/Add.vue')
+})
+routes.push({
+  meta: { title: '盘点列表' },
+  path: 'part/takeStock/list',
+  component: () => import('@/views/part/takeStock/List.vue')
+})
+routes.push({
+  meta: { title: '盘点查看' },
+  path: 'part/takeStock/view/:id',
+  component: () => import('@/views/part/takeStock/View.vue')
+})
+routes.push({
+  meta: { title: '盘点编辑' },
+  path: 'part/takeStock/edit/:id',
+  component: () => import('@/views/part/takeStock/Edit.vue')
+})
 
 export default routes
