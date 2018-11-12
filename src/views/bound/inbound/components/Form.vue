@@ -6,7 +6,7 @@
       :editable="editable"
       @order-change="handleOrderChange"/>
     <Toolbar title="商品"/>
-    <Table
+    <InboundDocItemTable
       ref="table"
       :editable="editable"
       :items="items"/>
@@ -15,12 +15,12 @@
 <script>
 
 import InboundDocHeader from './InboundDocHeader'
-import Table from './Table'
+import InboundDocItemTable from './InboundDocItemTable'
 
 export default {
   components: {
     InboundDocHeader,
-    Table
+    InboundDocItemTable
   },
   props: {
     editable: {
@@ -36,38 +36,6 @@ export default {
   computed: {
     disabled () {
       return !this.editable
-    },
-    defaultItem () {
-      return {
-        product: {
-          id: null,
-          prodName: null,
-          prodCode: null,
-          unit: null,
-          specmodel: null,
-          brand: null
-        },
-        prodBatch: { // 批次
-          batchCode: null
-        },
-        warehouse: {
-          warehouse: null,
-          zone: null,
-          bin: null
-        }, // inner
-        destLoc: { // 仓库
-          id: null
-        },
-        destZone: { // 库区
-          id: null
-        },
-        destBin: { // 库位
-          id: null
-        },
-        movementQty: 0, // 入库数量
-        price: 0, // 商品中带出的，可以修改
-        amount: 0 // 根据数量和金额计算
-      }
     }
   },
   methods: {
@@ -85,12 +53,12 @@ export default {
     getForm () {
       return {
         ...this.$refs.inboundDocHeader.getForm(),
-        items: this.$refs.table.getItems()
+        items: this.items
       }
     },
     setForm (form) {
       this.$refs.inboundDocHeader.setForm(form)
-      this.$refs.table.setItems(form.items)
+      this.items = form.items
     },
     validate () {
       const tasks = [

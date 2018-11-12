@@ -92,16 +92,21 @@ export default {
     renderData () {
       const inventories = this.getSpanData(this.inventories)
       return inventories.map(invItem => {
+        // 注入销售单的销售数量为计划出库数量
+        const equalSaleItem = this.saleOrderItems.find(saleOrderItem => {
+          return invItem.product.id === saleOrderItem.product.id
+        })
+        if (equalSaleItem) {
+          invItem.movementQty = equalSaleItem.orderQty
+        }
+
         // 回写计划出库数量
         const equalItem = this.outboundOrderItems.find(obOrderItem => {
           return this.eq(invItem, obOrderItem)
         })
-        invItem.movementQty = equalItem ? equalItem.movementQty : 0
-        // 注入计划出库数量
-        const equalSaleItem = this.saleOrderItems.find(saleOrderItem => {
-          return invItem.product.id === saleOrderItem.product.id
-        })
-        invItem.orderQty = equalSaleItem.orderQty
+        if (equalItem) {
+          invItem.movementQty = equalItem.movementQty
+        }
 
         return invItem
       })
@@ -115,8 +120,10 @@ export default {
       const query = {
         where: {
           and: [
-            { purposeId: { isNull: null } }, // 预留状态
-            { 'product.id': { in: this.saleOrderProductIds } }
+            { 'product.id': { in: this.saleOrderProductIds } },
+            { 'invMtrlStatus': 'Inventory_MtrlInvMtrlStatus_MIMS001' }, // 库存物料状态
+            { 'invBizStatus': 'Inventory_MtrlInvBizStatus_MIBS001' }, // 库存业务状态
+            { 'invCheckStatus': 'Inventory_MtrlInvCheckStatus_MICS001' } // 库存盘点状态
           ]
         },
         order: {

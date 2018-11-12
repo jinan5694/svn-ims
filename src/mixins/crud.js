@@ -40,7 +40,7 @@ export default {
         })
         this.toList()
       }).catch(error => {
-        throw new Error(error)
+        console.warn(JSON.stringify(error, null, 2))
       })
     },
     saveOrUpdate () {

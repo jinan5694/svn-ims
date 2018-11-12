@@ -6,8 +6,8 @@
     :rules="rules"
     :disabled="disabled">
     <el-input
-      slot="orderId"
-      v-model="form.orderId"/>
+      slot="docCode"
+      v-model="form.docCode"/>
     <el-select
       slot="saleOrder"
       v-model="form.saleOrder.id"
@@ -90,7 +90,7 @@ export default {
       const items = [
         {
           label: '出库单号',
-          prop: 'orderId'
+          prop: 'docCode'
         },
         {
           label: '销售单',
@@ -127,7 +127,7 @@ export default {
     rules () {
       return {
 
-        'orderId': [{
+        'docCode': [{
           required: true,
           message: '请输入出库单号',
           trigger: ['blur']

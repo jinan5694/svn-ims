@@ -126,18 +126,13 @@ export default {
     rules () {
       return {
         'purchaseOrder.id': [{
-          // required: true,
+          required: true,
           message: '请选择采购单',
           trigger: ['blur', 'change']
         }],
         sourceOrg: [{
-          // required: true,
+          required: true,
           message: '请选择供应商',
-          trigger: ['blur', 'change']
-        }],
-        postingDate: [{
-          // required: true,
-          message: '请选择入库日期',
           trigger: ['blur', 'change']
         }],
         operator: [{
@@ -168,12 +163,11 @@ export default {
     queryPurchaseOrders () {
       const url = '/PurchaseOrderService/query'
       const params = {
-        where: {
-          or: [
-            { orderStatus: 'AfterSales_OrderStatus_POStatus_POS001' }, // 新建
-            { orderStatus: 'AfterSales_OrderStatus_POStatus_POS002' } // 部分入库
-          ]
-        }
+        where: { or: [] }
+      }
+      if (this.editable) {
+        params.where.or.push({ orderStatus: 'AfterSales_OrderStatus_POStatus_POS001' }) // 新建
+        params.where.or.push({ orderStatus: 'AfterSales_OrderStatus_POStatus_POS002' }) // 部分入库
       }
       this.$axios.get(url, { params: [params] }).then(resp => {
         this.orders = resp.data

@@ -19,7 +19,9 @@
       </div>
       <div slot="bottom">
         <Toolbar title="商品"/>
-        <InboundDocItemTable :items="docItems"/>
+        <InboundDocItemTable
+          :editable="false"
+          :items="docItems"/>
       </div>
     </TopBottomLayout>
   </Page>
