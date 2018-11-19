@@ -40,6 +40,10 @@
 }
 
 // psi
+.el-container {
+  min-height: 0;
+}
+
 $form-width: 300px;
 .form-container {
   .el-input {

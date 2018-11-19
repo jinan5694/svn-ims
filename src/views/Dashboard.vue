@@ -11,7 +11,6 @@
       border>
       <!-- slot -->
     </BaseTable>
-
   </Page>
 </template>
 
