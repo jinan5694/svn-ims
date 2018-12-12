@@ -1,5 +1,5 @@
 // public
-function hasLogged () {
+function isLoggedIn () {
   return localStorage.getItem('token') || false
 }
 
@@ -24,7 +24,7 @@ function _clearToken () {
 }
 
 export {
-  hasLogged,
+  isLoggedIn,
   login,
   logout
 }

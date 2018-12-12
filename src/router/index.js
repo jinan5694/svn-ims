@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Login from '@/views/login/Login'
 import Index from '@/views/Index'
 
-import { hasLogged } from '@/common/login'
+import { isLoggedIn } from '@/common/login'
 import routes from '@/router/routes'
 
 Vue.use(Router)
@@ -14,7 +14,11 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      meta: { title: '登录', public: true },
+      meta: {
+        onlyWhenLoggedOut: true, // 只允许未登录时访问
+        public: true,
+        title: '登录'
+      },
       component: Login
     },
     {
@@ -46,16 +50,25 @@ const router = new Router({
   ]
 })
 
-router.beforeEach(async (to, from, next) => {
-  if (to.meta.public) {
-    next()
-  } else {
-    if (hasLogged()) {
-      next()
-    } else {
-      next('/login')
-    }
+router.beforeEach((to, from, next) => {
+  const isPublic = to.meta.public
+  const onlyWhenLoggedOut = to.meta.onlyWhenLoggedOut
+  const loggedIn = isLoggedIn()
+
+  // 不是公共权限并且未登录，拦截到登录页
+  if (!isPublic && !loggedIn) {
+    return next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
   }
+
+  // 已登录并且是登出页，拦截到首页
+  if (loggedIn && onlyWhenLoggedOut) {
+    return next('/')
+  }
+
+  next()
 })
 
 router.afterEach((to, from) => {
