@@ -1,71 +1,86 @@
 <template>
   <div class="form-container">
-    <el-form
+    <ElForm
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="100px">
-      <el-form-item
+      label-width="100px"
+    >
+      <ElFormItem
         label="员工编号"
-        prop="employeeNo">
-        <el-input
+        prop="employeeNo"
+      >
+        <ElInput
           v-model="form.employeeNo"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="员工姓名"
-        prop="employeeName">
-        <el-input
+        prop="employeeName"
+      >
+        <ElInput
           v-model="form.employeeName"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="职务"
-        prop="postPosition">
-        <el-select
+        prop="postPosition"
+      >
+        <ElSelect
           v-model="form.postPosition"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in systemPostPosition"
             :key="item.id"
             :label="item.label"
-            :value="item.code"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.code"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="性别"
-        prop="sex">
-        <el-select
+        prop="sex"
+      >
+        <ElSelect
           v-model="form.sex"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in systemSex"
             :key="item.id"
             :label="item.label"
-            :value="item.code"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.code"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="入职日期"
-        prop="entryDate">
-        <el-date-picker
+        prop="entryDate"
+      >
+        <ElDatePicker
           v-model="form.entryDate"
           :disabled="disabled"
           type="date"
           placeholder="选择失效日期"
-          value-format="yyyy-MM-dd"/>
-      </el-form-item>
-      <el-form-item
+          value-format="yyyy-MM-dd"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="出生日期"
-        prop="dateOfBirth">
-        <el-date-picker
+        prop="dateOfBirth"
+      >
+        <ElDatePicker
           v-model="form.dateOfBirth"
           :disabled="disabled"
           type="date"
           placeholder="选择失效日期"
-          value-format="yyyy-MM-dd"/>
-      </el-form-item>
-    </el-form>
+          value-format="yyyy-MM-dd"
+        />
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 <script>

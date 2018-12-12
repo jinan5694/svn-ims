@@ -4,24 +4,28 @@
       <Search
         v-model="searchKey"
         :placeholder="$t('placeholder.inbound')"
-        @search="fetch"/>
+        @search="fetch"
+      />
       <Button
         button-type="add"
-        @click="toAdd"/>
+        @click="toAdd"
+      />
     </template>
     <TopBottomLayout>
       <div slot="top">
-        <Toolbar title="入库单"/>
+        <Toolbar title="入库单" />
         <InboundDocTable
           ref="inboundDocTable"
           :search-key="searchKey"
-          @current-change="handleCurrentChange"/>
+          @current-change="handleCurrentChange"
+        />
       </div>
       <div slot="bottom">
-        <Toolbar title="商品"/>
+        <Toolbar title="商品" />
         <InboundDocItemTable
           :editable="false"
-          :items="docItems"/>
+          :items="docItems"
+        />
       </div>
     </TopBottomLayout>
   </Page>

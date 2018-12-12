@@ -1,34 +1,42 @@
 <template>
   <Page
     v-loading="loading"
-    :element-loading-text="$t('loading_text')">
+    :element-loading-text="$t('loading_text')"
+  >
     <template slot="toolbar">
       <Search
         v-model="searchKey"
         :placeholder="$t('placeholder.prod_batch')"
-        @search="fetch"/>
+        @search="fetch"
+      />
       <Button
         button-type="add"
-        @click="toAdd"/>
+        @click="toAdd"
+      />
     </template>
     <DataTable
       ref="table"
       :url="urlQuery"
       :params="params"
-      :columns="columns">
+      :columns="columns"
+    >
       <template
         slot="operator"
-        slot-scope="{row, index}">
+        slot-scope="{row}"
+      >
         <Button
           button-type="view"
-          @click="toView(row.id)"/>
+          @click="toView(row.id)"
+        />
         <Button
           button-type="edit"
-          @click="toEdit(row.id)"/>
+          @click="toEdit(row.id)"
+        />
         <ConfirmButton
           text="停用"
           msg="确定停用该仓库？"
-          @click="remove(row)"/>
+          @click="remove(row)"
+        />
       </template>
     </DataTable>
   </Page>

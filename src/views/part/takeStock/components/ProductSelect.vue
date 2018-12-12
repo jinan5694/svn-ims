@@ -1,27 +1,31 @@
 <template>
-  <el-dialog
+  <ElDialog
     :visible="visible"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     :append-to-body="true"
     :before-close="close"
     :title="$t('product_select')"
-    width="1200px">
+    width="1200px"
+  >
     <div class="search">
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.prodName')"
-        @search="fetch"/>
+        @search="fetch"
+      />
     </div>
     <DataTable
       ref="table"
       :url="urlQuery"
       :params="params"
       :columns="columns"
-      :table-config="tableConfig">
+      :table-config="tableConfig"
+    >
       <template
         slot="unit"
-        slot-scope="scope">
+        slot-scope="scope"
+      >
         {{
           $translate({
             key: 'AfterSales_Unit',
@@ -31,7 +35,8 @@
       </template>
       <template
         slot="prodCategory"
-        slot-scope="scope">
+        slot-scope="scope"
+      >
         {{
           $translate({
             key: 'AfterSales_ProdSubCate',
@@ -43,12 +48,14 @@
     <span slot="footer">
       <Button
         button-type="ok"
-        @click="select"/>
+        @click="select"
+      />
       <Button
         button-type="cancel"
-        @click="close"/>
+        @click="close"
+      />
     </span>
-  </el-dialog>
+  </ElDialog>
 </template>
 <script>
 export default {

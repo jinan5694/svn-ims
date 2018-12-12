@@ -4,10 +4,12 @@
     :columns="columns"
     :params="params"
     :table-config="tableConfig"
-    :url="urlQuery">
+    :url="urlQuery"
+  >
     <template
       slot="orderStatus"
-      slot-scope="{row, index}">
+      slot-scope="{row}"
+    >
       {{
         $translate({
           key: 'AfterSales_OrderStatus_POStatus',
@@ -17,19 +19,23 @@
     </template>
     <template
       slot="operator"
-      slot-scope="{row, index}">
+      slot-scope="{row}"
+    >
       <Button
         button-type="view"
-        @click="toView(row.id)"/>
+        @click="toView(row.id)"
+      />
       <Button
         v-show="orderEditable(row)"
         button-type="edit"
-        @click="toEdit(row.id)"/>
+        @click="toEdit(row.id)"
+      />
       <!-- TODO: 实现列表入库，跳转到详情页 -->
       <!-- <el-button type="text">入库</el-button> -->
       <ConfirmButton
         v-show="orderEditable(row)"
-        @click="remove(row)"/>
+        @click="remove(row)"
+      />
     </template>
   </DataTable>
 </template>

@@ -1,8 +1,10 @@
 <template>
   <div class="toolbar">
-    <div class="title">{{ title }}</div>
+    <div class="title">
+      {{ title }}
+    </div>
     <div class="actions">
-      <slot/>
+      <slot />
     </div>
   </div>
 </template>

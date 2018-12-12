@@ -1,24 +1,26 @@
 <template>
   <div class="header">
-    <router-link to="/">
-      <Logo color="#fff"/>
-    </router-link>
+    <RouterLink to="/">
+      <Logo color="#fff" />
+    </RouterLink>
     <div class="toolbar">
       <div class="item">
         {{ user.name }}
       </div>
       <div
         class="item"
-        @click="toPlay">
-        <Icon name="gamepad"/>
+        @click="toPlay"
+      >
+        <Icon name="gamepad" />
       </div>
       <div class="item">
-        <Icon name="settings"/>
+        <Icon name="settings" />
       </div>
       <div
         class="item"
-        @click="handleLogout">
-        <Icon name="power_settings_new"/>
+        @click="handleLogout"
+      >
+        <Icon name="power_settings_new" />
       </div>
     </div>
   </div>

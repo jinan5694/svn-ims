@@ -2,15 +2,17 @@
   <div
     v-loading="loading"
     class="ready"
-    element-loading-text="系统准备中">
-    <el-alert
+    element-loading-text="系统准备中"
+  >
+    <ElAlert
       v-show="readyFailed"
       class="alert"
       close-text="重试"
       title="系统准备失败"
       type="error"
       show-icon
-      @close="handleClose"/>
+      @close="handleClose"
+    />
   </div>
 </template>
 

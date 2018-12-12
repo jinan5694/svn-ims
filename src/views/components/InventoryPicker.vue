@@ -1,34 +1,44 @@
 <template>
   <div class="inventory-picker">
-    <el-dialog
+    <ElDialog
       :visible.sync="visible"
       title="选择库存"
-      width="90%">
+      width="90%"
+    >
       <BaseTable
         :columns="columns"
         :data="renderData"
         :span-method="spanMethod"
-        border>
+        border
+      >
         <!-- slot -->
         <template
           slot="movementQty"
-          slot-scope="{row}">
+          slot-scope="{row}"
+        >
           <InputNumber
             slot="movementQty"
             v-model="row.movementQty"
             :min="0"
-            :max="row.qty"/>
+            :max="row.qty"
+          />
         </template>
       </BaseTable>
       <span
         slot="footer"
-        class="dialog-footer">
-        <el-button @click="close">{{ $t('cancel') }}</el-button>
-        <el-button
+        class="dialog-footer"
+      >
+        <ElButton @click="close">
+          {{ $t('cancel') }}
+        </ElButton>
+        <ElButton
           type="primary"
-          @click="handleDone">{{ $t('ok') }}</el-button>
+          @click="handleDone"
+        >
+          {{ $t('ok') }}
+        </ElButton>
       </span>
-    </el-dialog>
+    </ElDialog>
   </div>
 </template>
 

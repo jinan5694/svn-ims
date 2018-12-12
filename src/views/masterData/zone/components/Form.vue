@@ -1,75 +1,91 @@
 <template>
   <div class="form-container">
-    <el-form
+    <ElForm
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="100px">
-      <el-form-item
+      label-width="100px"
+    >
+      <ElFormItem
         label="仓库代码"
-        prop="warehouse.id">
-        <el-select
+        prop="warehouse.id"
+      >
+        <ElSelect
           v-model="form.warehouse.id"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in warehouse"
             :key="item.id"
             :label="item.warehouseCode"
-            :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.id"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="库区代码"
-        prop="zoneCode">
-        <el-input
+        prop="zoneCode"
+      >
+        <ElInput
           v-model="form.zoneCode"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="库区名称"
-        prop="zoneName">
-        <el-input
+        prop="zoneName"
+      >
+        <ElInput
           v-model="form.zoneName"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="库区类型"
-        prop="zoneType">
-        <el-select
+        prop="zoneType"
+      >
+        <ElSelect
           v-model="form.zoneType"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in inventoryZoneType"
             :key="item.id"
             :label="item.label"
-            :value="item.code"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.code"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         v-show="form.id"
         label="默认库位"
-        prop="defaultBinId">
-        <el-select
+        prop="defaultBinId"
+      >
+        <ElSelect
           v-model="form.defaultBinId"
           :disabled="disabled"
-          @change="handleDefaultBinChange">
-          <el-option
+          @change="handleDefaultBinChange"
+        >
+          <ElOption
             v-for="item in bins"
             :key="item.id"
             :label="item.binCode"
-            :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.id"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="备注"
-        prop="remark">
-        <el-input
+        prop="remark"
+      >
+        <ElInput
           v-model="form.remark"
           :disabled="disabled"
           type="textarea"
-          maxlength="20"/>
-      </el-form-item>
-    </el-form>
+          maxlength="20"
+        />
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 <script>

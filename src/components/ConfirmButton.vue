@@ -1,30 +1,40 @@
 <template>
-  <el-popover
+  <ElPopover
     v-model="visible"
     :width="width"
     class="confirm-button"
     placement="bottom-end"
     title="提示"
-    trigger="click">
+    trigger="click"
+  >
     <div class="content">
       <div class="message">
-        <Icon name="warning"/>
+        <Icon name="warning" />
         {{ msg }}
       </div>
       <div class="footer">
-        <el-button
+        <ElButton
           type="text"
-          @click="handleDone">{{ $t('ok') }}</el-button>
-        <el-button
+          @click="handleDone"
+        >
+          {{ $t('ok') }}
+        </ElButton>
+        <ElButton
           type="text"
-          @click="handleCancel">{{ $t('cancel') }}</el-button>
+          @click="handleCancel"
+        >
+          {{ $t('cancel') }}
+        </ElButton>
       </div>
     </div>
-    <el-button
+    <ElButton
       slot="reference"
       :loading="loading"
-      :type="type">{{ text }}</el-button>
-  </el-popover>
+      :type="type"
+    >
+      {{ text }}
+    </ElButton>
+  </ElPopover>
 </template>
 
 <script>

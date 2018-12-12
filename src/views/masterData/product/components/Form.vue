@@ -1,124 +1,149 @@
 <template>
   <div class="form-container">
-    <el-form
+    <ElForm
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="100px">
-      <el-form-item
+      label-width="100px"
+    >
+      <ElFormItem
         label="商品名称"
-        prop="prodName">
-        <el-input
+        prop="prodName"
+      >
+        <ElInput
           v-model="form.prodName"
           :disabled="disabled"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="商品编码"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.prodCode"
           :disabled="disabled"
-          maxlength="32"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="32"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="计量单位"
-        prop="">
+        prop=""
+      >
         <Unit
           v-model="form.unit"
           :disabled="disabled"
           class="unit"
-          maxlength="50"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="50"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="规格型号"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.specmodel"
           :disabled="disabled"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="品牌"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.brand"
           :disabled="disabled"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="保质期天数"
-        prop="">
+        prop=""
+      >
         <InputNumber
           v-model="form.qualityGuaranteePeriod"
           :disabled="disabled"
           :max="999999"
-          :min="0"/>
-      </el-form-item>
-      <el-form-item
+          :min="0"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="商品类型"
-        prop="">
-        <el-select
+        prop=""
+      >
+        <ElSelect
           v-model="form.prodCategory"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in prodCategorys"
             :key="item.value"
             :label="item.label"
             :value="item.code"
           />
-        </el-select>
-      </el-form-item>
-      <el-form-item
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="备注"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.remark"
           :disabled="disabled"
           type="textarea"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="采购价"
-        prop="">
+        prop=""
+      >
         <InputNumber
           v-model="form.purchasePrice"
           :disabled="disabled"
           :precision="2"
           :max="999999"
-          :min="0"/>
-      </el-form-item>
-      <el-form-item
+          :min="0"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="销售价"
-        prop="">
+        prop=""
+      >
         <InputNumber
           v-model="form.sellingPrice"
           :disabled="disabled"
           :precision="2"
           :max="999999"
-          :min="0"/>
-      </el-form-item>
-      <el-form-item
+          :min="0"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="高储"
-        prop="">
+        prop=""
+      >
         <InputNumber
           v-model="form.stockTopLimit"
           :disabled="disabled"
           :precision="2"
           :max="999999"
-          :min="0"/>
-      </el-form-item>
-      <el-form-item
+          :min="0"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="低储"
-        prop="">
+        prop=""
+      >
         <InputNumber
           v-model="form.stockLowerLimit"
           :disabled="disabled"
           :precision="2"
           :max="999999"
-          :min="0"/>
-      </el-form-item>
-    </el-form>
+          :min="0"
+        />
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 <script>

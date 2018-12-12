@@ -46,10 +46,10 @@
 
 $form-width: 300px;
 .form-container {
-  .el-input {
-    width: $form-width;
-  }
-  .el-textarea {
+  .el-input,
+  .el-textarea,
+  .el-select, 
+  .el-date-editor.el-input {
     width: $form-width;
   }
 }

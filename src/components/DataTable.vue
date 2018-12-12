@@ -2,27 +2,31 @@
   <div
     v-loading="loading"
     :element-loading-text="$t('loading_text')"
-    class="data-table">
+    class="data-table"
+  >
     <div class="table">
       <BaseTable
         ref="table"
         :columns="columns"
         :data="data"
         v-bind="tableConfig.props"
-        v-on="tableConfig.events">
-        <slot/>
+        v-on="tableConfig.events"
+      >
+        <slot />
       </BaseTable>
     </div>
     <div
       v-show="paginationVisible"
-      class="pagination">
-      <el-pagination
+      class="pagination"
+    >
+      <ElPagination
         v-bind="paginationBinds"
         :current-page.sync="page.pageNumber"
         :total="total"
         v-on="paginationConfig.events"
         @current-change="handleCurrentChange"
-        @size-change="handleSizeChange"/>
+        @size-change="handleSizeChange"
+      />
     </div>
   </div>
 </template>

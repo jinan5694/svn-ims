@@ -4,47 +4,57 @@
     :items="items"
     :model="form"
     :rules="rules"
-    :disabled="disabled">
-    <el-input
+    :disabled="disabled"
+  >
+    <ElInput
       slot="orderNo"
       v-model="form.orderNo"
-      disabled/>
-    <el-select
+      disabled
+    />
+    <ElSelect
       slot="purchaseOrder"
       v-model="form.purchaseOrder.id"
-      @change="handlePurchaseChange">
-      <el-option
+      @change="handlePurchaseChange"
+    >
+      <ElOption
         v-for="item in orders"
         :key="item.id"
         :label="item.orderNo"
-        :value="item.id"/>
-    </el-select>
-    <el-select
+        :value="item.id"
+      />
+    </ElSelect>
+    <ElSelect
       slot="sourceOrg"
-      v-model="form.sourceOrg">
-      <el-option
+      v-model="form.sourceOrg"
+    >
+      <ElOption
         v-for="item in vendors"
         :key="item.id"
         :label="item.vendorName"
-        :value="item.id"/>
-    </el-select>
-    <el-date-picker
+        :value="item.id"
+      />
+    </ElSelect>
+    <ElDatePicker
       slot="postingDate"
       v-model="form.postingDate"
       disabled
-      value-format="yyyy-MM-dd"/>
-    <el-select
+      value-format="yyyy-MM-dd"
+    />
+    <ElSelect
       slot="operator"
-      v-model="form.operator">
-      <el-option
+      v-model="form.operator"
+    >
+      <ElOption
         v-for="item in employees"
         :key="item.id"
         :label="item.employeeName"
-        :value="item.id"/>
-    </el-select>
-    <el-input
+        :value="item.id"
+      />
+    </ElSelect>
+    <ElInput
       slot="remark"
-      v-model="form.remark"/>
+      v-model="form.remark"
+    />
     <div slot="docStatus">
       {{
         $translate({

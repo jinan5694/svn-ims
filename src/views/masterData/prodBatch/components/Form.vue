@@ -1,98 +1,119 @@
 <template>
   <div class="form-container">
-    <el-form
+    <ElForm
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="100px">
-      <el-form-item
+      label-width="100px"
+    >
+      <ElFormItem
         label="产品"
-        prop="product.id">
-        <el-select
+        prop="product.id"
+      >
+        <ElSelect
           v-model="form.product.id"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in products"
             :key="item.id"
             :label="item.prodName"
-            :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.id"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="批次号"
-        prop="batchCode">
-        <el-input
+        prop="batchCode"
+      >
+        <ElInput
           v-model="form.batchCode"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="批次描述"
-        prop="batchDesc">
-        <el-input
+        prop="batchDesc"
+      >
+        <ElInput
           v-model="form.batchDesc"
           :disabled="disabled"
-          type="textarea"/>
-      </el-form-item>
-      <el-form-item
+          type="textarea"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="批次状态"
-        prop="batchStatus">
-        <el-input
+        prop="batchStatus"
+      >
+        <ElInput
           v-model="form.batchStatus"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="最后采购时间"
-        prop="lastPurchaseTime">
-        <el-date-picker
+        prop="lastPurchaseTime"
+      >
+        <ElDatePicker
           v-model="form.lastPurchaseTime"
           :disabled="disabled"
           type="datetime"
           placeholder="选择最后采购时间"
-          value-format="yyyy-MM-dd HH:mm:ss"/>
-      </el-form-item>
-      <el-form-item
+          value-format="yyyy-MM-dd HH:mm:ss"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="生产日期"
-        prop="productionDate">
-        <el-date-picker
+        prop="productionDate"
+      >
+        <ElDatePicker
           v-model="form.productionDate"
           :disabled="disabled"
           type="date"
           placeholder="选择生产日期"
-          value-format="yyyy-MM-dd"/>
-      </el-form-item>
-      <el-form-item
+          value-format="yyyy-MM-dd"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="失效日期"
-        prop="expirationDate">
-        <el-date-picker
+        prop="expirationDate"
+      >
+        <ElDatePicker
           v-model="form.expirationDate"
           :disabled="disabled"
           type="date"
           placeholder="选择失效日期"
-          value-format="yyyy-MM-dd"/>
-      </el-form-item>
-      <el-form-item
+          value-format="yyyy-MM-dd"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="供应商"
-        prop="vendor">
-        <el-select
+        prop="vendor"
+      >
+        <ElSelect
           v-model="form.vendor"
           :disabled="disabled"
-          placeholder="选择供应商">
-          <el-option
+          placeholder="选择供应商"
+        >
+          <ElOption
             v-for="item in vendors"
             :key="item.id"
             :label="item.vendorName"
-            :value="item.id"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.id"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="备注"
-        prop="remark">
-        <el-input
+        prop="remark"
+      >
+        <ElInput
           v-model="form.remark"
           :disabled="disabled"
-          type="textarea"/>
-      </el-form-item>
-    </el-form>
+          type="textarea"
+        />
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 <script>

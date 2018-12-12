@@ -1,56 +1,68 @@
 <template>
   <div class="form-container">
-    <el-form
+    <ElForm
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="100px">
-      <el-form-item
+      label-width="100px"
+    >
+      <ElFormItem
         label="库区代码"
-        prop="warehouseAndZone">
-        <el-cascader
+        prop="warehouseAndZone"
+      >
+        <ElCascader
           v-model="form.warehouseAndZone"
           :disabled="disabled"
           :options="options"
           expand-trigger="hover"
-          @change="handleChange"/>
-      </el-form-item>
-      <el-form-item
+          @change="handleChange"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="库位代码"
-        prop="binCode">
-        <el-input
+        prop="binCode"
+      >
+        <ElInput
           v-model="form.binCode"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="库位名称"
-        prop="binName">
-        <el-input
+        prop="binName"
+      >
+        <ElInput
           v-model="form.binName"
-          :disabled="disabled"/>
-      </el-form-item>
-      <el-form-item
+          :disabled="disabled"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="库位类型"
-        prop="binType">
-        <el-select
+        prop="binType"
+      >
+        <ElSelect
           v-model="form.binType"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in inventoryBinType"
             :key="item.id"
             :label="item.label"
-            :value="item.code"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.code"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="备注"
-        prop="remark">
-        <el-input
+        prop="remark"
+      >
+        <ElInput
           v-model="form.remark"
           :disabled="disabled"
-          type="textarea"/>
-      </el-form-item>
-    </el-form>
+          type="textarea"
+        />
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 <script>

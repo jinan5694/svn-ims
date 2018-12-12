@@ -1,5 +1,5 @@
 <template>
-  <el-form
+  <ElForm
     ref="form"
     :model="form"
   >
@@ -8,10 +8,12 @@
       :columns="columns"
       :data="form.items"
       :summary-method="getSummaries"
-      show-summary>
+      show-summary
+    >
       <template
         slot="unit"
-        slot-scope="scope">
+        slot-scope="scope"
+      >
         {{
           $translate({
             key: 'AfterSales_Unit',
@@ -21,53 +23,63 @@
       </template>
       <template
         slot="orderQty"
-        slot-scope="scope">
-        <el-form-item
+        slot-scope="scope"
+      >
+        <ElFormItem
           :prop="'items.' + scope.index + '.orderQty'"
           :rules="rules.orderQty"
-          :show-message="false">
+          :show-message="false"
+        >
           <InputNumber
             v-model="scope.row.orderQty"
             :min="0"
             :max="999999"
-            @change="calcQty(scope.row)"/>
-        </el-form-item>
+            @change="calcQty(scope.row)"
+          />
+        </ElFormItem>
       </template>
       <template
         slot="price"
-        slot-scope="scope">
-        <el-form-item
+        slot-scope="scope"
+      >
+        <ElFormItem
           :prop="'items.' + scope.index + '.price'"
           :rules="rules.price"
-          :show-message="false">
+          :show-message="false"
+        >
           <InputNumber
             v-model="scope.row.price"
             :min="0"
             :max="999999"
             type="amount"
-            @change="calcQty(scope.row)"/>
-        </el-form-item>
+            @change="calcQty(scope.row)"
+          />
+        </ElFormItem>
       </template>
       <template
         slot="OwningQty"
-        slot-scope="scope">
+        slot-scope="scope"
+      >
         {{
           scope.row.orderQty - scope.row.outQty
         }}
       </template>
       <template
         slot="operations"
-        slot-scope="{row, index}">
+        slot-scope="{row, index}"
+      >
         <Button
           button-type="delete"
-          @click="remove(index)"/>
+          @click="remove(index)"
+        />
       </template>
     </BaseTable>
-  </el-form>
+  </ElForm>
 </template>
 
 <script>
 import FormMixin from '@/mixins/form'
+import { formatNumber } from '@/common/utils.js'
 
 export default {
   mixins: [ FormMixin ],
@@ -114,7 +126,8 @@ export default {
         },
         {
           label: '金额',
-          prop: 'amount'
+          prop: 'amount',
+          formatter: row => formatNumber(row.amount, 'amount')
         },
         {
           label: '出库数量',
@@ -167,7 +180,12 @@ export default {
             }
             const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr
+              let res = prev + curr
+              if (column.property === 'amount') {
+                return formatNumber(res, 'amount')
+              } else {
+                return formatNumber(res)
+              }
             } else {
               return prev
             }

@@ -1,24 +1,28 @@
 <template>
-  <el-container
+  <ElContainer
     v-if="hasReady"
-    class="container">
-    <el-header
+    direction="vertical"
+    class="container"
+  >
+    <ElHeader
       class="header-box"
-      height="50px">
-      <Header/>
-    </el-header>
-    <el-container>
-      <el-aside
+      height="50px"
+    >
+      <Header />
+    </ElHeader>
+    <ElContainer>
+      <ElAside
         class="aside-box"
-        width="65px">
-        <Sidebar/>
-      </el-aside>
-      <el-main class="main">
-        <router-view/>
-      </el-main>
-    </el-container>
-  </el-container>
-  <Ready v-else/>
+        width="65px"
+      >
+        <Sidebar />
+      </ElAside>
+      <ElMain class="main">
+        <RouterView />
+      </ElMain>
+    </ElContainer>
+  </ElContainer>
+  <Ready v-else />
 </template>
 <script>
 import Ready from '@/views/Ready'

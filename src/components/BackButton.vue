@@ -1,5 +1,7 @@
 <template>
-  <el-button @click="goback">{{ $t('back') }}</el-button>
+  <ElButton @click="goback">
+    {{ $t('back') }}
+  </ElButton>
 </template>
 <script>
 export default {

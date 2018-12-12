@@ -1,70 +1,93 @@
 <template>
-  <el-form
+  <ElForm
     ref="form"
     :model="form"
-    :show-message="false">
+    :show-message="false"
+  >
     <BaseTable
       :columns="columns"
       :data="form.items"
-      class="table-validate">
+      class="table-validate"
+    >
       <!-- slot -->
       <template
         slot="batch"
-        slot-scope="{row, index}">
-        <el-form-item
+        slot-scope="{row, index}"
+      >
+        <ElFormItem
           v-if="editable"
           :prop="`items.${index}.prodBatch.batchCode`"
-          :rules="rules.batch">
-          <el-input v-model="row.prodBatch.batchCode"/>
-        </el-form-item>
-        <template v-else>{{ $_.get(row, 'prodBatch.batchCode') }}</template>
+          :rules="rules.batch"
+        >
+          <ElInput v-model="row.prodBatch.batchCode" />
+        </ElFormItem>
+        <template v-else>
+          {{ $_.get(row, 'prodBatch.batchCode') }}
+        </template>
       </template>
       <template
         slot="dest"
-        slot-scope="{row, index}">
-        <el-form-item
+        slot-scope="{row, index}"
+      >
+        <ElFormItem
           v-if="editable"
           :prop="`items.${index}.dest`"
-          :rules="rules.dest">
-          <LocationCascader v-model="row.dest"/>
-        </el-form-item>
-        <template v-else>{{ getWarehouse(row) }}</template>
+          :rules="rules.dest"
+        >
+          <LocationCascader v-model="row.dest" />
+        </ElFormItem>
+        <template v-else>
+          {{ getWarehouse(row) }}
+        </template>
       </template>
       <template
         slot="qty"
-        slot-scope="{row, index}">
-        <el-form-item
+        slot-scope="{row, index}"
+      >
+        <ElFormItem
           v-if="editable"
           :prop="`items.${index}.movementQty`"
-          :rules="rules.qty">
+          :rules="rules.qty"
+        >
           <InputNumber
             v-model="row.movementQty"
-            :min="0"/>
-        </el-form-item>
+            :min="0"
+          />
+        </ElFormItem>
         <Number
           v-else
-          :value="row.movementQty"/>
+          :value="row.movementQty"
+        />
       </template>
       <template
         slot="price"
-        slot-scope="{row, index}">
+        slot-scope="{row}"
+      >
         <!-- 价格更新暂时不支持，所以注销 -->
         <Number
           :value="row.price"
-          amount/>
+          amount
+        />
       </template>
       <template
         slot="operator"
-        slot-scope="{row, index}">
-        <el-button
+        slot-scope="{row, index}"
+      >
+        <ElButton
           type="text"
-          @click="handleRemove(index)">删除</el-button>
-        <el-button
+          @click="handleRemove(index)"
+        >
+          删除
+        </ElButton>
+        <ElButton
           type="text"
-          @click="handleCopy(index)">复制</el-button>
+          @click="handleCopy(index)"
+        >
+          复制
+        </ElButton>
       </template>
     </BaseTable>
-  </el-form>
+  </ElForm>
 </template>
 
 <script>

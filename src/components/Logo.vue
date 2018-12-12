@@ -1,7 +1,10 @@
 <template>
   <div
     :style="style"
-    class="logo">PSI</div>
+    class="logo"
+  >
+    PSI
+  </div>
 </template>
 
 <script>

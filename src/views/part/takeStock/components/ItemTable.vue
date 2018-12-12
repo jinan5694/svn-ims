@@ -4,10 +4,12 @@
     :columns="columns"
     :data="data"
     :summary-method="getSummaries"
-    show-summary>
+    show-summary
+  >
     <template
       slot="unit"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       {{
         $translate({
           key: 'AfterSales_Unit',
@@ -17,7 +19,8 @@
     </template>
     <template
       slot="metarialStatus"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       {{
         $translate({
           key: 'AfterSales_OrderStatus_POStatus',

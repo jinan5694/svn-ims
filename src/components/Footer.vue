@@ -1,6 +1,8 @@
 <template>
   <div class="footer">
-    Copyright© 2018 上海睿谋信息技术有限公司<a href="http://www.miitbeian.gov.cn/">沪ICP备17038562号</a>
+    Copyright© 2018 上海睿谋信息技术有限公司<a href="http://www.miitbeian.gov.cn/">
+      沪ICP备17038562号
+    </a>
   </div>
 </template>
 

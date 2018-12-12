@@ -4,22 +4,25 @@
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.purchase')"
-        @search="fetch"/>
+        @search="fetch"
+      />
       <Button
         button-type="add"
-        @click="toAdd"/>
+        @click="toAdd"
+      />
     </template>
     <TopBottomLayout>
       <div slot="top">
-        <Toolbar title="采购单"/>
+        <Toolbar title="采购单" />
         <HeadTable
           ref="headTable"
           :search-key="searchValue"
-          @current-change="handleCurrentChange"/>
+          @current-change="handleCurrentChange"
+        />
       </div>
       <div slot="bottom">
-        <Toolbar title="商品"/>
-        <ItemTable :data="data"/>
+        <Toolbar title="商品" />
+        <ItemTable :data="data" />
       </div>
     </TopBottomLayout>
   </Page>

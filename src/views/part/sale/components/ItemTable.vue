@@ -4,10 +4,12 @@
     :columns="columns"
     :data="data"
     :summary-method="getSummaries"
-    show-summary>
+    show-summary
+  >
     <template
       slot="unit"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       {{
         $translate({
           key: 'AfterSales_Unit',
@@ -17,7 +19,8 @@
     </template>
     <template
       slot="metarialStatus"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       {{
         $translate({
           key: 'AfterSales_OrderMetarialStatus',
@@ -27,7 +30,8 @@
     </template>
     <template
       slot="OwningQty"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       {{
         scope.row.qty - scope.row.inQty
       }}
@@ -36,6 +40,7 @@
 </template>
 
 <script>
+import { formatNumber } from '@/common/utils.js'
 
 export default {
   props: {
@@ -77,11 +82,13 @@ export default {
         },
         {
           label: '销售单价',
-          prop: 'price'
+          prop: 'price',
+          formatter: row => formatNumber(row.amount, 'amount')
         },
         {
           label: '金额',
-          prop: 'amount'
+          prop: 'amount',
+          formatter: row => formatNumber(row.amount, 'amount')
         },
         {
           label: '状态',
@@ -124,7 +131,12 @@ export default {
             }
             const value = Number(curr)
             if (!isNaN(value)) {
-              return prev + curr
+              let res = prev + curr
+              if (column.property === 'price' || column.property === 'amount') {
+                return formatNumber(res, 'amount')
+              } else {
+                return formatNumber(res)
+              }
             } else {
               return prev
             }

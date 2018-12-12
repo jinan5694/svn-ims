@@ -1,5 +1,5 @@
 <template>
-  <el-form
+  <ElForm
     ref="form"
     :model="form"
   >
@@ -8,37 +8,45 @@
       :columns="columns"
       :data="form.items"
       :summary-method="getSummaries"
-      show-summary>
+      show-summary
+    >
       <template
         slot="qtyStocktaking"
-        slot-scope="scope">
-        <el-form-item
+        slot-scope="scope"
+      >
+        <ElFormItem
           :prop="'items.' + scope.index + '.qtyStocktaking'"
           :rules="rules.qtyStocktaking"
-          :show-message="false">
+          :show-message="false"
+        >
           <InputNumber
             v-model="scope.row.qtyStocktaking"
             :min="0"
-            :max="999999"/>
-        </el-form-item>
+            :max="999999"
+          />
+        </ElFormItem>
       </template>
       <template
         slot="invStocktaking"
-        slot-scope="scope">
-        <el-form-item
+        slot-scope="scope"
+      >
+        <ElFormItem
           :prop="'items.' + scope.index + '.invStocktaking'"
           :rules="rules.invStocktaking"
-          :show-message="false">
+          :show-message="false"
+        >
           <InputNumber
             v-model="scope.row.invStocktaking"
             :min="0"
             :max="999999"
-            type="amount"/>
-        </el-form-item>
+            type="amount"
+          />
+        </ElFormItem>
       </template>
       <template
         slot="unit"
-        slot-scope="scope">
+        slot-scope="scope"
+      >
         {{
           $translate({
             key: 'AfterSales_Unit',
@@ -47,7 +55,7 @@
         }}
       </template>
     </BaseTable>
-  </el-form>
+  </ElForm>
 </template>
 
 <script>

@@ -1,11 +1,15 @@
 <template>
   <div class="top-bottom-layout">
     <div class="top">
-      <slot name="top">top slot here</slot>
+      <slot name="top">
+        top slot here
+      </slot>
     </div>
-    <div class="bar"/>
+    <div class="bar" />
     <div class="bottom">
-      <slot name="bottom">bottom slot here</slot>
+      <slot name="bottom">
+        bottom slot here
+      </slot>
     </div>
   </div>
 </template>

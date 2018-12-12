@@ -3,64 +3,76 @@
     <p>{{ value }}</p>
     <In
       v-model="value"
-      :max="10"/>
-    <Number/><br >
+      :max="10"
+    />
+    <Number /><br>
     <hr>
-    <Number value="0"/><br >
-    <Number :value="0"/><br >
+    <Number value="0" /><br>
+    <Number :value="0" /><br>
     <Number
       :value="0"
-      amount/><br ><hr>
+      amount
+    /><br><hr>
 
-    <Number value="1"/><br >
-    <Number :value="1"/><br >
+    <Number value="1" /><br>
+    <Number :value="1" /><br>
     <Number
       :value="1"
-      amount/><br ><hr>
+      amount
+    /><br><hr>
 
-    <Number value="1.2345"/><br >
-    <Number :value="1.2345"/><br >
+    <Number value="1.2345" /><br>
+    <Number :value="1.2345" /><br>
     <Number
       :value="1.2345"
-      amount/><br ><hr>
+      amount
+    /><br><hr>
 
-    <Number value="test"/><br >
+    <Number value="test" /><br>
     <!-- <Number :value="test"/><br > -->
     <Number
       value="test"
-      amount/><br ><hr>
+      amount
+    /><br><hr>
 
-    <Number value="-3456.7789"/><br >
-    <Number :value="-3456.7789"/><br >
+    <Number value="-3456.7789" /><br>
+    <Number :value="-3456.7789" /><br>
     <Number
       :value="-3456.7789"
-      amount/><br ><hr>
+      amount
+    /><br><hr>
 
     <BaseButton
       type="add"
-      @click="handleClick"/>
-    <BaseButton type="save"/>
-    <BaseButton type="search"/>
-    <BaseButton type="print"/>
-    <BaseButton type="back"/>
+      @click="handleClick"
+    />
+    <BaseButton type="save" />
+    <BaseButton type="search" />
+    <BaseButton type="print" />
+    <BaseButton type="back" />
 
-    <BaseButton type="view"/>
-    <BaseButton type="edit"/>
-    <BaseButton type="stop"/>
+    <BaseButton type="view" />
+    <BaseButton type="edit" />
+    <BaseButton type="stop" />
     <BaseButton
       :loading="true"
-      type="edit"/>
-    <BaseButton type="test">test</BaseButton>
+      type="edit"
+    />
+    <BaseButton type="test">
+      test
+    </BaseButton>
     <div>{{ form }}</div>
     <GridForm
       :items="items"
       :model="form"
-      :rules="rules">
-      <el-date-picker
+      :rules="rules"
+    >
+      <ElDatePicker
         slot="date"
-        v-model="form.date"/>
+        v-model="form.date"
+      />
       <div slot="name">
-        <el-input v-model="form.name"/>
+        <ElInput v-model="form.name" />
       </div>
       <InputNumber
         ref="in"
@@ -69,20 +81,24 @@
         type="number"
         @change="handleChange"
         @blur="handleBlur"
-        @focus="handleFocus"/>
+        @focus="handleFocus"
+      />
       <div slot="address">
-        <el-input
+        <ElInput
           v-model="form.address"
           type="textarea"
-          @change="handleChange"/>
+          @change="handleChange"
+        />
       </div>
-      <el-select
+      <ElSelect
         slot="sex"
-        v-model="form.sex"/>
-      <el-date-picker
+        v-model="form.sex"
+      />
+      <ElDatePicker
         slot="time"
         v-model="form.time"
-        type="datetime"/>
+        type="datetime"
+      />
     </GridForm>
   </Page>
 </template>

@@ -4,10 +4,12 @@
     :url="urlQuery"
     :params="params"
     :columns="columns"
-    :table-config="tableConfig">
+    :table-config="tableConfig"
+  >
     <template
       slot="orderStatus"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       {{
         $translate({
           key: 'AfterSales_OrderStatus_POStatus',
@@ -17,21 +19,26 @@
     </template>
     <template
       slot="operations"
-      slot-scope="scope">
+      slot-scope="scope"
+    >
       <Button
         button-type="view"
-        @click="toView(scope.row.id)"/>
+        @click="toView(scope.row.id)"
+      />
       <Button
         button-type="edit"
-        @click="toEdit(scope.row.id)"/>
+        @click="toEdit(scope.row.id)"
+      />
       <ConfirmButton
-        @click="remove(scope.row)"/>
+        @click="remove(scope.row)"
+      />
       <!-- <Button
         button-type="inWarehouse"
         @click="toWarehouse(scope.row.id)"/> -->
       <Button
         button-type="print"
-        @click="toPrint(scope.row.id)"/>
+        @click="toPrint(scope.row.id)"
+      />
     </template>
   </DataTable>
 </template>

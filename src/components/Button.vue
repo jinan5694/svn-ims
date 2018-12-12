@@ -1,10 +1,11 @@
 <template>
-  <el-button
+  <ElButton
     v-bind="$attrs"
     :type="buttonTypes[buttonType].type"
-    v-on="$listeners">
+    v-on="$listeners"
+  >
     {{ buttonTypes[buttonType].label }}
-  </el-button>
+  </ElButton>
 </template>
 <script>
 

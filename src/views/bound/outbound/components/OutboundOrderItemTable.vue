@@ -1,14 +1,19 @@
 <template>
   <BaseTable
     :columns="columns"
-    :data="items">
+    :data="items"
+  >
     <!-- slot -->
     <template
       slot="operator"
-      slot-scope="{row, index}">
-      <el-button
+      slot-scope="{row, index}"
+    >
+      <ElButton
         type="text"
-        @click="handleRemove(index)">删除</el-button>
+        @click="handleRemove(index)"
+      >
+        删除
+      </ElButton>
     </template>
   </BaseTable>
 </template>

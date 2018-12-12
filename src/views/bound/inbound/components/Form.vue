@@ -1,15 +1,17 @@
 <template>
   <div class="form">
-    <Toolbar title="基本信息"/>
+    <Toolbar title="基本信息" />
     <InboundDocHeader
       ref="inboundDocHeader"
       :editable="editable"
-      @order-change="handleOrderChange"/>
-    <Toolbar title="商品"/>
+      @order-change="handleOrderChange"
+    />
+    <Toolbar title="商品" />
     <InboundDocItemTable
       ref="table"
       :editable="editable"
-      :items="items"/>
+      :items="items"
+    />
   </div>
 </template>
 <script>

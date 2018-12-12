@@ -1,24 +1,30 @@
 <template>
   <div class="form">
-    <Toolbar title="基本信息"/>
+    <Toolbar title="基本信息" />
     <OutboundOrderHeader
       ref="obOrderHeader"
       :editable="editable"
-      @sale-order-change="handleSaleOrderChange"/>
+      @sale-order-change="handleSaleOrderChange"
+    />
     <Toolbar title="商品信息">
-      <el-button
+      <ElButton
         v-if="editable"
         type="primary"
-        @click="showInventoryPicker">添加</el-button>
+        @click="showInventoryPicker"
+      >
+        添加
+      </ElButton>
     </Toolbar>
     <OutboundOrderItemTable
       ref="obOrderItemTable"
-      :editable="editable"/>
+      :editable="editable"
+    />
     <InventoryPicker
       ref="inventoryPicker"
       :sale-order-items="saleOrderItems"
       :outbound-order-items="outboundOrderItems"
-      @inventory-change="handleInventoryChange"/>
+      @inventory-change="handleInventoryChange"
+    />
   </div>
 </template>
 <script>

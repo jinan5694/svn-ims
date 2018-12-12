@@ -1,83 +1,101 @@
 <template>
   <div class="form-container">
-    <el-form
+    <ElForm
       ref="form"
       :model="form"
       :rules="rules"
-      label-width="100px">
-      <el-form-item
+      label-width="100px"
+    >
+      <ElFormItem
         label="客户名称"
-        prop="customerName">
-        <el-input
+        prop="customerName"
+      >
+        <ElInput
           v-model="form.customerName"
           :disabled="disabled"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="客户电话"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.customerTel"
           :disabled="disabled"
-          maxlength="30"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="30"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="客户类别"
-        prop="">
-        <el-select
+        prop=""
+      >
+        <ElSelect
           v-model="form.customerCategory"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in customerCategorys"
             :key="item.value"
             :label="item.label"
-            :value="item.code"/>
-        </el-select>
-      </el-form-item>
-      <el-form-item
+            :value="item.code"
+          />
+        </ElSelect>
+      </ElFormItem>
+      <ElFormItem
         label="联系人"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.contact"
           :disabled="disabled"
-          maxlength="32"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="32"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="联系电话"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.customerTelOther"
           :disabled="disabled"
-          maxlength="30"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="30"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="账单地址"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.billingAddr"
           :disabled="disabled"
           type="textarea"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="收货地址"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.addr"
           :disabled="disabled"
           type="textarea"
-          maxlength="255"/>
-      </el-form-item>
-      <el-form-item
+          maxlength="255"
+        />
+      </ElFormItem>
+      <ElFormItem
         label="备注"
-        prop="">
-        <el-input
+        prop=""
+      >
+        <ElInput
           v-model="form.remark"
           :disabled="disabled"
           type="textarea"
-          maxlength="255"/>
-      </el-form-item>
-    </el-form>
+          maxlength="255"
+        />
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 <script>

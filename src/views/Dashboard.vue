@@ -1,14 +1,17 @@
 <template>
   <Page>
     <template slot="toolbar">
-      <el-button type="primary">{{ $t('ok') }}</el-button>
-      <el-button>{{ $t('back') }}</el-button>
+      <ElButton type="primary">
+        {{ $t('ok') }}
+      </ElButton>
+      <ElButton>{{ $t('back') }}</ElButton>
     </template>
     <BaseTable
       :columns="columns"
       :data="renderData"
       :span-method="spanMethod"
-      border>
+      border
+    >
       <!-- slot -->
     </BaseTable>
   </Page>

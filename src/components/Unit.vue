@@ -1,6 +1,6 @@
 <template>
   <div class="unit-select">
-    <el-popover
+    <ElPopover
       ref="pNPopover"
       v-model="pNPop"
       :disabled="disabled"
@@ -16,12 +16,14 @@
           :class="{btnChecked : unitData[index].label==unitLabel }"
           class="btnOFF"
           @click="popoverClick(unitData[index])"
-        >{{ unitData[index].label }}</div>
+        >
+          {{ unitData[index].label }}
+        </div>
       </span>
-    </el-popover>
-    <el-input
-      v-popover:pNPopover
+    </ElPopover>
+    <ElInput
       v-model="unitLabel"
+      v-popover:pNPopover
       :readonly="true"
       :disabled="disabled"
       class="input-primary"
@@ -30,7 +32,7 @@
         slot="suffix"
         class="el-input__icon el-icon-circle-close pointer"
         @click="handleClear"/> -->
-    </el-input>
+    </ElInput>
   </div>
 </template>
 <script>

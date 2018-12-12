@@ -1,12 +1,13 @@
 <template>
-  <el-breadcrumb>
-    <el-breadcrumb-item
+  <ElBreadcrumb>
+    <ElBreadcrumbItem
       v-for="item in matched"
       :key="item.path"
-      :to="{ path: item.path === '' ? '/' : item.path }">
+      :to="{ path: item.path === '' ? '/' : item.path }"
+    >
       {{ item.meta && item.meta.title }}
-    </el-breadcrumb-item>
-  </el-breadcrumb>
+    </ElBreadcrumbItem>
+  </ElBreadcrumb>
 </template>
 <script>
 

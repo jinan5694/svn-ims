@@ -1,32 +1,40 @@
 <template>
   <Page
     v-loading="loading"
-    :element-loading-text="$t('loading_text')">
+    :element-loading-text="$t('loading_text')"
+  >
     <template slot="toolbar">
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.vendorName')"
-        @search="fetch"/>
+        @search="fetch"
+      />
       <Button
         button-type="add"
-        @click="toAdd"/>
+        @click="toAdd"
+      />
     </template>
     <DataTable
       ref="table"
       :url="urlQuery"
       :params="params"
-      :columns="columns">
+      :columns="columns"
+    >
       <template
         slot="operations"
-        slot-scope="scope">
+        slot-scope="scope"
+      >
         <Button
           button-type="view"
-          @click="toView(scope.row.id)"/>
+          @click="toView(scope.row.id)"
+        />
         <Button
           button-type="edit"
-          @click="toEdit(scope.row.id)"/>
+          @click="toEdit(scope.row.id)"
+        />
         <ConfirmButton
-          @click="remove(scope.row)"/>
+          @click="remove(scope.row)"
+        />
       </template>
     </DataTable>
   </Page>

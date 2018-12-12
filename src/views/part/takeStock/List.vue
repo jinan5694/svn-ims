@@ -4,22 +4,25 @@
       <Search
         v-model="searchValue"
         :placeholder="$t('placeholder.takeStock')"
-        @search="fetch"/>
+        @search="fetch"
+      />
       <Button
         button-type="add"
-        @click="toAdd"/>
+        @click="toAdd"
+      />
     </template>
     <TopBottomLayout>
       <div slot="top">
-        <Toolbar :title="$t('take_stock')"/>
+        <Toolbar :title="$t('take_stock')" />
         <HeadTable
           ref="headTable"
           :search-key="searchValue"
-          @current-change="handleCurrentChange"/>
+          @current-change="handleCurrentChange"
+        />
       </div>
       <div slot="bottom">
-        <Toolbar :title="$t('product')"/>
-        <ItemTable :data="data"/>
+        <Toolbar :title="$t('product')" />
+        <ItemTable :data="data" />
       </div>
     </TopBottomLayout>
   </Page>

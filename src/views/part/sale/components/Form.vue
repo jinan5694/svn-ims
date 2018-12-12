@@ -1,63 +1,74 @@
 <template>
   <div class="">
-    <Toolbar title="基本信息"/>
+    <Toolbar title="基本信息" />
     <GridForm
       ref="form"
       :items="items"
       :model="form"
       :rules="rules"
       :number-of-columns="4"
-      :disabled="disabled">
+      :disabled="disabled"
+    >
       <div slot="orderNo">
-        <el-input
-          v-model="form.orderNo"/>
+        <ElInput
+          v-model="form.orderNo"
+        />
       </div>
       <div slot="destOrg">
-        <el-select
-          v-model="form.destOrg.id">
-          <el-option
+        <ElSelect
+          v-model="form.destOrg.id"
+        >
+          <ElOption
             v-for="item in customers"
             :key="item.id"
             :label="item.customerName"
-            :value="item.id"/>
-        </el-select>
+            :value="item.id"
+          />
+        </ElSelect>
       </div>
       <div slot="postingDate">
-        <el-date-picker
+        <ElDatePicker
           v-model="form.postingDate"
           type="date"
-          value-format="yyyy-MM-dd"/>
+          value-format="yyyy-MM-dd"
+        />
       </div>
       <div slot="operator">
-        <el-select
-          v-model="form.operator">
-          <el-option
+        <ElSelect
+          v-model="form.operator"
+        >
+          <ElOption
             v-for="item in operators"
             :key="item.id"
             :label="item.employeeName"
-            :value="item.id"/>
-        </el-select>
+            :value="item.id"
+          />
+        </ElSelect>
       </div>
       <div slot="remark">
-        <el-input
+        <ElInput
           v-model="form.remark"
           type="textarea"
-          maxlength="255"/>
+          maxlength="255"
+        />
       </div>
     </GridForm>
     <ProductSelect
       v-if="visible"
       :visible.sync="visible"
-      @select="select"/>
+      @select="select"
+    />
     <Toolbar title="商品信息">
       <Button
         v-if="!disabled"
         button-type="batchAdd"
-        @click="batchAdd"/>
+        @click="batchAdd"
+      />
     </Toolbar>
     <EditItemTable
       v-if="!disabled"
-      ref="editItemTable"/>
+      ref="editItemTable"
+    />
     <ItemTable
       v-else
       :data="form.productItems"
@@ -68,6 +79,7 @@
 import EditItemTable from './EditItemTable.vue'
 import ItemTable from './ItemTable.vue'
 import ProductSelect from '@/views/part/purchase/components/ProductSelect.vue'
+import moment from 'moment'
 
 export default {
   name: 'SaleForm',
@@ -91,7 +103,7 @@ export default {
         destOrg: {
           id: null
         },
-        postingDate: null,
+        postingDate: moment().format('YYYY-MM-DD'),
         operator: null,
         remark: null,
         productItems: []

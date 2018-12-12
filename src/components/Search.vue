@@ -1,14 +1,15 @@
 <template>
   <div>
-    <el-input
+    <ElInput
       v-model="key"
       :style="{width: fieldWidth}"
       :placeholder="placeholder"
       class="rb-search"
       prefix-icon="el-icon-search"
       @keyup.enter.native="enter"
-      @change="handleChange"/>
-      <!-- <Button
+      @change="handleChange"
+    />
+    <!-- <Button
       button-type="search"
       @click="handleIconClick"/> -->
   </div>

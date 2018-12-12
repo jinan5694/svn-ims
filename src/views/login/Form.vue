@@ -1,58 +1,71 @@
 <template>
   <div
     class="login-form"
-    @keyup.enter="handleSubmit">
-    <Logo/>
+    @keyup.enter="handleSubmit"
+  >
+    <Logo />
     <div class="form">
-      <el-form
+      <ElForm
         ref="loginForm"
         :model="loginForm"
-        :rules="rules">
-        <el-form-item prop="account">
-          <el-input
+        :rules="rules"
+      >
+        <ElFormItem prop="account">
+          <ElInput
             v-model="loginForm.account"
             :maxlength="20"
             autofocus="autofocus"
             size="large"
             auto-complete="off"
             placeholder="账号"
-            @blur="handleAccountBlur"/>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
+            @blur="handleAccountBlur"
+          />
+        </ElFormItem>
+        <ElFormItem prop="password">
+          <ElInput
             v-model="loginForm.password"
             :maxlength="20"
             size="large"
             type="password"
             auto-complete="off"
-            placeholder="密码"/>
-        </el-form-item>
-        <el-form-item
+            placeholder="密码"
+          />
+        </ElFormItem>
+        <ElFormItem
           v-show="showCaptcha"
-          prop="captcha">
-          <el-input
+          prop="captcha"
+        >
+          <ElInput
             v-model="loginForm.captcha"
             :maxlength="4"
             class="captcha-input"
             size="large"
-            placeholder="验证码"/>
+            placeholder="验证码"
+          />
           <img
             :src="captchaSrc"
             class="captcha-img"
-            @click="reloadCaptchaImage">
-        </el-form-item>
+            @click="reloadCaptchaImage"
+          >
+        </ElFormItem>
         <div class="toolbar">
-          <el-checkbox
+          <ElCheckbox
             v-model="rememberPassword"
-            @change="handleChange">记住密码</el-checkbox>
+            @change="handleChange"
+          >
+            记住密码
+          </ElCheckbox>
         </div>
-        <el-button
+        <ElButton
           :loading="loading"
           class="submit"
           size="large"
           type="primary"
-          @click="handleSubmit">登 录</el-button>
-      </el-form>
+          @click="handleSubmit"
+        >
+          登 录
+        </ElButton>
+      </ElForm>
     </div>
   </div>
 </template>

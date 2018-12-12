@@ -1,19 +1,22 @@
 <template>
   <Page
     v-loading="loading"
-    :element-loading-text="$t('loading_text')">
+    :element-loading-text="$t('loading_text')"
+  >
     <template slot="toolbar">
       <ConfirmButton
         :loading="inboundBtnLoading"
         type="primary"
         text="入库"
         msg="确定入库？"
-        @click="handleInbound"/>
-      <BackButton/>
+        @click="handleInbound"
+      />
+      <BackButton />
     </template>
     <Form
       ref="form"
-      :editable="false"/>
+      :editable="false"
+    />
   </Page>
 </template>
 <script>

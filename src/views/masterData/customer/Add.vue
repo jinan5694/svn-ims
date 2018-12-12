@@ -1,14 +1,16 @@
 <template>
   <Page
     v-loading="loading"
-    :element-loading-text="$t('loading_text')">
+    :element-loading-text="$t('loading_text')"
+  >
     <template slot="toolbar">
       <Button
         button-type="save"
-        @click="handleSaveOrUpdate"/>
-      <BackButton/>
+        @click="handleSaveOrUpdate"
+      />
+      <BackButton />
     </template>
-    <Form ref="form"/>
+    <Form ref="form" />
   </Page>
 </template>
 <script>

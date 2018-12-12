@@ -4,21 +4,26 @@
     :url="urlQuery"
     :params="params"
     :columns="columns"
-    :table-config="tableConfig">
+    :table-config="tableConfig"
+  >
     <template
       slot="operator"
-      slot-scope="{row, index}">
+      slot-scope="{row}"
+    >
       <Button
         button-type="view"
-        @click="toView(row.id)"/>
+        @click="toView(row.id)"
+      />
       <Button
         v-show="orderEditable(row)"
         button-type="edit"
-        @click="toEdit(row.id)"/>
+        @click="toEdit(row.id)"
+      />
       <!-- <el-button type="text">入库</el-button> -->
       <ConfirmButton
         v-show="orderEditable(row)"
-        @click="remove(row)"/>
+        @click="remove(row)"
+      />
     </template>
   </DataTable>
 </template>

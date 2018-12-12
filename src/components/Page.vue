@@ -1,15 +1,15 @@
 <template>
   <div class="page">
     <div class="header">
-      <Breadcrumb/>
+      <Breadcrumb />
       <div class="toolbar">
-        <slot name="toolbar"/>
+        <slot name="toolbar" />
       </div>
     </div>
     <div class="content">
-      <slot/>
+      <slot />
     </div>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 

@@ -1,10 +1,11 @@
 <template>
-  <el-cascader
+  <ElCascader
     v-model="ids"
     :options="options"
     v-bind="$attrs"
     expand-trigger="hover"
-    @change="handleChange"/>
+    @change="handleChange"
+  />
 </template>
 <script>
 export default {

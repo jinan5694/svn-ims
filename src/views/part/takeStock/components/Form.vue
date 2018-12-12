@@ -1,92 +1,110 @@
 <template>
   <div class="">
-    <Toolbar :title="$t('base_info')"/>
+    <Toolbar :title="$t('base_info')" />
     <GridForm
       ref="form"
       :items="items"
       :model="form"
       :rules="rules"
       :number-of-columns="4"
-      :disabled="disabled">
+      :disabled="disabled"
+    >
       <div slot="orderNo">
-        <el-input
-          v-model="form.orderNo"/>
+        <ElInput
+          v-model="form.orderNo"
+        />
       </div>
       <div slot="postingDate">
-        <el-date-picker
+        <ElDatePicker
           v-model="form.postingDate"
           :disabled="disabled"
           type="date"
-          value-format="yyyy-MM-dd"/>
+          value-format="yyyy-MM-dd"
+        />
       </div>
       <div slot="operator">
-        <el-select
+        <ElSelect
           v-model="form.operator"
-          :disabled="disabled">
-          <el-option
+          :disabled="disabled"
+        >
+          <ElOption
             v-for="item in operators"
             :key="item.id"
             :label="item.employeeName"
-            :value="item.id"/>
-        </el-select>
+            :value="item.id"
+          />
+        </ElSelect>
       </div>
       <div slot="remark">
-        <el-input
+        <ElInput
           v-model="form.remark"
           :disabled="disabled"
           type="textarea"
-          maxlength="255"/>
+          maxlength="255"
+        />
       </div>
       <div slot="warehouse">
-        <el-select
+        <ElSelect
           v-model="form.warehouse"
-          @change="handleChangeWarehouse">
-          <el-option
+          @change="handleChangeWarehouse"
+        >
+          <ElOption
             v-for="item in warehouses"
             :key="item.id"
             :label="item.warehouseName"
-            :value="item.id"/>
-        </el-select>
+            :value="item.id"
+          />
+        </ElSelect>
       </div>
       <div slot="zone">
-        <el-select
+        <ElSelect
           v-model="form.zone"
-          @change="handleChangeZone">
-          <el-option
+          @change="handleChangeZone"
+        >
+          <ElOption
             v-for="item in zones"
             :key="item.id"
             :label="item.zoneName"
-            :value="item.id"/>
-        </el-select>
+            :value="item.id"
+          />
+        </ElSelect>
       </div>
       <div slot="bin">
-        <el-select
+        <ElSelect
           v-model="form.bin"
-          @change="handleChangeBin">
-          <el-option
+          @change="handleChangeBin"
+        >
+          <ElOption
             v-for="item in bins"
             :key="item.id"
             :label="item.binName"
-            :value="item.id"/>
-        </el-select>
+            :value="item.id"
+          />
+        </ElSelect>
       </div>
     </GridForm>
     <ProductSelect
       v-if="visible"
       :visible.sync="visible"
-      @select="select"/>
+      @select="select"
+    />
     <Toolbar :title="$t('product_info')">
-      <el-button
+      <ElButton
         type="primary"
-        @click="exportWarehouse">{{ $t('export_warehouse') }}</el-button>
+        @click="exportWarehouse"
+      >
+        {{ $t('export_warehouse') }}
+      </ElButton>
     </Toolbar>
     <EditItemTable
       v-if="!disabled"
-      ref="editItemTable"/>
+      ref="editItemTable"
+    />
     <ItemTable
       v-else
       ref="itemTable"
-      :data="form.productItems"/>
+      :data="form.productItems"
+    />
   </div>
 </template>
 <script>
